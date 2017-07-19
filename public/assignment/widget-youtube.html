@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Edit Widget</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <!-- Custom styles -->
+    <link href="css/styles.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="zw-with-nav">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="navbar-header">
+            <p class="navbar-text navbar-left">
+                <a href="widget-list.html" class="navbar-link">
+                    <span class="glyphicon glyphicon-chevron-left">
+                    </span>
+                </a>
+            </p>
+            <div class="navbar-brand">
+                Edit Widget
+            </div>
+            <p class="navbar-text navbar-right">
+                <a href="widget-list.html" class="navbar-link">
+                    <span class="glyphicon glyphicon-ok">
+                    </span>
+                </a>
+            </p>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <form action="widget-list.html">
+            <label for="name">Name</label>
+            <input name="name"
+                   id="name"
+                   type="text"
+                   class="form-control"/>
+            <label for="text">Text</label>
+            <input name="text"
+                   id="text"
+                   type="text"
+                   class="form-control"/>
+            <label for="url">URL</label>
+            <input name="url"
+                   id="url"
+                   type="url"
+                   value="https://www.youtube.com/embed/uLWLashCXHE"
+                   class="form-control"/>
+            <label for="width">Width</label>
+            <input name="width"
+                   id="width"
+                   type="text"
+                   class="form-control"/>
+            <div class="zw-group">
+                <!--
+                <button type="submit"
+                        class="btn btn-block btn-success form-control">
+                    Save
+                </button>
+                <a class="btn btn-block btn-default"
+                   href="widget-list.html">
+                    Cancel
+                </a>
+                -->
+                <a class="btn btn-block btn-danger"
+                   href="widget-list.html">
+                    Delete
+                </a>
+            </div>
+        </form>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="navbar-header">
+            <p class="navbar-text navbar-right">
+                <a href="profile.html" class="navbar-link">
+                    <span class="glyphicon glyphicon-user">
+                    </span>
+                </a>
+            </p>
+        </div>
+    </nav>
+</body>
+</html>
