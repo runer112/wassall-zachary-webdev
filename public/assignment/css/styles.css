@@ -29,7 +29,7 @@
 
 /* body elements */
 
-.zw-with-nav {
+body {
     margin-top: 50px;
     margin-bottom: 50px;
     padding-top: 10px;
@@ -120,18 +120,25 @@ label {
 @media (min-width: 768px) {
     #left {
         position: absolute;
-        left: 0;
+        top: 50px;
+        bottom: 50px;
+        padding-top: 10px;
+        padding-bottom: 10px;
         width: 33.33%;
-        overflow-y: scroll;
+        overflow-y: auto;
         border-width: 0 1px 0 0;
         border-style: solid;
-        border-color: #ddd
+        border-color: #ddd;
     }
 
     #right {
         position: absolute;
+        top: 50px;
+        bottom: 50px;
+        padding-top: 10px;
+        padding-bottom: 10px;
         right: 0;
-        overflow-y: scroll;
         width: 66.67%;
+        overflow-y: auto;
     }
 }

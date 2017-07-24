@@ -1,0 +1,62 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-header">
+        <div class="navbar-brand navbar-left">
+            Profile
+        </div>
+        <p class="navbar-text navbar-right">
+            <a href="#!/user/0" class="navbar-link">
+                <span class="glyphicon glyphicon-ok">
+                </span>
+            </a>
+        </p>
+    </div>
+</nav>
+<div class="container-fluid zw-with-nav">
+    <form onSubmit="window.location = '#!/user/0/website'">
+        <label for="username">Username</label>
+        <input name="username"
+               id="username"
+               type="text"
+               value="runer112"
+               readonly
+               class="form-control"/>
+        <label for="email">Email</label>
+        <input name="email"
+               id="email"
+               type="email"
+               value="runer112@gmail.com"
+               class="form-control"/>
+        <label for="firstname">First Name</label>
+        <input name="firstname"
+               id="firstname"
+               type="text"
+               value="Zachary"
+               class="form-control"/>
+        <label for="lastname">Last Name</label>
+        <input name="lastname"
+               id="lastname"
+               type="text"
+               value="Wassall"
+               class="form-control"/>
+        <div class="zw-group">
+            <button type="submit"
+                    class="btn btn-block btn-primary form-control">
+                Websites
+            </button>
+            <a class="btn btn-block btn-danger"
+               href="#!/login">
+                Logout
+            </a>
+        </div>
+    </form>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="navbar-header">
+        <p class="navbar-text navbar-right">
+            <a href="#!/user/0" class="navbar-link">
+                <span class="glyphicon glyphicon-user">
+                </span>
+            </a>
+        </p>
+    </div>
+</nav>
