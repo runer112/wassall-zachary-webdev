@@ -28,7 +28,7 @@
                     model.usernameClass = "";
                 } else if (userService.findUserByUsername(username)) {
                     model.usernameClass = "has-error";
-                    model.usernameMessage = "Username exists";
+                    model.usernameMessage = "Username exists.";
                 } else {
                     model.usernameClass = "has-success";
                     model.usernameOk = true;
@@ -53,7 +53,7 @@
                     model.verifyPasswordClass = "";
                 } else if (verifyPassword !== model.user.password) {
                     model.verifyPasswordClass = "has-error";
-                    model.verifyPasswordMessage = "Passwords do not match";
+                    model.verifyPasswordMessage = "Passwords do not match.";
                 } else {
                     model.verifyPasswordClass = "has-success";
                     model.verifyPasswordOk = true;

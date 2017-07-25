@@ -4,7 +4,7 @@
             Profile
         </div>
         <p class="navbar-text navbar-right">
-            <a href="#!/user/0" class="navbar-link">
+            <a ng-click="model.isChanged() && model.updateUser()" class="navbar-link">
                 <span class="glyphicon glyphicon-ok">
                 </span>
             </a>
@@ -12,37 +12,44 @@
     </div>
 </nav>
 <div class="container-fluid zw-with-nav">
-    <form onSubmit="window.location = '#!/user/0/website'">
+    <form ng-submit="model.updateUser()">
+        <div ng-show="model.successMessage" class="alert alert-success">
+            {{model.successMessage}}
+        </div>
         <label for="username">Username</label>
-        <input name="username"
-               id="username"
+        <input id="username"
+               ng-model="model.user.username"
                type="text"
-               value="runer112"
                readonly
                class="form-control"/>
         <label for="email">Email</label>
-        <input name="email"
-               id="email"
+        <input id="email"
+               ng-model="model.user.email"
                type="email"
-               value="runer112@gmail.com"
+               ng-change="model.successMessage = null"
                class="form-control"/>
         <label for="firstname">First Name</label>
-        <input name="firstname"
-               id="firstname"
+        <input id="firstname"
+               ng-model="model.user.firstName"
                type="text"
-               value="Zachary"
+               ng-change="model.successMessage = null"
                class="form-control"/>
         <label for="lastname">Last Name</label>
-        <input name="lastname"
-               id="lastname"
+        <input id="lastname"
+               ng-model="model.user.lastName"
                type="text"
-               value="Wassall"
+               ng-change="model.successMessage = null"
                class="form-control"/>
         <div class="zw-group">
-            <button type="submit"
-                    class="btn btn-block btn-primary form-control">
-                Websites
+            <button ng-disabled="!model.isChanged()"
+                    type="submit"
+                    class="btn btn-block btn-success">
+                Save
             </button>
+            <a class="btn btn-block btn-primary"
+               ng-href="#!/user/{{model.user._id}}/website">
+                Websites
+            </a>
             <a class="btn btn-block btn-danger"
                href="#!/login">
                 Logout
@@ -53,7 +60,7 @@
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="navbar-header">
         <p class="navbar-text navbar-right">
-            <a href="#!/user/0" class="navbar-link">
+            <a ng-href="#!/user/{{model.user._id}}" class="navbar-link">
                 <span class="glyphicon glyphicon-user">
                 </span>
             </a>
