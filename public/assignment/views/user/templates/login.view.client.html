@@ -1,20 +1,24 @@
-<div class="container-fluid zw-with-nav">
+<div class="container-fluid">
     <h2>Login</h2>
-    <form onSubmit="window.location = '#!/user/0'">
-        <!--<label for="username">Username</label>-->
-        <input name="username"
-               id="username"
+    <div ng-show="model.errorMessage" class="alert alert-danger">
+        {{model.errorMessage}}
+    </div>
+    <form ng-submit="model.login(model.user)">
+        <label for="username">Username</label>
+        <input id="username"
+               ng-model="model.user.username"
                type="text"
                placeholder="username"
                class="form-control"/>
-        <!--<label for="password">Password</label>-->
-        <input name="password"
-               id="password"
+        <label for="password">Password</label>
+        <input id="password"
+               ng-model="model.user.password"
                type="password"
                placeholder="password"
                class="form-control"/>
         <div class="zw-group">
-            <button type="submit"
+            <button ng-disabled="!(model.user.username && model.user.password)"
+                    type="submit"
                     class="btn btn-block btn-primary">
                 Login
             </button>

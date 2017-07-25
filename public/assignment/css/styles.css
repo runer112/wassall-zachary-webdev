@@ -29,7 +29,7 @@
 
 /* body elements */
 
-body {
+.zw-with-nav {
     margin-top: 50px;
     margin-bottom: 50px;
     padding-top: 10px;
@@ -56,6 +56,11 @@ label {
 
 .form-control {
     margin-bottom: 5px;
+}
+
+.alert {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 /* lists */
