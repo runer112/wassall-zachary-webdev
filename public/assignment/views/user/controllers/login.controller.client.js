@@ -1,20 +1,20 @@
-(function() {
+(function () {
     angular
         .module("WebAppMaker")
         .controller("loginController", loginController);
 
-        function loginController($location, userService) {
-            var model = this;
+    function loginController($location, userService) {
+        var model = this;
 
-            model.login = login;
+        model.login = login;
 
-            function login(user) {
-                user = userService.findUserByCredentials(user.username, user.password);
-                if (user) {
-                    $location.url("user/" + user._id);
-                } else {
-                    model.errorMessage = "Invalid username or password.";
-                }
+        function login(user) {
+            user = userService.findUserByCredentials(user.username, user.password);
+            if (user) {
+                $location.url("user/" + user._id);
+            } else {
+                model.errorMessage = "Invalid username or password.";
             }
         }
+    }
 })();

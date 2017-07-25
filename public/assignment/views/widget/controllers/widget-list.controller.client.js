@@ -1,9 +1,9 @@
-(function() {
+(function () {
     angular
         .module("WebAppMaker")
         .controller("widgetListController", widgetListController);
 
-        function widgetListController() {
-            var model = this;
-        }
+    function widgetListController() {
+        var model = this;
+    }
 })();
