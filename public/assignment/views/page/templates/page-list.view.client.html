@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="navbar-header">
         <p class="navbar-text navbar-left">
-            <a href="#!/user/0/website" class="navbar-link">
+            <a ng-href="#!/user/{{model.uid}}/website" class="navbar-link">
                 <span class="glyphicon glyphicon-chevron-left">
                 </span>
             </a>
@@ -10,55 +10,22 @@
             Pages
         </div>
         <p class="navbar-text navbar-right">
-            <a href="#!/user/0/website/0/page/new" class="navbar-link">
+            <a ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page/new" class="navbar-link">
                 <span class="glyphicon glyphicon-plus">
                 </span>
             </a>
         </p>
     </div>
 </nav>
-<div class="container-fluid">
+<div class="container-fluid zw-with-nav">
     <ul class="zw-list">
-        <li class="zw-list-item">
-            <a href="#!/user/0/website/0/page/0/widget">Blog Post</a>
+        <li ng-repeat="page in model.pages"
+            class="zw-list-item">
+            <a ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{page._id}}/widget">
+                {{page.name}}
+            </a>
             <p class="pull-right">
-                <a href="#!/user/0/website/0/page/edit">
-                    <span class="glyphicon glyphicon-cog">
-                    </span>
-                </a>
-            </p>
-        </li>
-        <li class="zw-list-item">
-            <a href="#!/user/0/website/0/page/0/widget">Blogs</a>
-            <p class="pull-right">
-                <a href="#!/user/0/website/0/page/edit">
-                    <span class="glyphicon glyphicon-cog">
-                    </span>
-                </a>
-            </p>
-        </li>
-        <li class="zw-list-item">
-            <a href="#!/user/0/website/0/page/0/widget">Home</a>
-            <p class="pull-right">
-                <a href="#!/user/0/website/0/page/edit">
-                    <span class="glyphicon glyphicon-cog">
-                    </span>
-                </a>
-            </p>
-        </li>
-        <li class="zw-list-item">
-            <a href="#!/user/0/website/0/page/0/widget">About</a>
-            <p class="pull-right">
-                <a href="#!/user/0/website/0/page/edit">
-                    <span class="glyphicon glyphicon-cog">
-                    </span>
-                </a>
-            </p>
-        </li>
-        <li class="zw-list-item">
-            <a href="#!/user/0/website/0/page/0/widget">Contact Us</a>
-            <p class="pull-right">
-                <a href="#!/user/0/website/0/page/edit">
+                <a ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{page._id}}">
                     <span class="glyphicon glyphicon-cog">
                     </span>
                 </a>
@@ -69,7 +36,7 @@
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="navbar-header">
         <p class="navbar-text navbar-right">
-            <a href="#!/user/0" class="navbar-link">
+            <a ng-href="#!/user/{{model.uid}}" class="navbar-link">
                 <span class="glyphicon glyphicon-user">
                 </span>
             </a>
