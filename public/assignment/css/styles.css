@@ -133,10 +133,8 @@ label {
 @media (min-width: 768px) {
     #left {
         position: absolute;
-        top: 50px;
-        bottom: 50px;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        top: 0px;
+        bottom: 0px;
         width: 33.33%;
         overflow-y: auto;
         border-width: 0 1px 0 0;
@@ -146,10 +144,8 @@ label {
 
     #right {
         position: absolute;
-        top: 50px;
-        bottom: 50px;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        top: 0px;
+        bottom: 0px;
         right: 0;
         width: 66.67%;
         overflow-y: auto;
