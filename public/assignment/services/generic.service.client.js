@@ -25,7 +25,7 @@ function createGenericService() {
         }
 
         function update(entityId, entity) {
-            var index = api.findIndexOfById(entityId);
+            var index = findIndexOfById(entityId);
             var entityClone = api.clone(entity);
             entityClone._id = entityId;
             api.entities[index] = entityClone;
@@ -33,7 +33,7 @@ function createGenericService() {
         }
 
         function delete_(entityId, entity) {
-            var index = api.findIndexOfById(entityId);
+            var index = findIndexOfById(entityId);
             api.entities.splice(index, 1);
         }
 
