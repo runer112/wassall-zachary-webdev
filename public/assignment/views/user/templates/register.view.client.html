@@ -1,25 +1,51 @@
-<div class="container-fluid zw-with-nav">
+<div class="container-fluid">
     <h2>Register</h2>
-    <form onSubmit="window.location = '#!/user/0'">
-        <!--<label for="username">Username</label>-->
-        <input name="username"
-               id="username"
-               type="text"
-               placeholder="username"
-               class="form-control"/>
-        <!--<label for="password">Password</label>-->
-        <input name="password"
-               id="password"
-               type="password"
-               placeholder="password"
-               class="form-control"/>
-        <!--<label for="password">Password</label>-->
-        <input id="verifyPassword"
-               type="password"
-               placeholder="verify password"
-               class="form-control"/>
+    <form ng-submit="model.register(model.user)">
+        <div class="form-group" ng-class="model.usernameClass">
+            <label for="username"
+                   class="control-label">
+                Username
+            </label>
+            <input id="username"
+                   ng-model="model.user.username"
+                   type="text"
+                   placeholder="username"
+                   class="form-control"/>
+            <div ng-show="model.usernameMessage" class="help-block">
+                {{model.usernameMessage}}
+            </div>
+        </div>
+        <div class="form-group" ng-class="model.passwordClass">
+            <label for="password"
+                   class="control-label">
+                Password
+            </label>
+            <input id="password"
+                   ng-model="model.user.password"
+                   type="password"
+                   placeholder="password"
+                   class="form-control"/>
+            <div ng-show="model.passwordMessage" class="help-block">
+                {{model.passwordMessage}}
+            </div>
+        </div>
+        <div class="form-group" ng-class="model.verifyPasswordClass">
+            <label for="verifyPassword"
+                   class="control-label">
+                Verify Password
+            </label>
+            <input id="verifyPassword"
+                   ng-model="model.verifyPassword"
+                   type="password"
+                   placeholder="verify password"
+                   class="form-control"/>
+            <div ng-show="model.verifyPasswordMessage" class="help-block">
+                {{model.verifyPasswordMessage}}
+            </div>
+        </div>
         <div class="zw-group">
-            <button type="submit"
+            <button ng-disabled="!(model.usernameOk && model.passwordOk && model.verifyPasswordOk)"
+                    type="submit"
                     class="btn btn-block btn-primary">
                 Register
             </button>
