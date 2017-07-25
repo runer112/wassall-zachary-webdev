@@ -44,7 +44,7 @@ function createGenericService() {
 
         function findById(entityId) {
             return api.find(function (entity) {
-                entity._id === entityId;
+                return entity._id === entityId;
             })
         }
 
