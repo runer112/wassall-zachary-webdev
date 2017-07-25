@@ -5,9 +5,5 @@
 
         function newWebsiteController() {
             var model = this;
-
-            function init() {
-            }
-            init();
         }
 })();

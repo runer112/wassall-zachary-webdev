@@ -5,9 +5,5 @@
 
         function editPageController() {
             var model = this;
-
-            function init() {
-            }
-            init();
         }
 })();

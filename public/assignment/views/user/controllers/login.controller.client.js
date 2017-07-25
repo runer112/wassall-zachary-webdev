@@ -8,10 +8,6 @@
 
             model.login = login;
 
-            function init() {
-            }
-            init();
-
             function login(user) {
                 user = userService.findUserByCredentials(user.username, user.password);
                 if (user) {

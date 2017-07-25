@@ -12,10 +12,6 @@
             $scope.$watch("model.user.password", validatePassword);
             $scope.$watch("model.verifyPassword", validateVerifyPassword);
 
-            function init() {
-            }
-            init();
-
             function register(user) {
                 user = userService.createUser(user);
                 $location.url("user/" + user._id);

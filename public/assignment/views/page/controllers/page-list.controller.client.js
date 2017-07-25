@@ -5,9 +5,5 @@
 
         function pageListController() {
             var model = this;
-
-            function init() {
-            }
-            init();
         }
 })();

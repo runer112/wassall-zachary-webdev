@@ -5,9 +5,5 @@
 
         function widgetListController() {
             var model = this;
-
-            function init() {
-            }
-            init();
         }
 })();

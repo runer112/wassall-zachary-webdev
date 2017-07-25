@@ -14,10 +14,6 @@
         var userId = $routeParams["uid"];
         setUser(userService.findUserById(userId));
 
-        function init() {
-        }
-        init();
-
         function updateUser() {
             setUser(userService.updateUser(model.user._id, model.user));
             model.successMessage = "Changes saved successfully.";

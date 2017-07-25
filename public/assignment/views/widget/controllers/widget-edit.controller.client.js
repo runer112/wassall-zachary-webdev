@@ -5,9 +5,5 @@
 
         function editWidgetController() {
             var model = this;
-
-            function init() {
-            }
-            init();
         }
 })();
