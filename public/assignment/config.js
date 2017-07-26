@@ -65,7 +65,7 @@
                 controllerAs: "model"
             })
             .when("/user/:uid/website/:wid/page/:pid/widget/:wgid", {
-                templateUrl: "views/widget/templates/widget-heading.view.client.html",
+                templateUrl: "views/widget/templates/editors/widget-heading-edit.view.client.html",
                 controller: "editWidgetController",
                 controllerAs: "model"
             })
