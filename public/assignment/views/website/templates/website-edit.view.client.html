@@ -29,7 +29,7 @@
                     Edit Website
                 </div>
                 <p class="navbar-text navbar-right">
-                    <a ng-click="model.validate() && model.updateWebsite()" class="navbar-link">
+                    <a onclick="document.getElementById('submitButton').click();" class="navbar-link">
                         <span class="glyphicon glyphicon-ok">
                         </span>
                     </a>
@@ -51,6 +51,7 @@
                 <input id="name"
                        ng-model="model.website.name"
                        type="text"
+                       required
                        placeholder="Name"
                        class="form-control"/>
                 <label for="description">Description</label>
@@ -60,7 +61,7 @@
                           rows="5"
                           class="form-control"></textarea>
                 <div class="zw-group">
-                    <button ng-disabled="!model.validate()"
+                    <button id="submitButton"
                             type="submit"
                             class="btn btn-block btn-success">
                         Save

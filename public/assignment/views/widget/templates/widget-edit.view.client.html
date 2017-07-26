@@ -10,7 +10,7 @@
             Edit Widget
         </div>
         <p class="navbar-text navbar-right">
-            <a ng-click="model.validate() && model.updateWidget()" class="navbar-link">
+            <a onclick="document.getElementById('submitButton').click();" class="navbar-link">
                 <span class="glyphicon glyphicon-ok">
                 </span>
             </a>
@@ -26,15 +26,17 @@
                class="form-control"/>
         <label for="text">Text</label>
         <div ng-if="model.widget.widgetType === 'HTML'">
+            <!-- FIXME required doesn't seem to do anything -->
             <textarea id="description"
-                      ng-model="model.widget.text"
                       rows="10"
+                      required
                       class="form-control"></textarea>
         </div>
         <div ng-if="model.widget.widgetType !== 'HTML'">
             <input id="text"
                    ng-model="model.widget.text"
                    type="text"
+                   ng-required="model.widget.widgetType === 'HEADING'"
                    class="form-control"/>
         </div>
         <div ng-if="model.widget.widgetType === 'HEADING'">
@@ -44,6 +46,7 @@
                    type="number"
                    min="1"
                    max="6"
+                   required
                    class="form-control"/>
         </div>
         <div ng-if="model.widget.widgetType === 'IMAGE' || model.widget.widgetType === 'YOUTUBE'">
@@ -51,6 +54,7 @@
             <input id="url"
                    ng-model="model.widget.url"
                    type="url"
+                   required
                    class="form-control"/>
             <label for="width">Width</label>
             <input id="width"
@@ -65,7 +69,7 @@
                    class="form-control"/>
         </div>
         <div class="zw-group">
-            <button ng-disabled="!model.validate()"
+            <button id="submitButton"
                     type="submit"
                     class="btn btn-block btn-success">
                 Save

@@ -6,7 +6,6 @@
     function editPageController($routeParams, $location, pageService) {
         var model = this;
 
-        model.validate = validate;
         model.updatePage = updatePage;
         model.deletePage = deletePage;
 
@@ -14,12 +13,6 @@
         model.wid = $routeParams["wid"];
         model.pid = $routeParams["pid"];
         model.page = pageService.findPageById(model.pid);
-        var pageStr = JSON.stringify(model.page);
-
-        function validate() {
-            return !!model.page.name
-                && pageStr !== JSON.stringify(model.page);
-        }
 
         function updatePage() {
             pageService.updatePage(model.pid, model.page);

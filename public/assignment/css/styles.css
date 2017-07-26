@@ -46,6 +46,10 @@ h1, h2, h3, h4, h5 {
     font-weight: bold;
 }
 
+a {
+    cursor: pointer;
+}
+
 a:hover, a:visited, a:link, a:active {
     text-decoration: none;
 }
@@ -69,12 +73,6 @@ label {
 .alert {
     margin-top: 10px;
     margin-bottom: 10px;
-}
-
-[ng-click],
-[data-ng-click],
-[x-ng-click] {
-    cursor: pointer;
 }
 
 /* lists */

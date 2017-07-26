@@ -10,7 +10,7 @@
             Edit Page
         </div>
         <p class="navbar-text navbar-right">
-            <a ng-click="model.validate() && model.updatePage()" class="navbar-link">
+            <a onclick="document.getElementById('submitButton').click();" class="navbar-link">
                 <span class="glyphicon glyphicon-ok">
                 </span>
             </a>
@@ -23,6 +23,7 @@
         <input id="name"
                ng-model="model.page.name"
                type="text"
+               required
                placeholder="Page Name"
                class="form-control"/>
         <label for="title">Title</label>
@@ -32,7 +33,7 @@
                placeholder="Page Title"
                class="form-control"/>
         <div class="zw-group">
-            <button ng-disabled="!model.validate()"
+            <button id="submitButton"
                     type="submit"
                     class="btn btn-block btn-success">
                 Create

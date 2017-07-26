@@ -9,10 +9,9 @@
         model.updateUser = updateUser;
         model.isChanged = isChanged;
 
-        var user;
+        var uid = $routeParams["uid"];
         var userStr;
-        var userId = $routeParams["uid"];
-        setUser(userService.findUserById(userId));
+        setUser(userService.findUserById(uid));
 
         function updateUser() {
             setUser(userService.updateUser(model.user._id, model.user));
@@ -27,9 +26,8 @@
         }
 
         function setUser(user) {
-            this.user = user;
+            model.user = user;
             userStr = JSON.stringify(user);
-            model.user = JSON.parse(userStr);
         }
     }
 })();
