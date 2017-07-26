@@ -3,8 +3,8 @@
         .module("WebAppMaker")
         .factory("websiteService", websiteService);
 
-    function websiteService() {
-        var genericService = createGenericService();
+    function websiteService(pageService) {
+        var genericService = createGenericService("developerId", [pageService]);
 
         var websites = [
             {"_id": "123", "name": "Facebook", "developerId": "456", "description": "Lorem"},
@@ -20,17 +20,12 @@
         var api = {
             createWebsite: genericService.create,
             findWebsiteById: genericService.findById,
-            findWebsitesByUser: findWebsitesByUser,
+            findWebsitesByUser: genericService.filterByFk,
             updateWebsite: genericService.update,
             deleteWebsite: genericService.delete,
+            deleteByFk: genericService.deleteByFk,
         };
 
         return api;
-
-        function findWebsitesByUser(userId) {
-            return genericService.filter(function (website) {
-                return website.developerId === userId;
-            });
-        }
     }
 })();

@@ -3,8 +3,8 @@
         .module("WebAppMaker")
         .factory("userService", userService);
 
-    function userService() {
-        var genericService = createGenericService();
+    function userService(websiteService) {
+        var genericService = createGenericService(null, [websiteService]);
 
         var users = [
             {_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder",  email: "alice@wonder.com" },

@@ -4,7 +4,7 @@
         .factory("widgetService", widgetService);
 
     function widgetService() {
-        var genericService = createGenericService();
+        var genericService = createGenericService("pageId", []);
 
         var widgets = [
             { "_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
@@ -22,17 +22,12 @@
         var api = {
             createWidget: genericService.create,
             findWidgetById: genericService.findById,
-            findWidgetsByPageId: findWidgetsByPageId,
+            findWidgetsByPageId: genericService.filterByFk,
             updateWidget: genericService.update,
             deleteWidget: genericService.delete,
+            deleteByFk: genericService.deleteByFk,
         };
 
         return api;
-
-        function findWidgetsByPageId(pageId) {
-            return genericService.filter(function (widget) {
-                return widget.pageId === pageId;
-            });
-        }
     }
 })();
