@@ -3,7 +3,9 @@
         .module("WebAppMaker")
         .controller("registerController", registerController);
 
-    function registerController($scope, $location, userService) {
+    function registerController($rootScope, $scope, $location, userService) {
+        $rootScope.title = "Register";
+
         var model = this;
 
         model.register = register;

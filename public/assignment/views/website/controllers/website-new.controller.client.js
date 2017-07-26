@@ -3,7 +3,9 @@
         .module("WebAppMaker")
         .controller("newWebsiteController", newWebsiteController);
 
-    function newWebsiteController($routeParams, $location, websiteService) {
+    function newWebsiteController($rootScope, $routeParams, $location, websiteService) {
+        $rootScope.title = "New Website";
+
         var model = this;
 
         model.createWebsite = createWebsite;

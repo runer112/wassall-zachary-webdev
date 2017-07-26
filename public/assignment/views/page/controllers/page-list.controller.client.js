@@ -3,7 +3,9 @@
         .module("WebAppMaker")
         .controller("pageListController", pageListController);
 
-    function pageListController($routeParams, pageService) {
+    function pageListController($rootScope, $routeParams, pageService) {
+        $rootScope.title = "Pages";
+
         var model = this;
 
         model.uid = $routeParams["uid"];

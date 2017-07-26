@@ -3,7 +3,9 @@
         .module("WebAppMaker")
         .controller("editWebsiteController", editWebsiteController);
 
-    function editWebsiteController($routeParams, $location, websiteService) {
+    function editWebsiteController($rootScope, $routeParams, $location, websiteService) {
+        $rootScope.title = "Edit Website";
+
         var model = this;
 
         model.updateWebsite = updateWebsite;

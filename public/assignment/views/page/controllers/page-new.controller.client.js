@@ -3,7 +3,9 @@
         .module("WebAppMaker")
         .controller("newPageController", newPageController);
 
-    function newPageController($routeParams, $location, pageService) {
+    function newPageController($rootScope, $routeParams, $location, pageService) {
+        $rootScope.title = "New Page";
+
         var model = this;
 
         model.createPage = createPage;

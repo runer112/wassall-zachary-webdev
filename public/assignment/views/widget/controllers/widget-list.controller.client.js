@@ -3,7 +3,9 @@
         .module("WebAppMaker")
         .controller("widgetListController", widgetListController);
 
-    function widgetListController($routeParams, $sce, widgetService) {
+    function widgetListController($rootScope, $routeParams, $sce, widgetService) {
+        $rootScope.title = "Widgets";
+
         var model = this;
 
         model.getWidgetUrl = getWidgetUrl;

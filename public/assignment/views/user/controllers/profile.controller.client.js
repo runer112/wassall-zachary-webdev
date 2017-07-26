@@ -3,7 +3,9 @@
         .module("WebAppMaker")
         .controller("profileController", profileController);
 
-    function profileController($routeParams, userService) {
+    function profileController($rootScope, $routeParams, userService) {
+        $rootScope.title = "Profile";
+
         var model = this;
 
         model.updateUser = updateUser;

@@ -3,7 +3,9 @@
         .module("WebAppMaker")
         .controller("chooseWidgetController", chooseWidgetController);
 
-    function chooseWidgetController($routeParams, $location, widgetService) {
+    function chooseWidgetController($rootScope, $routeParams, $location, widgetService) {
+        $rootScope.title = "Choose Widget";
+
         var model = this;
 
         model.createWidget = createWidget;

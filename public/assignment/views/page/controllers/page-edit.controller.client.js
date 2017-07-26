@@ -3,7 +3,9 @@
         .module("WebAppMaker")
         .controller("editPageController", editPageController);
 
-    function editPageController($routeParams, $location, pageService) {
+    function editPageController($rootScope, $routeParams, $location, pageService) {
+        $rootScope.title = "Edit Page";
+
         var model = this;
 
         model.updatePage = updatePage;

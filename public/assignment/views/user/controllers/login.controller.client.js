@@ -3,7 +3,9 @@
         .module("WebAppMaker")
         .controller("loginController", loginController);
 
-    function loginController($location, userService) {
+    function loginController($rootScope, $location, userService) {
+        $rootScope.title = "Login";
+
         var model = this;
 
         model.login = login;

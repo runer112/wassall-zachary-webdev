@@ -3,7 +3,9 @@
         .module("WebAppMaker")
         .controller("websiteListController", websiteListController);
 
-    function websiteListController($routeParams, websiteService) {
+    function websiteListController($rootScope, $routeParams, websiteService) {
+        $rootScope.title = "Websites";
+
         var model = this;
 
         model.uid = $routeParams["uid"];

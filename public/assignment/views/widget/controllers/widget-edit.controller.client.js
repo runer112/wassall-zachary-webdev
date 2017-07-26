@@ -3,7 +3,9 @@
         .module("WebAppMaker")
         .controller("editWidgetController", editWidgetController);
 
-    function editWidgetController($routeParams, $location, widgetService) {
+    function editWidgetController($rootScope, $routeParams, $location, widgetService) {
+        $rootScope.title = "Edit Widget";
+
         var model = this;
 
         model.updateWidget = updateWidget;
