@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="navbar-header">
         <p class="navbar-text navbar-left">
-            <a href="#!/user/0/website/0/page" class="navbar-link">
+            <a ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page" class="navbar-link">
                 <span class="glyphicon glyphicon-chevron-left">
                 </span>
             </a>
@@ -10,126 +10,30 @@
             Widgets
         </div>
         <p class="navbar-text navbar-right">
-            <a href="#!/user/0/website/0/page/0/widget/new" class="navbar-link">
+            <a ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/new" class="navbar-link">
                 <span class="glyphicon glyphicon-plus">
                 </span>
             </a>
         </p>
     </div>
 </nav>
-<div class="container-fluid">
-    <div class="zw-widget">
-        <div class="zw-widget-control-group">
-            <div class="zw-widget-control">
-                <a href="#!/user/0/website/0/page/0/widget/0">
-                    <span class="glyphicon glyphicon-cog">
+<div class="container-fluid zw-with-nav">
+    <div ng-repeat="widget in model.widgets">
+        <div class="zw-widget">
+            <div class="zw-widget-control-group">
+                <div class="zw-widget-control">
+                    <a ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/{{widget._id}}">
+                        <span class="glyphicon glyphicon-cog">
+                        </span>
+                    </a>
+                </div>
+                <div class="zw-widget-control">
+                    <span class="glyphicon glyphicon-menu-hamburger">
                     </span>
-                </a>
+                </div>
             </div>
-            <div class="zw-widget-control">
-                <span class="glyphicon glyphicon-menu-hamburger">
-                </span>
-            </div>
+            <ng-include src="model.getWidgetUrl(widget.widgetType)"></div>
         </div>
-        <h1>GIZMODO</h1>
-    </div>
-    <div class="zw-widget">
-        <div class="zw-widget-control-group">
-            <div class="zw-widget-control">
-                <a href="#!/user/0/website/0/page/0/widget/0">
-                    <span class="glyphicon glyphicon-cog">
-                    </span>
-                </a>
-            </div>
-            <div class="zw-widget-control">
-                <span class="glyphicon glyphicon-menu-hamburger">
-                </span>
-            </div>
-        </div>
-        <h4>US Senate Reaches Compromise on Emergency Zika Funding</h4>
-    </div>
-    <div class="zw-widget">
-        <div class="zw-widget-control-group">
-            <div class="zw-widget-control">
-                <a href="#!/user/0/website/0/page/0/widget/0">
-                    <span class="glyphicon glyphicon-cog">
-                    </span>
-                </a>
-            </div>
-            <div class="zw-widget-control">
-                <span class="glyphicon glyphicon-menu-hamburger">
-                </span>
-            </div>
-        </div>
-        <img class="zw-img" src="https://i.kinja-img.com/gawker-media/image/upload/dw3l4m5ulgn6qqlhr7om.png">
-    </div>
-    <div class="zw-widget">
-        <div class="zw-widget-control-group">
-            <div class="zw-widget-control">
-                <a href="#">
-                    <span class="glyphicon glyphicon-cog">
-                    </span>
-                </a>
-            </div>
-            <div class="zw-widget-control">
-                <span class="glyphicon glyphicon-menu-hamburger">
-                </span>
-            </div>
-        </div>
-        In February, the <a href="http://gizmodo.com/white-house-wants-1-8-billion-to-fight-zika-1757772335">White House formally asked Congress for $1.8 billion dollars</a> to help combat the Zika virus this summer. Now, the Senate has worked out a bipartisan deal will allocate $1.1 billion in emergency funding.
-    </div>
-    <div class="zw-widget">
-        <div class="zw-widget-control-group">
-            <div class="zw-widget-control">
-                <a href="#!/user/0/website/0/page/0/widget/0">
-                    <span class="glyphicon glyphicon-cog">
-                    </span>
-                </a>
-            </div>
-            <div class="zw-widget-control">
-                <span class="glyphicon glyphicon-menu-hamburger">
-                </span>
-            </div>
-        </div>
-        <h4>Man in Wingsuit Flies Straight Through a Ring of Fire</h4>
-    </div>
-    <div class="zw-widget">
-        <div class="zw-widget-control-group">
-            <div class="zw-widget-control">
-                <a href="#!/user/0/website/0/page/0/widget/0">
-                    <span class="glyphicon glyphicon-cog">
-                    </span>
-                </a>
-            </div>
-            <div class="zw-widget-control">
-                <span class="glyphicon glyphicon-menu-hamburger">
-                </span>
-            </div>
-        </div>
-        <div class="zw-video-outer">
-            <div class="zw-video">
-                <iframe class="zw-video-frame"
-                        src="https://www.youtube.com/embed/uLWLashCXHE"
-                        frameborder="0"
-                        allowfullscreen>
-                </iframe>
-            </div>
-        </div>
-    </div>
-    <div class="zw-widget">
-        <div class="zw-widget-control-group">
-            <div class="zw-widget-control">
-                <a href="#">
-                    <span class="glyphicon glyphicon-cog">
-                    </span>
-                </a>
-            </div>
-            <div class="zw-widget-control">
-                <span class="glyphicon glyphicon-menu-hamburger">
-                </span>
-            </div>
-        </div>
-        Flying in a wingsuit? That’s just not enough anymore. Anyone could do that (I would never do that). You have to make it more extreme, like by hitting a target while you’re cutting through the air at crazy speeds. Or by making that target a small ring that you have to somehow fly through. Or by lighting that ring on fire. Or by... actually, that should be extreme enough for now.
     </div>
 </div>
 <nav class="navbar navbar-default navbar-fixed-bottom">
@@ -143,7 +47,7 @@
             </span>
         </div>
         <p class="navbar-text navbar-right">
-            <a href="#!/user/0" class="navbar-link">
+            <a ng-href="#!/user/{{model.uid}}" class="navbar-link">
                 <span class="glyphicon glyphicon-user">
                 </span>
             </a>
