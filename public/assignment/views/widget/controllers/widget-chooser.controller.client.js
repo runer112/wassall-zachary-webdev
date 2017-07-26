@@ -14,7 +14,7 @@
         model.widgets = widgetService.findWidgetsByPageId(model.pid);
 
         function createWidget(widgetType) {
-            var widget = {widgetType: widgetType};
+            var widget = {pageId: model.pid, widgetType: widgetType};
             widget = widgetService.createWidget(widget);
             $location.url("user/" + model.uid + "/website/" + model.wid + "/page/" + model.pid + "/widget/" + widget._id);
         }
