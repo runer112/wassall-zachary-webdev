@@ -30,7 +30,7 @@
         });
 
         function getWidgetUrl(widgetType) {
-            return "views/widget/templates/widget-" + widgetType + ".view.client.html";
+            return "views/widget/templates/widget-" + widgetType.toLowerCase() + ".view.client.html";
         }
 
         function trustAsHtml(html) {
