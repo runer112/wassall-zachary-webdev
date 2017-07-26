@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="navbar-header">
         <p class="navbar-text navbar-left">
-            <a href="#!/user/0/website/0/page/0/widget" class="navbar-link">
+            <a ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget" class="navbar-link">
                 <span class="glyphicon glyphicon-chevron-left">
                 </span>
             </a>
@@ -11,16 +11,16 @@
         </div>
     </div>
 </nav>
-<div class="container-fluid">
+<div class="container-fluid zw-with-nav">
     <ul class="zw-list">
         <li class="zw-list-item">
-            <a href="#!/user/0/website/0/page/0/widget/0">Header</a>
+            <a ng-click="model.createWidget('HEADER')">Header</a>
         </li>
         <li class="zw-list-item">
             <a href="#">Label</a>
         </li>
         <li class="zw-list-item">
-            <a href="#">HTML</a>
+            <a ng-click="model.createWidget('HTML')">HTML</a>
         </li>
         <li class="zw-list-item">
             <a href="#">Text Input</a>
@@ -32,10 +32,10 @@
             <a href="#">Buttom</a>
         </li>
         <li class="zw-list-item">
-            <a href="#!/user/0/website/0/page/0/widget/0">Image</a>
+            <a ng-click="model.createWidget('IMAGE')">Image</a>
         </li>
         <li class="zw-list-item">
-            <a href="#!/user/0/website/0/page/0/widget/0">YouTube</a>
+            <a ng-click="model.createWidget('YOUTUBE')">YouTube</a>
         </li>
         <li class="zw-list-item">
             <a href="#">Data Table</a>
@@ -48,7 +48,7 @@
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="navbar-header">
         <p class="navbar-text navbar-right">
-            <a href="#!/user/0" class="navbar-link">
+            <a ng-href="#!/user/{{model.uid}}" class="navbar-link">
                 <span class="glyphicon glyphicon-user">
                 </span>
             </a>
