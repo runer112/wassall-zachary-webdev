@@ -5,6 +5,10 @@
 
     function configuration($routeProvider) {
         $routeProvider
+            // home route
+            .when("/", {
+                templateUrl: "views/home/templates/home.view.client.html"
+            })
             // user routes
             .when("/login", {
                 templateUrl: "views/user/templates/login.view.client.html",

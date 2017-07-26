@@ -13,6 +13,7 @@
         function login(user) {
             user = userService.findUserByCredentials(user.username, user.password);
             if (user) {
+                $rootScope.user = user;
                 $location.url("user/" + user._id);
             } else {
                 model.errorMessage = "Invalid username or password.";

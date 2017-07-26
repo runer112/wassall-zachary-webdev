@@ -50,8 +50,8 @@
                ng-href="#!/user/{{model.user._id}}/website">
                 Websites
             </a>
-            <a class="btn btn-block btn-danger"
-               href="#!/login">
+            <a ng-click="model.logout()"
+               class="btn btn-block btn-danger">
                 Logout
             </a>
         </div>
