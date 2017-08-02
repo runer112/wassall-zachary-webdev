@@ -9,6 +9,7 @@
             var initial;
             var final;
             element.sortable({
+                handle : ".handle",
                 start: function (event, ui) {
                     initial = $(ui.item).index();
                 },
