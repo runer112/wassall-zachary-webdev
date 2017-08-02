@@ -11,13 +11,16 @@
         model.login = login;
 
         function login(user) {
-            user = userService.findUserByCredentials(user.username, user.password);
-            if (user) {
-                $rootScope.user = user;
-                $location.url("user/" + user._id);
-            } else {
-                model.errorMessage = "Invalid username or password.";
-            }
+            userService.findUserByCredentials(null, user.username, user.password)
+                .then(function (response) {
+                    if (response.data.length == 1) {
+                        var user = response.data[0];
+                        $rootScope.user = user;
+                        $location.url("user/" + user._id);
+                    } else {
+                        model.errorMessage = "Invalid username or password.";
+                    }
+                });
         }
     }
 })();

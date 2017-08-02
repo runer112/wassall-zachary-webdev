@@ -1,93 +1,83 @@
-function createGenericService(fkName_, childServices_) {
+function createGenericService($http_, getBaseUrl_, getEntityUrl_) {
     return (function () {
-        var entities = [];
-        var nextId = 1000;
-        var fkName = fkName_;
-        var childServices = childServices_;
+        var $http = $http_;
+        var getBaseUrl = getBaseUrl_;
+        var getEntityUrl = getEntityUrl_;
 
         var api = {
-            entities: entities,
             create: create,
-            find: find,
             findById: findById,
-            filter: filter,
-            filterByFk: filterByFk,
+            query: query,
+            queryBy: queryBy,
+            queryOne: queryOne,
+            queryOneBy: queryOneBy,
             update: update,
             delete: delete_,
-            deleteByFk: deleteByFk,
-            clone: clone,
         };
 
         return api;
 
-        function create(entity) {
-            entity._id = nextId.toString();
-            nextId++;
-            var entityClone = api.clone(entity);
-            api.entities.push(entityClone);
-            return api.clone(entityClone);
+        function create(urlContext, entity) {
+            return $http.post(getBaseUrl(urlContext), entity);
         }
 
-        function find(predicate) {
-            var entity = api.entities.find(predicate);
-            return api.clone(entity);
+        function findById(urlContext) {
+            return $http.get(getEntityUrl(urlContext));
         }
 
-        function findById(entityId) {
-            return api.find(function (entity) {
-                return entity._id === entityId;
-            })
+        function query(urlContext, query) {
+            var queryStr = Object.keys(query).map(function (key) {
+                return "" + key + "=" + query[key];
+            }).join("&");
+            return $http.get(getBaseUrl(urlContext) + "?" + queryStr);
         }
 
-        function filter(predicate) {
-            var filteredEntities = api.entities.filter(predicate);
-            return filteredEntities.map(api.clone);
-        }
-
-        function filterByFk(fk) {
-            return api.filter(function (entity) {
-                return entity[fkName] === fk;
-            })
-        }
-
-        function update(entityId, entity) {
-            var index = findIndexOfById(entityId);
-            var entityClone = api.clone(entity);
-            entityClone._id = entityId;
-            api.entities[index] = entityClone;
-            return api.clone(entityClone);
-        }
-
-        function delete_(entityId) {
-            var index = findIndexOfById(entityId);
-            if (index >= 0) {
-                if (childServices) {
-                    childServices.forEach(function (childService) {
-                        childService.deleteByFk(entityId);
-                    });
+        function queryBy() {
+            var keys = arguments;
+            return function (urlContext) {
+                var values = arguments;
+                var query = {};
+                for (var i = 0; i < keys.length; i++) {
+                    query[keys[i]] = values[i + 1];
                 }
-                api.entities.splice(index, 1);
-            }
+                return api.query(urlContext, query);
+            };
         }
 
-        function deleteByFk(fk) {
-            var entitiesToDelete = api.filter(function (entity) {
-                return entity[fkName] === fk;
-            });
-            var entityIdsToDelete = entitiesToDelete.map(function (entity) {
-                return entity._id;
-            });
-            entityIdsToDelete.forEach(api.delete);
+        function queryOne(urlContext, query) {
+            var promise = api.query(urlContext, query);
+            var originalThen = promise.then;
+            promise.then = function (successCallback, errorCallback) {
+                originalThen(function (response) {
+                    if (response.data.length === 1) {
+                        response.data = response.data[0];
+                        successCallback(response);
+                    } else {
+                        errorCallback(response);
+                    }
+                }, errorCallback);
+            };
+            return promise;
         }
 
-        function findIndexOfById(entityId) {
-            return api.entities.findIndex(function (entity) {
-                return entity._id === entityId;
-            });
+        function queryOneBy() {
+            return queryByUsing(api.queryOne);
         }
 
-        function clone(obj) {
-            return obj ? JSON.parse(JSON.stringify(obj)) : obj;
+        function update(urlContext, entity) {
+            return $http.put(getEntityUrl(urlContext), entity);
+        }
+
+        function delete_(urlContext) {
+            return $http.delete(getEntityUrl(urlContext));
+        }
+
+        function successCallback(res) {
+            return res.data;
+        }
+
+        function errorCallback(res) {
+            return null;
         }
     })();
 }

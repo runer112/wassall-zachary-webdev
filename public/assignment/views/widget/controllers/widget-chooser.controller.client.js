@@ -9,16 +9,17 @@
         var model = this;
 
         model.createWidget = createWidget;
-
         model.uid = $routeParams["uid"];
         model.wid = $routeParams["wid"];
         model.pid = $routeParams["pid"];
-        model.widgets = widgetService.findWidgetsByPageId(model.pid);
 
         function createWidget(widgetType) {
             var widget = {pageId: model.pid, widgetType: widgetType};
-            widget = widgetService.createWidget(widget);
-            $location.url("user/" + model.uid + "/website/" + model.wid + "/page/" + model.pid + "/widget/" + widget._id);
+            widgetService.createWidget(widget)
+                .then(function (response) {
+                    widget = response.data;
+                    $location.url("user/" + model.uid + "/website/" + model.wid + "/page/" + model.pid + "/widget/" + widget._id);
+                });
         }
     }
 })();

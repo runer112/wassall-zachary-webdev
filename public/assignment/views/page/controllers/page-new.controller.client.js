@@ -9,15 +9,21 @@
         var model = this;
 
         model.createPage = createPage;
-
         model.uid = $routeParams["uid"];
         model.wid = $routeParams["wid"];
-        model.pages = pageService.findPagesByWebsiteId(model.wid);
-        model.page = {};
-        model.page.websiteId = model.wid;
+        model.page = {websiteId: model.wid};
+
+        pageService.findPagesByWebsiteId(model.wid, model.wid)
+            .then(function (response) {
+                model.pages = response.data;
+            });
 
         function createPage() {
-            pageService.createPage(model.page);
+            pageService.createPage(model.wid, model.page)
+                .then(returnToList);
+        }
+
+        function returnToList() {
             $location.url("user/" + model.uid + "/website/" + model.wid + "/page");
         }
     }

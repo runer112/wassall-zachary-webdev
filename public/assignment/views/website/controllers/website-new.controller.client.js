@@ -9,13 +9,20 @@
         var model = this;
 
         model.createWebsite = createWebsite;
-
         model.uid = $routeParams["uid"];
-        model.websites = websiteService.findWebsitesByUser(model.uid);
         model.website = {developerId: model.uid};
 
+        websiteService.findWebsitesByUser(model.uid, model.uid)
+            .then(function (response) {
+                model.websites = response.data;
+            });
+
         function createWebsite() {
-            websiteService.createWebsite(model.website);
+            websiteService.createWebsite(model.uid, model.website)
+                .then(returnToList);
+        }
+
+        function returnToList() {
             $location.url("user/" + model.uid + "/website");
         }
     }

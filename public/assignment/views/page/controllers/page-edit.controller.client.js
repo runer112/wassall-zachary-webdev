@@ -10,19 +10,26 @@
 
         model.updatePage = updatePage;
         model.deletePage = deletePage;
-
         model.uid = $routeParams["uid"];
         model.wid = $routeParams["wid"];
         model.pid = $routeParams["pid"];
-        model.page = pageService.findPageById(model.pid);
+
+        pageService.findPageById(model.pid)
+            .then(function (response) {
+                model.page = response.data;
+            });
 
         function updatePage() {
-            pageService.updatePage(model.pid, model.page);
-            $location.url("user/" + model.uid + "/website/" + model.wid + "/page");
+            pageService.updatePage(model.pid, model.page)
+                .then(returnToList);
         }
 
         function deletePage() {
-            pageService.deletePage(model.pid);
+            pageService.deletePage(model.pid)
+                .then(returnToList);
+        }
+
+        function returnToList() {
             $location.url("user/" + model.uid + "/website/" + model.wid + "/page");
         }
     }

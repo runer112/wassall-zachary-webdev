@@ -10,10 +10,12 @@
 
         model.logout = logout;
         model.updateUser = updateUser;
-
         model.uid = $routeParams["uid"];
-        var userStr;
-        setUser(userService.findUserById(model.uid));
+
+        userService.findUserById(model.uid)
+            .then(function (response) {
+                model.user = response.data;
+            });
 
         function logout() {
             $rootScope.user = null;
@@ -21,13 +23,10 @@
         }
 
         function updateUser() {
-            setUser(userService.updateUser(model.uid, model.user));
-            model.successMessage = "Changes saved successfully.";
-        }
-
-        function setUser(user) {
-            model.user = user;
-            userStr = JSON.stringify(user);
+            userService.updateUser(model.uid, model.user)
+                .then(function (response) {
+                    model.successMessage = "Changes saved successfully.";
+                });
         }
     }
 })();

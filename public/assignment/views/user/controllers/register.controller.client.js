@@ -10,26 +10,42 @@
 
         model.register = register;
 
-        $scope.$watch("model.user.username", validateUsername);
         $scope.$watch("model.user.password", validatePassword);
         $scope.$watch("model.verifyPassword", validateVerifyPassword);
 
-        function register(user) {
-            user = userService.createUser(user);
-            $location.url("user/" + user._id);
+        function register() {
+            validateUsername(model.user.username, registerCallback);
         }
 
-        function validateUsername(username) {
+        function registerCallback() {
+            if (model.usernameOk && model.passwordOk && model.verifyPasswordOk) {
+                userService.createUser(null, model.user)
+                    .then(function (response) {
+                       var user = response.data;
+                        $location.url("user/" + user._id);
+                    });
+            }
+        }
+
+        function validateUsername(username, successCallback) {
             model.usernameMessage = "";
             model.usernameOk = false;
             if (!username) {
                 model.usernameClass = "";
-            } else if (userService.findUserByUsername(username)) {
-                model.usernameClass = "has-error";
-                model.usernameMessage = "Username exists.";
             } else {
-                model.usernameClass = "has-success";
-                model.usernameOk = true;
+                userService.findUserByUsername(null, username)
+                    .then(function (response) {
+                        if (response.data.length) {
+                            model.usernameClass = "has-error";
+                            model.usernameMessage = "Username exists.";
+                        } else {
+                            model.usernameClass = "has-success";
+                            model.usernameOk = true;
+                            if (successCallback) {
+                                successCallback();
+                            }
+                        }
+                    });
             }
         }
 

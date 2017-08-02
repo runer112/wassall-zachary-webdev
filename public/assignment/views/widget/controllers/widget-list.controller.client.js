@@ -12,22 +12,25 @@
         model.trustAsHtml = trustAsHtml;
         model.trustAsResourceUrl = trustAsResourceUrl;
         model.getYouTubeEmbedUrl = getYouTubeEmbedUrl;
-
         model.uid = $routeParams["uid"];
         model.wid = $routeParams["wid"];
         model.pid = $routeParams["pid"];
-        var widgets = widgetService.findWidgetsByPageId(model.pid);
 
-        // delete unintialized widgets
-        model.widgets = [];
-        widgets.forEach(function (widget) {
-            // _id, pageId, and widgetType should always be present, so check for more than 3 keys
-            if (Object.keys(widget).length > 3) {
-                model.widgets.push(widget);
-            } else {
-                widgetService.deleteWidget(widget._id);
-            }
-        });
+        widgetService.findWidgetsByPageId(model.pid, model.pid)
+            .then(function (response) {
+                var widgets = response.data;
+
+                // delete unintialized widgets
+                model.widgets = [];
+                widgets.forEach(function (widget) {
+                    // _id, pageId, and widgetType should always be present, so check for more than 3 keys
+                    if (Object.keys(widget).length > 3) {
+                        model.widgets.push(widget);
+                    } else {
+                        widgetService.deleteWidget(widget._id);
+                    }
+                });
+            });
 
         function getWidgetUrl(widgetType) {
             return "views/widget/templates/widget-" + widgetType.toLowerCase() + ".view.client.html";
