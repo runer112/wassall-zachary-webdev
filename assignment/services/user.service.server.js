@@ -1,5 +1,5 @@
 module.exports = function (app, createGenericService, websiteService) {
-    var userService = createGenericService("/api/user", "/api/user/:uid", "uid", null, [websiteService.deleteByFk]);
+    var userService = createGenericService("/api/user", "/api/user/:uid", "uid", null, null, [websiteService.deleteByFk]);
     userService.entities = [
         {_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder", isAdmin: true  },
         {_id: "234", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley"  },

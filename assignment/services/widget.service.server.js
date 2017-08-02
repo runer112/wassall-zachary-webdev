@@ -1,5 +1,5 @@
 module.exports = function (app, createGenericService) {
-    var widgetService = createGenericService("/api/page/:pid/widget", "/api/widget/:wgid", "wgid", "pageId", []);
+    var widgetService = createGenericService("/api/page/:pid/widget", "/api/widget/:wgid", "wgid", "pid", "pageId", []);
     widgetService.entities = [
         { "_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
         { "_id": "234", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},

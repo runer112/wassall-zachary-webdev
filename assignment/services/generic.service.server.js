@@ -1,9 +1,10 @@
 module.exports = function (app) {
-    return function (baseUrl_, entityUrl_, idParam_, fkName_, childServiceDeleteByFkFuncs_) {
+    return function (baseUrl_, entityUrl_, idParam_, fkParam_, fkName_, childServiceDeleteByFkFuncs_) {
         // express internal
         var baseUrl = baseUrl_;
         var entityUrl = entityUrl_;
         var idParam = idParam_;
+        var fkParam = fkParam_;
 
         // JS internal
         var fkName = fkName_;
@@ -16,6 +17,7 @@ module.exports = function (app) {
         app.get(entityUrl, efindById);
         app.get(baseUrl, equery);
         app.put(entityUrl, eupdate);
+        app.put(baseUrl, emove);
         app.delete(entityUrl, edelete);
 
         var api = {
@@ -26,6 +28,7 @@ module.exports = function (app) {
             query: query,
             queryByFk: queryByFk,
             update: update,
+            move: move,
             delete: delete_,
             deleteByFk: deleteByFk,
         };
@@ -65,6 +68,14 @@ module.exports = function (app) {
             var entity = req.body;
             entity = api.update(entityId, entity);
             esend(res, entity);
+        }
+
+        function emove(req, res) {
+            var parentId = req.params[fkParam];
+            var initial = parseInt(req.query.initial);
+            var final = parseInt(req.query.final);
+            api.move(parentId, initial, final);
+            esend(res, {});
         }
 
         function edelete(req, res) {
@@ -117,6 +128,45 @@ module.exports = function (app) {
                 api.entities[index] = entity;
                 return entity;
             }
+        }
+
+        function move(parentId, initial, final) {
+            var entityToMove, iShiftInto, j = 0;
+            var entities = api.entities;
+            for (var i = 0; i < entities.length; i++) {
+                var entity = entities[i];
+                if (entity[fkName] === parentId) {
+                    if (initial < final) {
+                        if (j === initial) {
+                            entityToMove = entity;
+                            iShiftInto = i;
+                        }
+                        if (j >= initial) {
+                            entities[iShiftInto] = entity;
+                            iShiftInto = i;
+                        }
+                        if (j === final) {
+                            entities[i] = entityToMove;
+                            break;
+                        }
+                    } else if (final < initial) {
+                        if (j === final) {
+                            entityToMove = entity;
+                            iShiftInto = i;
+                        }
+                        if (j >= final) {
+                            entities[i] = entityToMove;
+                            entityToMove = entity;
+                        }
+                        if (j === initial) {
+                            entities[iShiftInto] = entity;
+                            break;
+                        }
+                    }
+                    j++;
+                }
+            }
+            return {};
         }
 
         function delete_(entityId) {

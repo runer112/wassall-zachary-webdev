@@ -1,0 +1,17 @@
+<div ng-repeat="widget in model.widgets">
+    <div class="zw-widget">
+        <div class="zw-widget-control-group">
+            <div class="zw-widget-control">
+                <a ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/{{widget._id}}">
+                    <span class="glyphicon glyphicon-cog">
+                    </span>
+                </a>
+            </div>
+            <div class="zw-widget-control">
+                <span class="glyphicon glyphicon-menu-hamburger">
+                </span>
+            </div>
+        </div>
+        <ng-include src="model.getWidgetUrl(widget.widgetType)">
+    </div>
+</div>

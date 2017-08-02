@@ -1,5 +1,5 @@
 module.exports = function (app, createGenericService, pageService) {
-    var websiteService = createGenericService("/api/user/:uid/website", "/api/website/:wid", "wid", "developerId", [pageService.deleteByFk]);
+    var websiteService = createGenericService("/api/user/:uid/website", "/api/website/:wid", "wid", "uid", "developerId", [pageService.deleteByFk]);
     websiteService.entities = [
         { "_id": "123", "name": "Facebook",    "developerId": "456", "description": "Lorem" },
         { "_id": "234", "name": "Tweeter",     "developerId": "456", "description": "Lorem" },
