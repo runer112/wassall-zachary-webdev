@@ -12,5 +12,37 @@ module.exports = function (app, createGenericService) {
         { "_id": "789", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
     ];
 
+    // image upload
+    var multer = require('multer');
+    var upload = multer({dest: __dirname + '/../../public/uploads'});
+
+    app.post("/api/upload", upload.single('file'), uploadImage);
+
     return widgetService;
+
+    // image upload
+    function uploadImage(req, res) {
+        var uid = req.body.uid;
+        var wid = req.body.wid;
+        var pid = req.body.pid;
+        var wgid = req.body.wgid;
+
+        var file = req.file;
+
+        var widget = {
+            widgetType: "IMAGE",
+            pageId: pid,
+            name: req.body.name,
+            text: req.body.text,
+            url: file ? '/uploads/' + file.filename : req.body.url,
+            width: req.body.width,
+        };
+
+        widgetService.update(wgid, widget);
+
+        var callbackUrl = "/assignment/#!/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget";
+
+        res.redirect(callbackUrl);
+    }
+
 };

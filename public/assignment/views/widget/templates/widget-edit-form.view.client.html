@@ -1,0 +1,80 @@
+<label for="name">Name</label>
+<input id="name"
+       name="name"
+       ng-model="model.widget.name"
+       type="text"
+       class="form-control"/>
+<label for="text">Text</label>
+<div ng-if="model.widget.widgetType === 'HTML'">
+    <!-- FIXME required doesn't seem to do anything -->
+    <textarea id="text"
+              ng-model="model.widget.text"
+              rows="10"
+              required
+              class="form-control"></textarea>
+</div>
+<div ng-if="model.widget.widgetType !== 'HTML'">
+    <input id="text"
+           name="text"
+           ng-model="model.widget.text"
+           type="text"
+           ng-required="model.widget.widgetType === 'HEADING'"
+           class="form-control"/>
+</div>
+<div ng-if="model.widget.widgetType === 'HEADING'">
+    <label for="size">Size</label>
+    <input id="size"
+           ng-model="model.widget.size"
+           type="number"
+           min="1"
+           max="6"
+           required
+           class="form-control"/>
+</div>
+<div ng-if="model.widget.widgetType === 'IMAGE' || model.widget.widgetType === 'YOUTUBE'">
+    <label for="url">URL</label>
+    <div ng-if="model.widget.widgetType === 'IMAGE'">
+        <!-- type="text" because uploaded file URLs fail url validation -->
+        <input id="url"
+               name="url"
+               ng-model="model.widget.url"
+               type="text"
+               class="form-control"/>
+    </div>
+    <div ng-if="model.widget.widgetType !== 'IMAGE'">
+        <input id="url"
+               name="url"
+               ng-model="model.widget.url"
+               type="url"
+               required
+               class="form-control"/>
+    </div>
+    <label for="width">Width</label>
+    <input id="width"
+           name="width"
+           ng-model="model.widget.width"
+           type="text"
+           class="form-control"/>
+</div>
+<div ng-if="model.widget.widgetType === 'IMAGE'">
+    <label for="file">Upload</label>
+    <input id="file"
+           name="file"
+           type="file"
+           class="form-control"/>
+</div>
+<div class="zw-group">
+    <button id="submitButton"
+            type="submit"
+            class="btn btn-block btn-success">
+        Save
+    </button>
+    <a class="btn btn-block btn-default"
+       ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget">
+        Cancel
+    </a>
+    <a ng-click="model.deleteWidget()"
+       class="btn btn-block btn-danger">
+        Delete
+    </a>
+</div>

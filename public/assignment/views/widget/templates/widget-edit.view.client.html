@@ -18,73 +18,30 @@
     </div>
 </nav>
 <div class="container-fluid zw-with-nav">
-    <form ng-submit="model.updateWidget()">
-        <label for="name">Name</label>
-        <input id="name"
-               ng-model="model.widget.name"
-               type="text"
-               class="form-control"/>
-        <label for="text">Text</label>
-        <div ng-if="model.widget.widgetType === 'HTML'">
-            <!-- FIXME required doesn't seem to do anything -->
-            <textarea id="text"
-                      ng-model="model.widget.text"
-                      rows="10"
-                      required
-                      class="form-control"></textarea>
-        </div>
-        <div ng-if="model.widget.widgetType !== 'HTML'">
-            <input id="text"
-                   ng-model="model.widget.text"
-                   type="text"
-                   ng-required="model.widget.widgetType === 'HEADING'"
-                   class="form-control"/>
-        </div>
-        <div ng-if="model.widget.widgetType === 'HEADING'">
-            <label for="size">Size</label>
-            <input id="size"
-                   ng-model="model.widget.size"
-                   type="number"
-                   min="1"
-                   max="6"
-                   required
-                   class="form-control"/>
-        </div>
-        <div ng-if="model.widget.widgetType === 'IMAGE' || model.widget.widgetType === 'YOUTUBE'">
-            <label for="url">URL</label>
-            <input id="url"
-                   ng-model="model.widget.url"
-                   type="url"
-                   required
-                   class="form-control"/>
-            <label for="width">Width</label>
-            <input id="width"
-                   ng-model="model.widget.width"
-                   type="text"
-                   class="form-control"/>
-        </div>
-        <div ng-if="model.widget.widgetType === 'IMAGE'">
-            <label for="file">Upload</label>
-            <input id="file"
-                   type="file"
-                   class="form-control"/>
-        </div>
-        <div class="zw-group">
-            <button id="submitButton"
-                    type="submit"
-                    class="btn btn-block btn-success">
-                Save
-            </button>
-            <a class="btn btn-block btn-default"
-               ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget">
-                Cancel
-            </a>
-            <a ng-click="model.deleteWidget()"
-               class="btn btn-block btn-danger">
-                Delete
-            </a>
-        </div>
-    </form>
+    <div ng-if="model.widget.widgetType === 'IMAGE'">
+        <form action="/api/upload"
+              method="post"
+              enctype="multipart/form-data">
+            <ng-include src="'views/widget/templates/widget-edit-form.view.client.html'"/>
+            <input name="uid"
+                   value="{{model.uid}}"
+                   style="display: none"/>
+            <input name="wid"
+                   value="{{model.wid}}"
+                   style="display: none"/>
+            <input name="pid"
+                   value="{{model.pid}}"
+                   style="display: none"/>
+            <input name="wgid"
+                   value="{{model.widget._id}}"
+                   style="display: none"/>
+        </form>
+    </div>
+    <div ng-if="model.widget.widgetType !== 'IMAGE'">
+        <form ng-submit="model.updateWidget()">
+            <ng-include src="'views/widget/templates/widget-edit-form.view.client.html'"/>
+        </form>
+    </div>
 </div>
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="navbar-header">
