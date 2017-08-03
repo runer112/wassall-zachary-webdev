@@ -18,7 +18,7 @@
         widgetService.findWidgetById(model.wgid)
             .then(function (response) {
                 model.widget = response.data;
-            })
+            });
 
         function updateWidget() {
             widgetService.updateWidget(model.wgid, model.widget)

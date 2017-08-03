@@ -27,7 +27,8 @@
         <label for="text">Text</label>
         <div ng-if="model.widget.widgetType === 'HTML'">
             <!-- FIXME required doesn't seem to do anything -->
-            <textarea id="description"
+            <textarea id="text"
+                      ng-model="model.widget.text"
                       rows="10"
                       required
                       class="form-control"></textarea>
