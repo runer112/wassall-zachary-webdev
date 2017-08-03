@@ -1,4 +1,5 @@
-<div class="zw-video-outer">
+<div class="zw-video-outer"
+     style="max-width: {{widget.width}}"> <!-- set max-width rather than width to fit rather than scroll on narrow screens -->
     <div class="zw-video">
         <iframe class="zw-video-frame"
                 ng-src="{{model.getYouTubeEmbedUrl(widget.url)}}"
