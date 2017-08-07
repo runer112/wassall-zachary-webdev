@@ -18,20 +18,7 @@
     </div>
 </nav>
 <div class="container-fluid zw-with-nav">
-    <ul class="zw-list">
-        <li ng-repeat="page in model.pages"
-            class="zw-list-item">
-            <a ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{page._id}}/widget">
-                {{page.name}}
-            </a>
-            <p class="pull-right">
-                <a ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{page._id}}">
-                    <span class="glyphicon glyphicon-cog">
-                    </span>
-                </a>
-            </p>
-        </li>
-    </ul>
+    <div ng-include="'views/page/templates/page-list.template.view.client.html'"></div>
 </div>
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="navbar-header">

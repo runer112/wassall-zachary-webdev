@@ -1,53 +1,83 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="navbar-header">
-        <p class="navbar-text navbar-left">
-            <a ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page" class="navbar-link">
-                <span class="glyphicon glyphicon-chevron-left">
-                </span>
-            </a>
-        </p>
-        <div class="navbar-brand">
-            Edit Page
+        <div class="row">
+            <div class="col-xs-4 hidden-xs">
+                <p class="navbar-text navbar-left">
+                    <a ng-href="#!/user/{{model.uid}}/website" class="navbar-link">
+                        <span class="glyphicon glyphicon-chevron-left">
+                        </span>
+                    </a>
+                </p>
+                <div class="navbar-brand">
+                    Pages
+                </div>
+                <p class="navbar-text navbar-right">
+                    <a ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page/new" class="navbar-link">
+                        <span class="glyphicon glyphicon-plus">
+                        </span>
+                    </a>
+                </p>
+            </div>
+            <div class="col-xs-12 col-sm-8">
+                <p class="navbar-text navbar-left">
+                    <a ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page" class="navbar-link">
+                        <span class="glyphicon glyphicon-chevron-left">
+                        </span>
+                    </a>
+                </p>
+                <div class="navbar-brand">
+                    Edit Page
+                </div>
+                <p class="navbar-text navbar-right">
+                    <a onclick="document.getElementById('submitButton').click();" class="navbar-link">
+                        <span class="glyphicon glyphicon-ok">
+                        </span>
+                    </a>
+                </p>
+            </div>
         </div>
-        <p class="navbar-text navbar-right">
-            <a onclick="document.getElementById('submitButton').click();" class="navbar-link">
-                <span class="glyphicon glyphicon-ok">
-                </span>
-            </a>
-        </p>
     </div>
 </nav>
 <div class="container-fluid zw-with-nav">
-    <form ng-submit="model.updatePage()">
-        <label for="name">Name</label>
-        <input id="name"
-               ng-model="model.page.name"
-               type="text"
-               required
-               placeholder="Page Name"
-               class="form-control"/>
-        <label for="title">Title</label>
-        <!-- model discrepancy between view and controller/service; is this title or description? -->
-        <input id="title"
-               ng-model="model.page.description"
-               placeholder="Page Title"
-               class="form-control"/>
-        <div class="zw-group">
-            <button id="submitButton"
-                    type="submit"
-                    class="btn btn-block btn-success">
-                Save
-            </button>
-            <a class="btn btn-block btn-default"
-               ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page">
-                Cancel
-            </a>
-            <a ng-click="model.deletePage()"
-               class="btn btn-block btn-danger">
-                Delete
-            </a>
+    <div class="row">
+        <div class="col-xs-4 hidden-xs zw-with-nav"
+             id="left">
+            <div ng-include="'views/page/templates/page-list.template.view.client.html'"></div>
         </div>
-    </form>
+        <div class="col-xs-12 col-sm-8 zw-with-nav"
+             id="right">
+            <form ng-submit="model.updatePage()">
+                <label for="name">Name</label>
+                <input id="name"
+                       ng-model="model.page.name"
+                       type="text"
+                       required
+                       placeholder="Page Name"
+                       class="form-control"/>
+                <label for="title">Title</label>
+                <!-- model discrepancy between view and controller/service; is this title or description? -->
+                <input id="title"
+                       ng-model="model.page.description"
+                       placeholder="Page Title"
+                       class="form-control"/>
+                <div class="zw-group">
+                    <button id="submitButton"
+                            type="submit"
+                            class="btn btn-block btn-success">
+                        Save
+                    </button>
+                    <a class="btn btn-block btn-default"
+                       ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page">
+                        Cancel
+                    </a>
+                    <a ng-click="model.deletePage()"
+                       class="btn btn-block btn-danger">
+                        Delete
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="navbar-header">

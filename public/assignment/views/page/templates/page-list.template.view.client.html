@@ -1,0 +1,14 @@
+<ul class="zw-list">
+    <li ng-repeat="page in model.pages"
+        class="zw-list-item">
+        <a ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{page._id}}/widget">
+            {{page.name}}
+        </a>
+        <p class="pull-right">
+            <a ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{page._id}}">
+                <span class="glyphicon glyphicon-cog">
+                </span>
+            </a>
+        </p>
+    </li>
+</ul>
