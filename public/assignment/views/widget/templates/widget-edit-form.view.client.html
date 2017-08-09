@@ -6,12 +6,12 @@
        class="form-control"/>
 <label for="text">Text</label>
 <div ng-if="model.widget.type === 'HTML'">
-    <!-- FIXME required doesn't seem to do anything -->
-    <textarea id="text"
-              ng-model="model.widget.text"
-              rows="10"
-              required
-              class="form-control"></textarea>
+    <div ng-model="model.widget.text"
+         text-angular
+         ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],
+            ['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],
+            ['indent','outdent'],['html']]">
+    </div>
 </div>
 <div ng-if="model.widget.type !== 'HTML'">
     <input id="text"
