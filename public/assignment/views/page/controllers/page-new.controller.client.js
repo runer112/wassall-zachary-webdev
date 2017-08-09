@@ -11,7 +11,7 @@
         model.createPage = createPage;
         model.uid = $routeParams["uid"];
         model.wid = $routeParams["wid"];
-        model.page = {websiteId: model.wid};
+        model.page = {_website: model.wid};
 
         pageService.findPagesByWebsiteId(model.wid, model.wid)
             .then(function (response) {

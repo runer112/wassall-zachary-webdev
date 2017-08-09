@@ -1,10 +1,13 @@
-module.exports = function (app, createGenericService, widgetService) {
-    var pageService = createGenericService("/api/website/:wid/page", "/api/page/:pid", "pid", "wid", "websiteId", [widgetService.deleteByFk]);
-    pageService.entities = [
-        { "_id": "321", "name": "Post 1", "websiteId": "456", "description": "Lorem" },
-        { "_id": "432", "name": "Post 2", "websiteId": "456", "description": "Lorem" },
-        { "_id": "543", "name": "Post 3", "websiteId": "456", "description": "Lorem" }
-    ];
+var createGenericService = require("./generic.service.server");
+var pageModel = require("../model/page/page.model.server.js");
+
+module.exports = function (app, websiteService, deleteWidgetsByFkSupplier) {
+    var pageService = createGenericService(app, "/api/website/:wid/page", "/api/page/:pid", "pid", "wid", pageModel, websiteService, "_website", "widgets", deleteWidgetsByFkSupplier);
+    // var pages = [
+    //     { "_id": "321", "name": "Post 1", "_website": "456", "description": "Lorem" },
+    //     { "_id": "432", "name": "Post 2", "_website": "456", "description": "Lorem" },
+    //     { "_id": "543", "name": "Post 3", "_website": "456", "description": "Lorem" }
+    // ];
 
     return pageService;
 };
