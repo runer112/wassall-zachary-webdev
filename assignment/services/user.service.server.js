@@ -1,7 +1,8 @@
-module.exports = function (app, createGenericService, websiteService) {
-    var userModel = require("../model/user/user.model.server.js");
+var createGenericService = require("./generic.service.server");
+var userModel = require("../model/user/user.model.server.js");
 
-    var userService = createGenericService("/api/user", "/api/user/:uid", "uid", null, userModel, null, null, null);
+module.exports = function (app, deleteWebsitesByFkSupplier) {
+    var userService = createGenericService(app, "/api/user", "/api/user/:uid", "uid", null, userModel, null, null, "websites", deleteWebsitesByFkSupplier);
     // var users = [
     //     {username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder"  },
     //     {username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley"  },
