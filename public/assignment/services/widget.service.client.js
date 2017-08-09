@@ -9,7 +9,7 @@
         var api = {
             createWidget: genericService.create,
             findWidgetById: genericService.findById,
-            findWidgetsByPageId: genericService.queryBy("pageId"),
+            findWidgetsByPageId: genericService.queryBy("_page"),
             updateWidget: genericService.update,
             deleteWidget: genericService.delete,
         };

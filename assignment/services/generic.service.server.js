@@ -30,6 +30,7 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
         update: update,
         delete: delete_,
         deleteByFk: deleteByFk,
+        findChildren: findChildren,
         addChild: addChild,
         moveChild: moveChild,
         removeChild: removeChild,
@@ -58,7 +59,13 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
 
     function efind(req, res) {
         var query = req.query;
-        var promise = api.find(query);
+        var promise;
+        if (Object.keys(query).length === 1 && query[parentIdField]) {
+            // handle find by fk specially to reflect order in parent
+            promise = parentService.findChildren(query[parentIdField]);
+        } else {
+            promise = api.find(query);
+        }
         esend(res, promise);
     }
 
@@ -79,7 +86,7 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
         var parentId = req.params[fkParam];
         var initial = parseInt(req.query.initial);
         var final = parseInt(req.query.final);
-        var promise = api.move(parentId, initial, final);
+        var promise = parentService.moveChild(parentId, initial, final);
         esend(res, promise);
     }
 
@@ -115,9 +122,7 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
     }
 
     function findByFk(fk) {
-        var query = {};
-        query[parentIdField] = fk;
-        return api.find(query);
+        return parentService.findChildren(fk);
     }
 
     function update(entityId, entity) {
@@ -142,7 +147,7 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
 
     function deleteNoCascade(entityId) {
         if (parentService) {
-            return api.findById({_id: entityId})
+            return api.findById(entityId)
                 .then(function (entity) {
                     return parentService.removeChild(entity[parentIdField], entity._id)
                         .then(function () {
@@ -160,6 +165,17 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
         return model.remove(query);
     }
 
+    function findChildren(entityId) {
+        return api.findById(entityId)
+            .populate(childrenField)
+            .then (function (entity) {
+                var children = entity[childrenField];
+                return {then: function (consumer) {
+                    return consumer(children);
+                }};
+            });
+    }
+
     function addChild(entityId, child) {
         return api.findById(entityId)
             .then(function (entity) {
@@ -173,9 +189,8 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
             .then(function (entity) {
                 var children = entity[childrenField];
                 var childToMove = children.splice(initial, 1)[0];
-                var insertIndex = initial < final ? final - 1 : final;
-                children.splice(insertIndex, 0, childToMove);
-                entity.save();
+                children.splice(final, 0, childToMove);
+                return entity.save();
             });
     }
 

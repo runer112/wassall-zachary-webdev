@@ -1,16 +1,19 @@
-module.exports = function (app, createGenericService) {
-    var widgetService = createGenericService("/api/page/:pid/widget", "/api/widget/:wgid", "wgid", "pid", "pageId", []);
-    widgetService.entities = [
-        { "_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
-        { "_id": "234", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
-        { "_id": "345", "widgetType": "IMAGE", "pageId": "321", "width": "100%",
-            "url": "http://lorempixel.com/400/200/"},
-        { "_id": "456", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"},
-        { "_id": "567", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
-        { "_id": "678", "widgetType": "YOUTUBE", "pageId": "321", "width": "100%",
-            "url": "https://youtu.be/AM2Ivdi9c4E" },
-        { "_id": "789", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
-    ];
+var createGenericService = require("./generic.service.server");
+var widgetModel = require("../model/widget/widget.model.server.js");
+
+module.exports = function (app, pageService, deleteChildrenByFkSupplier) {
+    var widgetService = createGenericService(app, "/api/page/:pid/widget", "/api/widget/:wgid", "wgid", "pid", widgetModel, pageService, "_page", null, deleteChildrenByFkSupplier);
+    // var widgets = [
+    //     { "_id": "123", "type": "HEADING", "_page": "321", "size": 2, "text": "GIZMODO"},
+    //     { "_id": "234", "type": "HEADING", "_page": "321", "size": 4, "text": "Lorem ipsum"},
+    //     { "_id": "345", "type": "IMAGE", "_page": "321", "width": "100%",
+    //         "url": "http://lorempixel.com/400/200/"},
+    //     { "_id": "456", "type": "HTML", "_page": "321", "text": "<p>Lorem ipsum</p>"},
+    //     { "_id": "567", "type": "HEADING", "_page": "321", "size": 4, "text": "Lorem ipsum"},
+    //     { "_id": "678", "type": "YOUTUBE", "_page": "321", "width": "100%",
+    //         "url": "https://youtu.be/AM2Ivdi9c4E" },
+    //     { "_id": "789", "type": "HTML", "_page": "321", "text": "<p>Lorem ipsum</p>"}
+    // ];
 
     // image upload
     var multer = require('multer');
@@ -30,19 +33,19 @@ module.exports = function (app, createGenericService) {
         var file = req.file;
 
         var widget = {
-            widgetType: "IMAGE",
-            pageId: pid,
+            type: "IMAGE",
+            _page: pid,
             name: req.body.name,
             text: req.body.text,
             url: file ? '/uploads/' + file.filename : req.body.url,
             width: req.body.width,
         };
 
-        widgetService.update(wgid, widget);
-
-        var callbackUrl = "/assignment/#!/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget";
-
-        res.redirect(callbackUrl);
+        widgetService.update(wgid, widget)
+            .then(function () {
+                var callbackUrl = "/assignment/#!/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget";
+                res.redirect(callbackUrl);
+            });
     }
 
 };

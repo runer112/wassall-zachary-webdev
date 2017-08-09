@@ -13,8 +13,8 @@
         model.wid = $routeParams["wid"];
         model.pid = $routeParams["pid"];
 
-        function createWidget(widgetType) {
-            var widget = {pageId: model.pid, widgetType: widgetType};
+        function createWidget(type) {
+            var widget = {_page: model.pid, type: type};
             widgetService.createWidget(model.pid, widget)
                 .then(function (response) {
                     widget = response.data;

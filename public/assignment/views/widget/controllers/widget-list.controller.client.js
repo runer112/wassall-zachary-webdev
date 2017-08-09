@@ -23,7 +23,7 @@
                 // delete unintialized widgets
                 model.widgets = [];
                 widgets.forEach(function (widget) {
-                    // _id, pageId, and widgetType should always be present, so check for more than 3 keys
+                    // _id, _page, and type should always be present, so check for more than 3 keys
                     if (Object.keys(widget).length > 3) {
                         model.widgets.push(widget);
                     } else {
@@ -32,8 +32,8 @@
                 });
             });
 
-        function getWidgetUrl(widgetType) {
-            return "views/widget/templates/widget-" + widgetType.toLowerCase() + ".view.client.html";
+        function getWidgetUrl(type) {
+            return "views/widget/templates/widget-" + type.toLowerCase() + ".view.client.html";
         }
 
         function trustAsHtml(html) {

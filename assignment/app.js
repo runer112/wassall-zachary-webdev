@@ -9,9 +9,9 @@ module.exports = function (app) {
         return services.pageService.deleteByFk;
     });
     services.pageService = require("./services/page.service.server.js")(app, services.websiteService, function () {
-        // return services.widgetService.deleteByFk;
+        return services.widgetService.deleteByFk;
     });
-    // services.widgetService = require("./services/widget.service.server.js")(app, services.pageService, function () {
-    //     return null;
-    // });
+    services.widgetService = require("./services/widget.service.server.js")(app, services.pageService, function () {
+        return null;
+    });
 };

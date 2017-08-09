@@ -18,7 +18,7 @@
     </div>
 </nav>
 <div class="container-fluid zw-with-nav">
-    <div ng-if="model.widget.widgetType === 'IMAGE'">
+    <div ng-if="model.widget.type === 'IMAGE'">
         <form action="/api/upload"
               method="post"
               enctype="multipart/form-data">
@@ -37,7 +37,7 @@
                    style="display: none"/>
         </form>
     </div>
-    <div ng-if="model.widget.widgetType !== 'IMAGE'">
+    <div ng-if="model.widget.type !== 'IMAGE'">
         <form ng-submit="model.updateWidget()">
             <ng-include src="'views/widget/templates/widget-edit-form.view.client.html'"/>
         </form>

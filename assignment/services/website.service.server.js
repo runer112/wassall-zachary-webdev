@@ -1,8 +1,8 @@
 var createGenericService = require("./generic.service.server");
 var websiteModel = require("../model/website/website.model.server.js");
 
-module.exports = function (app, userService, deletePagesByFkSupplier) {
-    var websiteService = createGenericService(app, "/api/user/:uid/website", "/api/website/:wid", "wid", "uid", websiteModel, userService, "_user", "pages", deletePagesByFkSupplier);
+module.exports = function (app, userService, deleteChildrenByFkSupplier) {
+    var websiteService = createGenericService(app, "/api/user/:uid/website", "/api/website/:wid", "wid", "uid", websiteModel, userService, "_user", "pages", deleteChildrenByFkSupplier);
     // var websites = [
     //     { "_id": "123", "name": "Facebook",    "_user": "456", "description": "Lorem" },
     //     { "_id": "234", "name": "Tweeter",     "_user": "456", "description": "Lorem" },

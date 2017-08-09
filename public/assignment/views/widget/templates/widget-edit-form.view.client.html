@@ -5,7 +5,7 @@
        type="text"
        class="form-control"/>
 <label for="text">Text</label>
-<div ng-if="model.widget.widgetType === 'HTML'">
+<div ng-if="model.widget.type === 'HTML'">
     <!-- FIXME required doesn't seem to do anything -->
     <textarea id="text"
               ng-model="model.widget.text"
@@ -13,15 +13,15 @@
               required
               class="form-control"></textarea>
 </div>
-<div ng-if="model.widget.widgetType !== 'HTML'">
+<div ng-if="model.widget.type !== 'HTML'">
     <input id="text"
            name="text"
            ng-model="model.widget.text"
            type="text"
-           ng-required="model.widget.widgetType === 'HEADING'"
+           ng-required="model.widget.type === 'HEADING'"
            class="form-control"/>
 </div>
-<div ng-if="model.widget.widgetType === 'HEADING'">
+<div ng-if="model.widget.type === 'HEADING'">
     <label for="size">Size</label>
     <input id="size"
            ng-model="model.widget.size"
@@ -31,9 +31,9 @@
            required
            class="form-control"/>
 </div>
-<div ng-if="model.widget.widgetType === 'IMAGE' || model.widget.widgetType === 'YOUTUBE'">
+<div ng-if="model.widget.type === 'IMAGE' || model.widget.type === 'YOUTUBE'">
     <label for="url">URL</label>
-    <div ng-if="model.widget.widgetType === 'IMAGE'">
+    <div ng-if="model.widget.type === 'IMAGE'">
         <!-- type="text" because uploaded file URLs fail url validation -->
         <input id="url"
                name="url"
@@ -41,7 +41,7 @@
                type="text"
                class="form-control"/>
     </div>
-    <div ng-if="model.widget.widgetType !== 'IMAGE'">
+    <div ng-if="model.widget.type !== 'IMAGE'">
         <input id="url"
                name="url"
                ng-model="model.widget.url"
@@ -56,7 +56,7 @@
            type="text"
            class="form-control"/>
 </div>
-<div ng-if="model.widget.widgetType === 'IMAGE'">
+<div ng-if="model.widget.type === 'IMAGE'">
     <label for="file">Upload</label>
     <input id="file"
            name="file"
