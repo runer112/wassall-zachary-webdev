@@ -10,7 +10,7 @@
 
         model.createWebsite = createWebsite;
         model.uid = $routeParams["uid"];
-        model.website = {developerId: model.uid};
+        model.website = {_user: model.uid};
 
         websiteService.findWebsitesByUser(model.uid, model.uid)
             .then(function (response) {

@@ -9,7 +9,7 @@
         var api = {
             createWebsite: genericService.create,
             findWebsiteById: genericService.findById,
-            findWebsitesByUser: genericService.queryBy("developerId"),
+            findWebsitesByUser: genericService.queryBy("_user"),
             updateWebsite: genericService.update,
             deleteWebsite: genericService.delete,
         };

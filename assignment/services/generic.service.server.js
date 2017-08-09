@@ -96,9 +96,9 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
         if (parentService) {
             return promise
                 .then(function (entity) {
-                    parentService.addChild(entity[parentIdField], entity._id)
+                    return parentService.addChild(entity[parentIdField], entity._id)
                         .then(function () {
-
+                            return promise;
                         });
                 });
         } else {
@@ -128,15 +128,29 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
     }
 
     function delete_(entityId) {
-        var promise = model.remove({_id: entityId});
         var deleteChildrenByFk = deleteChildrenByFkSupplier();
         if (deleteChildrenByFk) {
-            return promise
+            return deleteChildrenByFk(entityId)
                 .then(function () {
-                    return deleteChildrenByFk(entityId);
+                    return deleteNoCascade(entityId);
+                });
+        }
+        else {
+            return deleteNoCascade(entityId);
+        }
+    }
+
+    function deleteNoCascade(entityId) {
+        if (parentService) {
+            return api.findById({_id: entityId})
+                .then(function (entity) {
+                    return parentService.removeChild(entity[parentIdField], entity._id)
+                        .then(function () {
+                            return entity.remove();
+                        });
                 });
         } else {
-            return promise;
+            return model.remove({_id: entityId});
         }
     }
 
@@ -168,7 +182,13 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
     function removeChild(entityId, child) {
         return api.findById(entityId)
             .then(function (entity) {
-                entity[childrenField].push(child);
+                var children = entity[childrenField];
+                var childIndex = children.findIndex(function (element) {
+                    return element.equals(child);
+                });
+                if (childIndex >= 0) {
+                    children.splice(childIndex, 1);
+                }
                 return entity.save();
             });
     }
