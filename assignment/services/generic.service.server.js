@@ -135,44 +135,47 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
     function delete_(entityId) {
         var deleteChildrenByFk = deleteChildrenByFkSupplier();
         if (deleteChildrenByFk) {
-            return deleteChildrenByFk(entityId)
-                .then(function () {
-                    return deleteNoCascade(entityId);
-                });
+            // don't wait
+            deleteChildrenByFk(entityId);
         }
-        else {
-            return deleteNoCascade(entityId);
-        }
+        return deleteNoCascade(entityId);
     }
 
     function deleteNoCascade(entityId) {
         if (parentService) {
             return api.findById(entityId)
                 .then(function (entity) {
-                    return parentService.removeChild(entity[parentIdField], entity._id)
-                        .then(function () {
-                            return entity.remove();
-                        });
+                    // don't wait
+                    parentService.removeChild(entity[parentIdField], entity._id);
+                    return entity.remove();
                 });
         } else {
             return model.remove({_id: entityId});
         }
     }
 
+    // does not return a promise
     function deleteByFk(fk) {
         var query = {};
         query[parentIdField] = fk;
-        return model.remove(query);
+        api.find(query)
+            .then(function (entities) {
+                entities.forEach(function (entity) {
+                    api.delete(entity._id);
+                });
+            });
     }
 
     function findChildren(entityId) {
         return api.findById(entityId)
             .populate(childrenField)
-            .then (function (entity) {
+            .then(function (entity) {
                 var children = entity[childrenField];
-                return {then: function (consumer) {
-                    return consumer(children);
-                }};
+                return {
+                    then: function (consumer) {
+                        return consumer(children);
+                    }
+                };
             });
     }
 
