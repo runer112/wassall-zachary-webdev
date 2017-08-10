@@ -63,6 +63,26 @@
            type="file"
            class="form-control"/>
 </div>
+<div ng-if="model.widget.type === 'TEXT'">
+    <label for="rows">Rows</label>
+    <input id="rows"
+           ng-model="model.widget.rows"
+           type="number"
+           min="1"
+           max="20"
+           ng-required="!model.widget.formatted"
+           ng-disabled="model.widget.formatted"
+           class="form-control"/>
+    <label for="placeholder">Placeholder</label>
+    <input id="placeholder"
+           ng-model="model.widget.placeholder"
+           type="text"
+           class="form-control"/>
+    <label for="formatted">Formatted</label>
+        <input id="formatted"
+               ng-model="model.widget.formatted"
+               type="checkbox"/>
+</div>
 <div class="zw-group">
     <button id="submitButton"
             type="submit"
