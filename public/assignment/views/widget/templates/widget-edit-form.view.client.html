@@ -79,11 +79,16 @@
            type="text"
            class="form-control"/>
     <label for="formatted">Formatted</label>
-        <input id="formatted"
-               ng-model="model.widget.formatted"
-               type="checkbox"/>
+    <input id="formatted"
+           ng-model="model.widget.formatted"
+           type="checkbox"/>
 </div>
 <div class="zw-group">
+    <a ng-if="model.widget.type === 'IMAGE'"
+       class="btn btn-block btn-primary"
+       ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/{{model.wgid}}/flickr">
+        Search
+    </a>
     <button id="submitButton"
             type="submit"
             class="btn btn-block btn-success">

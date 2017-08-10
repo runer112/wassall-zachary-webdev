@@ -62,7 +62,7 @@ label {
     margin-bottom: 10px;
 }
 
-.form-group {
+.form-group, .input-group {
     margin-bottom: 5px;
 }
 
@@ -128,6 +128,52 @@ label {
     left: 0;
     width: 100%;
     height: 100%;
+}
+
+.zw-flickr-thumb {
+    padding: 1px;
+}
+
+/* https://css-tricks.com/seamless-responsive-photo-grid/ */
+
+#photos {
+    /* Prevent vertical gaps */
+    line-height: 0;
+
+    -webkit-column-count: 5;
+    -webkit-column-gap:   0px;
+    -moz-column-count:    5;
+    -moz-column-gap:      0px;
+    column-count:         5;
+    column-gap:           0px;
+}
+
+#photos img {
+    /* Just in case there are inline attributes */
+    width: 100% !important;
+    height: auto !important;
+}
+
+@media (max-width: 992px) {
+    #photos {
+        -moz-column-count:    4;
+        -webkit-column-count: 4;
+        column-count:         4;
+    }
+}
+@media (max-width: 768px) {
+    #photos {
+        -moz-column-count:    3;
+        -webkit-column-count: 3;
+        column-count:         3;
+    }
+}
+@media (max-width: 512px) {
+    #photos {
+        -moz-column-count:    2;
+        -webkit-column-count: 2;
+        column-count:         2;
+    }
 }
 
 /* independently scrolling split view */

@@ -1,0 +1,49 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-header">
+        <p class="navbar-text navbar-left">
+            <a ng-href="#!/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/{{model.wgid}}"
+               class="navbar-link">
+                <span class="glyphicon glyphicon-chevron-left">
+                </span>
+            </a>
+        </p>
+        <div class="navbar-brand">
+            Search Flickr
+        </div>
+    </div>
+</nav>
+<div class="container-fluid zw-with-nav">
+    <form ng-submit="model.searchPhotos(searchText)">
+        <div class="input-group">
+            <input ng-model="searchText"
+                   type="text"
+                   class="form-control">
+            <span class="input-group-btn">
+                <a ng-click="model.searchPhotos(searchText)"
+                   class="btn btn-default"
+                   type="button">
+                    <span class="glyphicon glyphicon-search"></span>
+                </a>
+            </span>
+        </div>
+        <input type="submit" style="display: none"/>
+    </form>
+    <section id="photos">
+        <div ng-repeat="photo in model.photos.photo">
+            <a ng-click="model.selectPhoto(photo)">
+                <img ng-src="https://farm{{photo.farm}}.staticflickr.com/{{photo.server}}/{{photo.id}}_{{photo.secret}}_m.jpg"
+                     class="zw-flickr-thumb"/>
+            </a>
+        </div>
+    </section>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="navbar-header">
+        <p class="navbar-text navbar-right">
+            <a ng-href="#!/user/{{model.uid}}" class="navbar-link">
+                <span class="glyphicon glyphicon-user">
+                </span>
+            </a>
+        </p>
+    </div>
+</nav>
