@@ -23,8 +23,8 @@
                 // delete unintialized widgets
                 model.widgets = [];
                 widgets.forEach(function (widget) {
-                    // _id, _page, and type should always be present, so check for more than 3 keys
-                    if (Object.keys(widget).length > 3) {
+                    // __v, _id, _page, type, and dateCreated should always be present, so check for more than 5 keys
+                    if (Object.keys(widget).length > 5) {
                         model.widgets.push(widget);
                     } else {
                         widgetService.deleteWidget(widget._id);
