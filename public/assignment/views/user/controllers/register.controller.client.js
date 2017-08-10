@@ -9,9 +9,7 @@
         var model = this;
 
         model.register = register;
-
-        $scope.$watch("model.user.password", validatePassword);
-        $scope.$watch("model.verifyPassword", validateVerifyPassword);
+        model.validatePassword = validatePassword;
 
         function register() {
             validateUsername(model.user.username, registerCallback);
@@ -49,23 +47,21 @@
             }
         }
 
-        function validatePassword(password) {
+        function validatePassword() {
             model.passwordMessage = "";
             model.passwordOk = false;
-            if (!password) {
+            if (!model.user.password) {
                 model.passwordClass = "";
             } else {
                 model.passwordClass = "has-success";
                 model.passwordOk = true;
             }
-        }
 
-        function validateVerifyPassword(verifyPassword) {
             model.verifyPasswordMessage = "";
             model.verifyPasswordOk = false;
-            if (!verifyPassword) {
+            if (!model.verifyPassword) {
                 model.verifyPasswordClass = "";
-            } else if (verifyPassword !== model.user.password) {
+            } else if (model.verifyPassword !== model.user.password) {
                 model.verifyPasswordClass = "has-error";
                 model.verifyPasswordMessage = "Passwords do not match.";
             } else {

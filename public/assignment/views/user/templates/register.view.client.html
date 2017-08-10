@@ -22,6 +22,7 @@
             </label>
             <input id="password"
                    ng-model="model.user.password"
+                   ng-change="model.validatePassword()"
                    type="password"
                    placeholder="password"
                    class="form-control"/>
@@ -36,6 +37,7 @@
             </label>
             <input id="verifyPassword"
                    ng-model="model.verifyPassword"
+                   ng-change="model.validatePassword()"
                    type="password"
                    placeholder="verify password"
                    class="form-control"/>
