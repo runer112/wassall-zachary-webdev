@@ -10,9 +10,11 @@
             createUser: genericService.create,
             findUserById: genericService.findById,
             findUserByUsername: genericService.queryBy("username"),
-            findUserByCredentials: genericService.queryBy("username", "password"),
             updateUser: genericService.update,
             deleteUser: genericService.delete,
+            login: login,
+            logout: logout,
+            register: register,
         };
 
         return api;
@@ -23,6 +25,18 @@
 
         function getEntityUrl(entityId) {
             return "/p/api/user/" + entityId;
+        }
+
+        function login(user) {
+            return $http.post("/p/api/login", user);
+        }
+
+        function logout(user) {
+            return $http.post("/p/api/logout");
+        }
+
+        function register(user) {
+            return $http.post("/p/api/register", user);
         }
     }
 })();

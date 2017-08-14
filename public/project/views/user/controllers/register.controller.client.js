@@ -17,9 +17,10 @@
 
         function registerCallback() {
             if (model.usernameOk && model.passwordOk && model.verifyPasswordOk) {
-                userService.createUser(null, model.user)
+                userService.register(model.user)
                     .then(function (response) {
                        var user = response.data;
+                        $rootScope.user = user;
                         $location.url("user/" + user._id);
                     });
             }

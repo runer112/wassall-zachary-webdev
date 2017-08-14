@@ -10,7 +10,7 @@
 
         model.logout = logout;
         model.updateUser = updateUser;
-        model.uid = $routeParams["uid"];
+        model.uid = $rootScope.user._id;
 
         userService.findUserById(model.uid)
             .then(function (response) {
@@ -18,8 +18,12 @@
             });
 
         function logout() {
-            $rootScope.user = null;
-            $location.url("login");
+            userService.logout()
+                .then(
+                    function (response) {
+                        $rootScope.user = null;
+                        $location.url("/");
+                    });
         }
 
         function updateUser() {

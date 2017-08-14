@@ -25,6 +25,7 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
     var api = {
         create: create,
         find: find,
+        findOne: findOne,
         findById: findById,
         findByFk: findByFk,
         update: update,
@@ -115,6 +116,10 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
 
     function find(query) {
         return model.find(query);
+    }
+
+    function findOne(query) {
+        return model.findOne(query);
     }
 
     function findById(entityId) {
