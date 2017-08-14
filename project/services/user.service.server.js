@@ -4,6 +4,8 @@ var userModel = require("../model/user/user.model.server.js");
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
+var bcrypt = require("bcrypt-nodejs");
+
 module.exports = function (app, deleteWebsitesByFkSupplier) {
     var userService = createGenericService(app, "/p/api/user", "/p/api/user/:uid", "uid", null, userModel, null, null, "websites", deleteWebsitesByFkSupplier);
 
@@ -19,8 +21,7 @@ module.exports = function (app, deleteWebsitesByFkSupplier) {
     passport.use(new LocalStrategy(localStrategy));
 
     // internal setup
-    userService.findByUsernameAndPassword = userService.findOneBy("username", "password");
-    userService.findUserByFacebookId = userService.findOneBy("facebook.id");
+    userService.findByUsername = userService.findOneBy("usermame");
 
     return userService;
 
@@ -38,6 +39,7 @@ module.exports = function (app, deleteWebsitesByFkSupplier) {
 
     function register(req, res) {
         var user = req.body;
+        user.password = bcrypt.hashSync(user.password);
         userModel
             .create(user)
             .then(
@@ -80,10 +82,14 @@ module.exports = function (app, deleteWebsitesByFkSupplier) {
 
     function localStrategy(username, password, done) {
         userService
-            .findOne({username: username, password: password})
+            .findOne({username: username})
             .then(
                 function (user) {
-                    return done(null, user);
+                    if (user && bcrypt.compareSync(password, user.password)) {
+                        return done(null, user);
+                    } else {
+                        return done(null, false);
+                    }
                 },
                 function (err) {
                     return done(err);
