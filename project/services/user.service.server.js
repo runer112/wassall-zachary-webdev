@@ -7,16 +7,24 @@ var LocalStrategy = require('passport-local').Strategy;
 module.exports = function (app, deleteWebsitesByFkSupplier) {
     var userService = createGenericService(app, "/p/api/user", "/p/api/user/:uid", "uid", null, userModel, null, null, "websites", deleteWebsitesByFkSupplier);
 
-    passport.serializeUser(serializeUser);
-    passport.deserializeUser(deserializeUser);
-    passport.use(new LocalStrategy(localStrategy));
-
+    // express setup
     app.post('/p/api/login', passport.authenticate('local'), login);
     app.post('/p/api/logout', logout);
     app.post('/p/api/register', register);
     app.get('/p/api/loggedin', loggedin);
 
+    // passport setup
+    passport.serializeUser(serializeUser);
+    passport.deserializeUser(deserializeUser);
+    passport.use(new LocalStrategy(localStrategy));
+
+    // internal setup
+    userService.findByUsernameAndPassword = userService.findOneBy("username", "password");
+    userService.findUserByFacebookId = userService.findOneBy("facebook.id");
+
     return userService;
+
+    // express API
 
     function login(req, res) {
         var user = req.user;
@@ -51,6 +59,8 @@ module.exports = function (app, deleteWebsitesByFkSupplier) {
         res.send(req.isAuthenticated() ? req.user : "");
     }
 
+    // passport API
+
     function serializeUser(user, done) {
         done(null, user);
     }
@@ -69,7 +79,7 @@ module.exports = function (app, deleteWebsitesByFkSupplier) {
     }
 
     function localStrategy(username, password, done) {
-        userModel
+        userService
             .findOne({username: username, password: password})
             .then(
                 function (user) {
@@ -80,4 +90,6 @@ module.exports = function (app, deleteWebsitesByFkSupplier) {
                 }
             );
     }
+
+    // internal API
 };

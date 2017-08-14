@@ -25,16 +25,14 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
     var api = {
         create: create,
         find: find,
+        findBy: findBy,
         findOne: findOne,
+        findOneBy: findOneBy,
         findById: findById,
-        findByFk: findByFk,
+        findByFk: findBy(parentIdField),
         update: update,
         delete: delete_,
         deleteByFk: deleteByFk,
-        findChildren: findChildren,
-        addChild: addChild,
-        moveChild: moveChild,
-        removeChild: removeChild,
     };
 
     return api;
@@ -118,16 +116,39 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
         return model.find(query);
     }
 
+    function findBy() {
+        var findSupplier = function () {
+            return api.find;
+        };
+        var keys = arguments;
+        return findBy_(findSupplier, keys);
+    }
+
     function findOne(query) {
         return model.findOne(query);
     }
 
-    function findById(entityId) {
-        return model.findById(entityId);
+    function findOneBy() {
+        var findSupplier = function () {
+            return api.findOne;
+        };
+        var keys = arguments;
+        return findBy_(findSupplier, keys);
     }
 
-    function findByFk(fk) {
-        return parentService.findChildren(fk);
+    function findBy_(findSupplier, keys) {
+        return function () {
+            var values = arguments;
+            var query = {};
+            for (var i = 0; i < keys.length; i++) {
+                query[keys[i]] = values[i];
+            }
+            return findSupplier()(query);
+        };
+    }
+
+    function findById(entityId) {
+        return model.findById(entityId);
     }
 
     function update(entityId, entity) {
@@ -147,16 +168,7 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
     }
 
     function deleteNoCascade(entityId) {
-        if (parentService) {
-            return api.findById(entityId)
-                .then(function (entity) {
-                    // don't wait
-                    parentService.removeChild(entity[parentIdField], entity._id);
-                    return entity.remove();
-                });
-        } else {
-            return model.remove({_id: entityId});
-        }
+        return model.remove({_id: entityId});
     }
 
     // does not return a promise
@@ -168,51 +180,6 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
                 entities.forEach(function (entity) {
                     api.delete(entity._id);
                 });
-            });
-    }
-
-    function findChildren(entityId) {
-        return api.findById(entityId)
-            .populate(childrenField)
-            .then(function (entity) {
-                var children = entity[childrenField];
-                return {
-                    then: function (consumer) {
-                        return consumer(children);
-                    }
-                };
-            });
-    }
-
-    function addChild(entityId, child) {
-        return api.findById(entityId)
-            .then(function (entity) {
-                entity[childrenField].push(child);
-                return entity.save();
-            });
-    }
-
-    function moveChild(entityId, initial, final) {
-        return api.findById(entityId)
-            .then(function (entity) {
-                var children = entity[childrenField];
-                var childToMove = children.splice(initial, 1)[0];
-                children.splice(final, 0, childToMove);
-                return entity.save();
-            });
-    }
-
-    function removeChild(entityId, child) {
-        return api.findById(entityId)
-            .then(function (entity) {
-                var children = entity[childrenField];
-                var childIndex = children.findIndex(function (element) {
-                    return element.equals(child);
-                });
-                if (childIndex >= 0) {
-                    children.splice(childIndex, 1);
-                }
-                return entity.save();
             });
     }
 };
