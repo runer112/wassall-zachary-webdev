@@ -1,0 +1,65 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-header">
+        <div class="navbar-brand navbar-left">
+            Profile
+        </div>
+        <p class="navbar-text navbar-right">
+            <a onclick="document.getElementById('submitButton').click();" class="navbar-link">
+                <span class="glyphicon glyphicon-ok">
+                </span>
+            </a>
+        </p>
+    </div>
+</nav>
+<div class="container-fluid zw-with-nav">
+    <form ng-submit="model.updateUser()">
+        <div ng-show="model.successMessage" class="alert alert-success">
+            {{model.successMessage}}
+        </div>
+        <label for="username">Username</label>
+        <input id="username"
+               ng-model="model.user.username"
+               type="text"
+               readonly
+               class="form-control"/>
+        <label for="email">Email</label>
+        <input id="email"
+               ng-model="model.user.email"
+               type="email"
+               ng-change="model.successMessage = null"
+               class="form-control"/>
+        <label for="firstname">First Name</label>
+        <input id="firstname"
+               ng-model="model.user.firstName"
+               type="text"
+               ng-change="model.successMessage = null"
+               class="form-control"/>
+        <label for="lastname">Last Name</label>
+        <input id="lastname"
+               ng-model="model.user.lastName"
+               type="text"
+               ng-change="model.successMessage = null"
+               class="form-control"/>
+        <div class="zw-group">
+            <button id="submitButton"
+                    type="submit"
+                    class="btn btn-block btn-success">
+                Save
+            </button>
+            <a ng-click="model.logout()"
+               class="btn btn-block btn-danger">
+                Logout
+            </a>
+        </div>
+    </form>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="navbar-header">
+        <p class="navbar-text navbar-right">
+            <a ng-href="#!/user/{{model.user._id}}" class="navbar-link">
+                <span class="glyphicon glyphicon-user">
+                </span>
+            </a>
+        </p>
+    </div>
+</nav>
