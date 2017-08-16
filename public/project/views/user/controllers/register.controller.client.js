@@ -21,7 +21,7 @@
                     .then(function (response) {
                        var user = response.data;
                         $rootScope.user = user;
-                        $location.url("user/" + user._id);
+                        $location.url("");
                     });
             }
         }

@@ -3,6 +3,7 @@ var userModel = require("../model/user/user.model.server.js");
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 
 var bcrypt = require("bcrypt-nodejs");
 
@@ -14,14 +15,27 @@ module.exports = function (app, deleteWebsitesByFkSupplier) {
     app.post('/p/api/logout', logout);
     app.post('/p/api/register', register);
     app.get('/p/api/loggedin', loggedin);
+    app.get('/p/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
+    app.get('/p/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            successRedirect: '/project/#!/',
+            failureRedirect: '/project/#!/login'
+        }));
 
     // passport setup
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
     passport.use(new LocalStrategy(localStrategy));
+    var facebookConfig = {
+        clientID: process.env.FACEBOOK_CLIENT_ID,
+        clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+        callbackURL: process.env.FACEBOOK_CALLBACK_URL
+    };
+    passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
 
     // internal setup
-    userService.findByUsername = userService.findOneBy("usermame");
+    userService.findByUsername = userService.findOneBy("username");
+    userService.findByFacebookId = userService.findOneBy("facebook.id");
 
     return userService;
 
@@ -82,13 +96,41 @@ module.exports = function (app, deleteWebsitesByFkSupplier) {
 
     function localStrategy(username, password, done) {
         userService
-            .findOne({username: username})
+            .findByUsername(username)
             .then(
                 function (user) {
                     if (user && bcrypt.compareSync(password, user.password)) {
                         return done(null, user);
                     } else {
                         return done(null, false);
+                    }
+                },
+                function (err) {
+                    return done(err);
+                }
+            );
+    }
+
+    function facebookStrategy(token, refreshToken, profile, done) {
+        userService
+            .findByFacebookId(profile.id)
+            .then(
+                function (user) {
+                    if (user) {
+                        return done(null, user);
+                    } else {
+                        var user = {
+                            facebook: {
+                                id: profile.id,
+                                token: token
+                            },
+                            displayName: profile.displayName
+                        };
+                        return userService
+                            .create(user)
+                            .then(function (user) {
+                                return done(null, user);
+                            });
                     }
                 },
                 function (err) {

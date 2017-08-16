@@ -11,11 +11,7 @@
         model.logout = logout;
         model.updateUser = updateUser;
         model.uid = $rootScope.user._id;
-
-        userService.findUserById(model.uid)
-            .then(function (response) {
-                model.user = response.data;
-            });
+        model.user = $rootScope.user;
 
         function logout() {
             userService.logout()
@@ -30,6 +26,7 @@
             userService.updateUser(model.uid, model.user)
                 .then(function (response) {
                     model.successMessage = "Changes saved successfully.";
+                    $rootScope.user = response.data;
                 });
         }
     }
