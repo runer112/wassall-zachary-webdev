@@ -5,28 +5,6 @@
     padding: 0;
 }
 
-.navbar-left {
-    float: left;
-    margin-left: 0;
-    margin-right: 15px;
-}
-
-.navbar-brand {
-    padding-left: 0;
-}
-
-.navbar-right {
-    float: right;
-    margin-left: 0;
-    margin-right: 0;
-}
-
-.container-fluid > .navbar-header, .navbar-header {
-    float: none;
-    margin-left: 15px;
-    margin-right: 15px;
-}
-
 /* body elements */
 
 .zw-with-nav {

@@ -1,4 +1,6 @@
-<div class="container-fluid">
+<div ng-include="'views/templates/navbar.view.client.html'"></div>
+
+<div class="container zw-with-nav">
     <h2>Register</h2>
     <form ng-submit="model.register(model.user)">
         <div class="form-group" ng-class="model.usernameClass">
@@ -51,10 +53,6 @@
                     class="btn btn-block btn-primary">
                 Register
             </button>
-            <a class="btn btn-block btn-danger"
-               href="#!/login">
-                Cancel
-            </a>
         </div>
     </form>
 </div>

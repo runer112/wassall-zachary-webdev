@@ -1,17 +1,6 @@
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="navbar-header">
-        <div class="navbar-brand navbar-left">
-            Profile
-        </div>
-        <p class="navbar-text navbar-right">
-            <a onclick="document.getElementById('submitButton').click();" class="navbar-link">
-                <span class="glyphicon glyphicon-ok">
-                </span>
-            </a>
-        </p>
-    </div>
-</nav>
-<div class="container-fluid zw-with-nav">
+<div ng-include="'views/templates/navbar.view.client.html'"></div>
+
+<div class="container zw-with-nav">
     <form ng-submit="model.updateUser()">
         <div ng-show="model.successMessage" class="alert alert-success">
             {{model.successMessage}}
@@ -47,13 +36,3 @@
         </div>
     </form>
 </div>
-<nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="navbar-header">
-        <p class="navbar-text navbar-right">
-            <a ng-href="#!/user/{{model.user._id}}" class="navbar-link">
-                <span class="glyphicon glyphicon-user">
-                </span>
-            </a>
-        </p>
-    </div>
-</nav>

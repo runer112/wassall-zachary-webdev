@@ -51,6 +51,8 @@
         // home route
             .when("/", {
                 templateUrl: "views/home/templates/home.view.client.html",
+                controller: "homeController",
+                controllerAs: "model",
                 resolve: {loggedin: getLoggedin}
             })
             // user routes

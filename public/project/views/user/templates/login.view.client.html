@@ -1,4 +1,6 @@
-<div class="container-fluid">
+<div ng-include="'views/templates/navbar.view.client.html'"></div>
+
+<div class="container zw-with-nav">
     <h2>Login</h2>
     <div ng-show="model.errorMessage" class="alert alert-danger">
         {{model.errorMessage}}
