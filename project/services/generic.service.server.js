@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_, parentService_, parentIdField_, childrenField_, deleteChildrenByFkSupplier_) {
+module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_, parentIdField_, deleteChildrenByFkSupplier_) {
     // express internal
     var baseUrl = baseUrl_;
     var entityUrl = entityUrl_;
@@ -9,9 +9,7 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
 
     // mongoose internal
     var model = model_;
-    var parentService = parentService_;
     var parentIdField = parentIdField_;
-    var childrenField = childrenField_;
     var deleteChildrenByFkSupplier = deleteChildrenByFkSupplier_;
 
     // http handlers
@@ -19,7 +17,6 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
     app.get(baseUrl, efind);
     app.get(entityUrl, efindById);
     app.put(entityUrl, eupdate);
-    app.put(baseUrl, emove);
     app.delete(entityUrl, edelete);
 
     var api = {
@@ -58,13 +55,7 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
 
     function efind(req, res) {
         var query = req.query;
-        var promise;
-        if (Object.keys(query).length === 1 && query[parentIdField]) {
-            // handle find by fk specially to reflect order in parent
-            promise = parentService.findChildren(query[parentIdField]);
-        } else {
-            promise = api.find(query);
-        }
+        var promise = api.find(query);
         esend(res, promise);
     }
 
@@ -81,14 +72,6 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
         esend(res, promise);
     }
 
-    function emove(req, res) {
-        var parentId = req.params[fkParam];
-        var initial = parseInt(req.query.initial);
-        var final = parseInt(req.query.final);
-        var promise = parentService.moveChild(parentId, initial, final);
-        esend(res, promise);
-    }
-
     function edelete(req, res) {
         var entityId = req.params[idParam];
         var promise = api.delete(entityId);
@@ -98,18 +81,7 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
     // mongoose API
 
     function create(entity) {
-        var promise = model.create(entity);
-        if (parentService) {
-            return promise
-                .then(function (entity) {
-                    return parentService.addChild(entity[parentIdField], entity._id)
-                        .then(function () {
-                            return promise;
-                        });
-                });
-        } else {
-            return promise;
-        }
+        return model.create(entity);
     }
 
     function find(query) {

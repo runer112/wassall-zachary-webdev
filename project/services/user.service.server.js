@@ -7,10 +7,10 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 
 var bcrypt = require("bcrypt-nodejs");
 
-module.exports = function (app, deleteWebsitesByFkSupplier) {
-    var userService = createGenericService(app, "/p/api/user", "/p/api/user/:uid", "uid", null, userModel, null, null, "websites", deleteWebsitesByFkSupplier);
+module.exports = function (app, deleteChildrenByFkSupplier) {
+    var userService = createGenericService(app, "/p/api/user", "/p/api/user/:uid", "uid", null, userModel, null, deleteChildrenByFkSupplier);
 
-    // express setup
+    // express API setup
     app.post('/p/api/login', passport.authenticate('local'), login);
     app.post('/p/api/logout', logout);
     app.post('/p/api/register', register);
@@ -33,7 +33,7 @@ module.exports = function (app, deleteWebsitesByFkSupplier) {
     };
     passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
 
-    // internal setup
+    // internal API setup
     userService.findByUsername = userService.findOneBy("username");
     userService.findByFacebookId = userService.findOneBy("facebook.id");
 

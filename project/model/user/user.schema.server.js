@@ -10,6 +10,7 @@ var userSchema = mongoose.Schema({
     password: String,
     displayName: String,
     email: String,
+    followedReviewers: [{type: mongoose.Schema.Types.ObjectId, ref: "PUserModel"}],
     dateCreated: {type: Date, default: Date.now}
 }, {collection: "pUser"});
 
