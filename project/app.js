@@ -9,4 +9,7 @@ module.exports = function (app) {
     services.releaseService = require("./services/release.service.server.js")(app, function () {
         return null;
     });
+    services.appService = require("./services/app.service.server.js")(app, function () {
+        return null;
+    });
 };

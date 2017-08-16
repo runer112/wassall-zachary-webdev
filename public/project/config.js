@@ -48,7 +48,7 @@
 
     function configuration($routeProvider) {
         $routeProvider
-        // home route
+            // home route
             .when("/", {
                 templateUrl: "views/home/templates/home.view.client.html",
                 controller: "homeController",
@@ -73,6 +73,12 @@
                 controller: "profileController",
                 controllerAs: "model",
                 resolve: {loggedin: checkLoggedin}
+            })
+            // app routes
+            .when("/app", {
+                templateUrl: "views/app/templates/search.view.client.html",
+                controller: "searchController",
+                controllerAs: "model"
             })
         // .when("/user/:uid", {
         //     templateUrl: "views/user/templates/profile.view.client.html",
