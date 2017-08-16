@@ -5,12 +5,13 @@ var userSchema = mongoose.Schema({
         id:    String,
         token: String
     },
-    ticalcId: Number,
+    ticalc: Number,
     username: String,
     password: String,
     displayName: String,
     email: String,
     followedReviewers: [{type: mongoose.Schema.Types.ObjectId, ref: "PUserModel"}],
+    ownedReleases: [{type: mongoose.Schema.Types.ObjectId, ref: "PReleaseModel"}],
     dateCreated: {type: Date, default: Date.now}
 }, {collection: "pUser"});
 

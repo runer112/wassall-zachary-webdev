@@ -6,4 +6,7 @@ module.exports = function (app) {
     services.reviewService = require("./services/review.service.server.js")(app, function () {
         return null;
     });
+    services.releaseService = require("./services/release.service.server.js")(app, function () {
+        return null;
+    });
 };

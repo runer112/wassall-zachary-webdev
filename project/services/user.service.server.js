@@ -8,7 +8,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var bcrypt = require("bcrypt-nodejs");
 
 module.exports = function (app, deleteChildrenByFkSupplier) {
-    var userService = createGenericService(app, "/p/api/user", "/p/api/user/:uid", "uid", null, userModel, null, deleteChildrenByFkSupplier);
+    var userService = createGenericService(app, "/p/api/user", "/p/api/user/:userId", "userId", null, userModel, null, deleteChildrenByFkSupplier);
 
     // express API setup
     app.post('/p/api/login', passport.authenticate('local'), login);
