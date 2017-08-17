@@ -191,7 +191,7 @@ module.exports = function (app, userService, categoryService) {
                 }
 
                 var category;
-                var categoryMatch = matchField(body, "Category", "<B><A HREF=\"/pub/([^/]+)/[^\"]*\">[^<]*</A></B>");
+                var categoryMatch = matchField(body, "Category", "<B><A HREF=\"/pub/([^/\"]+)[^\"]*\">[^<]*</A></B>");
                 if (categoryMatch) {
                     category = categoryMatch[1];
                 } else {
