@@ -5,7 +5,7 @@ var userSchema = mongoose.Schema({
         id:    String,
         token: String
     },
-    ticalc: Number,
+    ticalcId: Number,
     username: String,
     password: String,
     displayName: String,

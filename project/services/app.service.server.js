@@ -1,7 +1,9 @@
+var model = require("../model/app/app.model.server.js");
+
 var request = require('request');
 var $q = require('q');
 
-module.exports = function (app) {
+module.exports = function (app, userService, categoryService) {
     var baseUrl = "/p/api/app";
     var entityUrl = "/p/api/app/:appId";
     var idParam = "appId";
@@ -13,6 +15,7 @@ module.exports = function (app) {
     var api = {
         find: find,
         findById: findById,
+        findByTicalcId: findByTicalcId,
     };
 
     return api;
@@ -51,7 +54,7 @@ module.exports = function (app) {
 
         // abort if query is empty
         if (query.q.length === 0) {
-            deferred.reject();
+            deferred.reject("Blank query string");
 
         } else {
             var q = query.q;
@@ -67,20 +70,44 @@ module.exports = function (app) {
 
             request.post(options, function (err, res, body) {
                 if (err) {
-                    return deferred.reject();
+                    deferred.reject("Failed to load ticalc search resource");
+
                 } else {
-                    var regex = /<TD class=t1 ><b><a href="\/archives\/files\/fileinfo\/\d+\/(\d+).html">(.*)<\/a><\/b><\/TD>/g;
+                    var re = /<TD class=t1 ><b><a href="\/archives\/files\/fileinfo\/\d+\/(\d+).html">(.*)<\/a><\/b><\/TD>/g;
                     var match;
-                    var result = [];
-                    while (match = regex.exec(body)) {
-                        var id = match[1];
-                        var name = match[2];
-                        result.push({
-                            id: id,
-                            name: name
-                        });
+                    var ticalcIds = [];
+
+                    while (match = re.exec(body)) {
+                        var ticalcId = parseInt(match[1]);
+                        ticalcIds.push(ticalcId);
                     }
-                    deferred.resolve(result);
+
+                    var appsMap = {};
+                    var checkDone = function() {
+                        if (Object.keys(appsMap).length === ticalcIds.length) {
+                            var apps = [];
+                            ticalcIds.forEach(function (ticalcId) {
+                                var app = appsMap["_" + ticalcId];
+                                if (app) {
+                                    apps.push(app);
+                                }
+                            });
+
+                            deferred.resolve(apps);
+                        }
+                    };
+
+                    ticalcIds.forEach(function (ticalcId) {
+                        api.findByTicalcId(ticalcId)
+                            .then(function (app) {
+                                appsMap["_" + ticalcId] = reduce(app);
+                                checkDone();
+                            }, function (err) {
+                                console.log("Failed to fill in ticalc app " + ticalcId + " for search '" +query.q + "': " + err);
+                                appsMap["_" + ticalcId] = null;
+                                checkDone();
+                            });
+                    });
                 }
             });
         }
@@ -91,5 +118,155 @@ module.exports = function (app) {
     function findById(entityId) {
         return model.findById(entityId);
     }
-}
-;
+
+    function findByTicalcId(ticalcId) {
+        var deferred = $q.defer();
+
+        model.findOne({ticalcId: ticalcId})
+            .then(function (app) {
+                if (app) {
+                    deferred.resolve(app);
+                } else {
+                    findByTicalcIdExternal(ticalcId)
+                        .then(function (app) {
+                            model.create(app)
+                                .then(function (app) {
+                                    deferred.resolve(app);
+                                });
+                        }, function (err) {
+                            deferred.reject(err);
+                        });
+                }
+            });
+
+        return deferred.promise;
+    }
+
+    // internal
+
+    function findByTicalcIdExternal(ticalcId) {
+        var deferred = $q.defer();
+
+        request("http://www.ticalc.org/archives/files/fileinfo/" + Math.floor(ticalcId / 100) + "/" + ticalcId + ".html", function (err, res, body) {
+            if (err) {
+                deferred.reject("Failed to load ticalc app resource");
+
+            } else {
+                var artifact;
+                var artifactMatch = body.match(/\(<B><A HREF="(.+)">Download<\/A><\/B>\)/)[1];
+                if (artifactMatch) {
+                    artifact = "http://www.ticalc.org" + artifactMatch;
+                } else {
+                    deferred.reject("Failed to parse artifact from ticalc app resource");
+                    return;
+                }
+
+                var name = matchFieldSimple(body, "Title");
+                if (!name) {
+                    deferred.reject("Failed to parse name from ticalc app resource");
+                    return;
+                }
+
+                var description = matchFieldSimple(body, "Description");
+                // if (!description) {
+                //     deferred.reject("Failed to parse description from ticalc app resource");
+                //     return;
+                // }
+
+                var datePublishedStr = matchFieldSimple(body, "File Date and Time");
+                var datePublished = Date.parse(datePublishedStr);
+                if (!datePublished) {
+                    deferred.reject("Failed to parse date published from ticalc app resource");
+                    return;
+                }
+
+                var screenshotRe = /\n<IMG SRC="(\/archives\/files\/ss\/[^"]+)"/g;
+                var screenshotMatch;
+                var screenshots = [];
+
+                while (screenshotMatch = screenshotRe.exec(body)) {
+                    var screenshotPath = screenshotMatch[1];
+                    var screenshot = "http://www.ticalc.org" + screenshotPath;
+                    screenshots.push(screenshot);
+                }
+
+                var category;
+                var categoryMatch = matchField(body, "Category", "<B><A HREF=\"/pub/([^/]+)/[^\"]*\">[^<]*</A></B>");
+                if (categoryMatch) {
+                    category = categoryMatch[1];
+                } else {
+                    deferred.reject("Failed to parse category from ticalc app resource");
+                    return;
+                }
+
+                var authorRe = /<A HREF="\/archives\/files\/authors\/\d+\/(\d+).html"><B>([^<]+)<\/B>[^<>]*<\/A> <I>\(<B><A HREF="[^"]*">([^<]*)<\/A><\/B>\)<\/I><BR>/g;
+                var authorMatch;
+                var authorIds = [];
+
+                while (authorMatch = authorRe.exec(body)) {
+                    var authorId = parseInt(authorMatch[1]);
+                    var displayName = authorMatch[2];
+                    var email = authorMatch[3];
+                    email = email ? email : null; // replace blank with null
+                    authorIds.push(authorId);
+
+                    (function (authorId, displayName, email) {
+                        userService.findByTicalcId(authorId)
+                            .then(function (author) {
+                                if (!author) {
+                                    author = {
+                                        ticalcId: authorId,
+                                        displayName: displayName,
+                                        email: email
+                                    };
+                                    userService.create(author);
+                                }
+                            });
+                    })(authorId, displayName, email);
+                }
+
+                if (!authorIds.length) {
+                    // author may be n/a
+                    authorMatch = matchField(body, "Author", "n/a");
+                    if (!authorMatch) {
+                        deferred.reject("Failed to parse authors from ticalc app resource");
+                        return;
+                    }
+                }
+
+                var app = {
+                    ticalcId: ticalcId,
+                    name: name,
+                    description: description,
+                    screenshots: screenshots,
+                    authorIds: authorIds,
+                    category: category,
+                    artifact: artifact,
+                    datePublished: datePublished
+                };
+                deferred.resolve(app);
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    function matchField(body, field, valuePattern) {
+        var reStr = "\\n<B>\\n" + field + "\\n(?:<.*>\\n){0,9}" + valuePattern;
+        var re = new RegExp(reStr);
+        return body.match(re);
+    }
+
+    function matchFieldSimple(body, field) {
+        var match = matchField(body, field, "(.+)")
+        return match ? match[1] : null;
+    }
+
+    function reduce(app) {
+        return {
+            _id: app._id,
+            name: app.name,
+            category: app.category
+        };
+    }
+};

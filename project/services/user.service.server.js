@@ -36,6 +36,7 @@ module.exports = function (app, deleteChildrenByFkSupplier) {
     // internal API setup
     userService.findByUsername = userService.findOneBy("username");
     userService.findByFacebookId = userService.findOneBy("facebook.id");
+    userService.findByTicalcId = userService.findOneBy("ticalcId");
 
     return userService;
 
