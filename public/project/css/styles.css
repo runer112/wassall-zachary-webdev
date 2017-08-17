@@ -81,14 +81,14 @@ label {
     position: absolute;
     display: inline;
     left: 0;
-    width: 77px;
+    width: 85px;
     border-right: solid lightgray 1px;
 }
 
 .zw-search-name {
     position: absolute;
     display: inline;
-    left: 85px;
+    left: 90px;
     right: 85px;
     white-space: nowrap;
     overflow: hidden;
