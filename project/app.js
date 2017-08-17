@@ -6,7 +6,7 @@ module.exports = function (app) {
     services.reviewService = require("./services/review.service.server.js")(app, function () {
         return null;
     });
-    services.categoryService = require("./services/category.service.server.js");
+    services.categoryService = require("./services/category.service.server.js")();
     services.releaseService = require("./services/release.service.server.js")(app, function () {
         return null;
     });

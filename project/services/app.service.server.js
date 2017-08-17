@@ -100,7 +100,7 @@ module.exports = function (app, userService, categoryService) {
                     ticalcIds.forEach(function (ticalcId) {
                         api.findByTicalcId(ticalcId)
                             .then(function (app) {
-                                appsMap["_" + ticalcId] = reduce(app);
+                                appsMap["_" + ticalcId] = populateForSearch(app);
                                 checkDone();
                             }, function (err) {
                                 console.log("Failed to fill in ticalc app " + ticalcId + " for search '" +query.q + "': " + err);
@@ -262,11 +262,15 @@ module.exports = function (app, userService, categoryService) {
         return match ? match[1] : null;
     }
 
-    function reduce(app) {
+    function populateForSearch(app) {
+        var category = categoryService.findByAbbrev(app.category);
         return {
             _id: app._id,
             name: app.name,
-            category: app.category
+            description: app.description,
+            category: app.category,
+            categoryName: category.name,
+            rating: Math.random() * 4 + 1,
         };
     }
 };

@@ -1,4 +1,4 @@
 (function () {
     angular
-        .module("ticalcAppStore", ["ngRoute"]);
+        .module("ticalcAppStore", ["ngRoute", "ngRateIt"]);
 })();
