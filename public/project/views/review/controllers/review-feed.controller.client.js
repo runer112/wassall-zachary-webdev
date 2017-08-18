@@ -13,6 +13,7 @@
 
             reviewService.findReviewsByFollowing($rootScope.user._id)
                 .then(function (response) {
+                    model.includeAppNameInReviews = true;
                     model.reviews = response.data;
                 });
         }

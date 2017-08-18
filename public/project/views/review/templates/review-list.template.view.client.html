@@ -1,0 +1,19 @@
+<div ng-if="model.reviews.length">
+    <div ng-repeat="review in model.reviews">
+        <div class="zw-review-short-main">
+            <div ng-if="model.includeAppNameInReviews"
+                 class="zw-review-short-app-name">
+                <a href="#!/app/{{review.app._id}}">{{review.app.name}}</a>
+            </div>
+            <span class="zw-review-short-title">{{review.title}}</span>
+            <span class="zw-review-short-date">{{review.dateUpdated | date}}</span>
+        </div>
+        <span class="zw-review-short-rating">
+            <ng-rate-it ng-model="review.stars"
+                        read-only="true"></ng-rate-it>
+        </span>
+        <span class="zw-review-short-author">by <a href="#!/profile/{{review.author._id}}"
+                                                   class="zw-review-short-author">{{review.author.displayName}}</a></span>
+        <span class="zw-review-short-text">{{review.text}}</span>
+    </div>
+</div>

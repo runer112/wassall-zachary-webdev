@@ -52,22 +52,7 @@
              class="zw-h-center">
             <i>Log in to write a review</i>
         </div>
-        <div ng-if="model.app.reviews.length">
-            <div ng-repeat="review in model.app.reviews">
-                <div class="zw-review-short-main">
-                    <span class="zw-review-short-title">{{review.title}}</span>
-                    <span class="zw-review-short-date">{{review.dateUpdated | date}}</span>
-                </div>
-                <span class="zw-review-short-rating">
-                    <ng-rate-it ng-model="review.stars"
-                                read-only="true"></ng-rate-it>
-                </span>
-                <span ng-if="review.author"class="zw-review-short-author">
-                    by <a href="#!/profile/{{review.author._id}}" class="zw-review-short-author">{{review.author.displayName}}</a>
-                </span>
-                <span class="zw-review-short-text">{{review.text}}</span>
-            </div>
-        </div>
+        <div ng-include="'views/review/templates/review-list.template.view.client.html'"></div>
         <div ng-if="!model.app.reviews.length"
              class="zw-h-center">
             No text reviews!

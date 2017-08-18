@@ -15,6 +15,7 @@
                 .then(function (response) {
                     var app = response.data;
                     model.app  = app;
+                    model.reviews = app.reviews;
                     $rootScope.title = app.name;
                 });
         }
