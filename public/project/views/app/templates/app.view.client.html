@@ -34,6 +34,7 @@
             </ul>
         </div>
         <div rn-carousel-indicators
+             ng-if="model.app.screenshots.length > 1"
              slides="model.app.screenshots"
              rn-carousel-index="screenshotsIndex"
              class="center">
