@@ -3,7 +3,8 @@
 <div class="container zw-with-nav">
     <h3>Top Apps</h3>
     <div ng-include="'views/app/templates/app-list.template.view.client.html'"></div>
-    <div ng-show="!model.apps">
+    <div ng-show="!model.apps.length"
+         class="zw-h-center">
         No apps have been rated :(
     </div>
 </div>
