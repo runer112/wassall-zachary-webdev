@@ -13,7 +13,7 @@
                 <ng-rate-it ng-model="review.stars"
                             read-only="true"></ng-rate-it>
             </span>
-            <span class="zw-review-short-author">by {{review.author.displayName}}</span>
+            <span class="zw-review-short-author">by <a href="#!/profile/{{review.author._id}}" class="zw-review-short-author">{{review.author.displayName}}</a></span>
             <span class="zw-review-short-text">{{review.text}}</span>
         </div>
     </div>
