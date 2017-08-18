@@ -16,6 +16,7 @@ module.exports = function (app, userService, categoryService) {
         find: find,
         findById: findById,
         findByTicalcId: findByTicalcId,
+        reduce: reduce,
     };
 
     return api;
@@ -83,7 +84,7 @@ module.exports = function (app, userService, categoryService) {
                     }
 
                     var appsMap = {};
-                    var checkDone = function() {
+                    var checkDone = function () {
                         if (Object.keys(appsMap).length === ticalcIds.length) {
                             var apps = [];
                             ticalcIds.forEach(function (ticalcId) {
@@ -100,10 +101,10 @@ module.exports = function (app, userService, categoryService) {
                     ticalcIds.forEach(function (ticalcId) {
                         api.findByTicalcId(ticalcId)
                             .then(function (app) {
-                                appsMap["_" + ticalcId] = populateForSearch(app);
+                                appsMap["_" + ticalcId] = reduce(app);
                                 checkDone();
                             }, function (err) {
-                                console.log("Failed to fill in ticalc app " + ticalcId + " for search '" +query.q + "': " + err);
+                                console.log("Failed to fill in ticalc app " + ticalcId + " for search '" + query.q + "': " + err);
                                 appsMap["_" + ticalcId] = null;
                                 checkDone();
                             });
@@ -116,7 +117,19 @@ module.exports = function (app, userService, categoryService) {
     }
 
     function findById(entityId) {
-        return model.findById(entityId);
+        return model.findById(entityId)
+            .then(function (app) {
+                if (app) {
+                    return populateFull(app)
+                        .then(function (app) {
+                            return app;
+                        }, function (err) {
+                            console.log(err);
+                        });
+                } else {
+                    return null;
+                }
+            });
     }
 
     function findByTicalcId(ticalcId) {
@@ -140,6 +153,18 @@ module.exports = function (app, userService, categoryService) {
             });
 
         return deferred.promise;
+    }
+
+    function reduce(app) {
+        var category = categoryService.findByAbbrev(app.category);
+        return {
+            _id: app._id,
+            name: app.name,
+            description: app.description,
+            category: app.category,
+            categoryName: category.name,
+            rating: Math.random() * 4 + 1
+        };
     }
 
     // internal
@@ -262,15 +287,22 @@ module.exports = function (app, userService, categoryService) {
         return match ? match[1] : null;
     }
 
-    function populateForSearch(app) {
-        var category = categoryService.findByAbbrev(app.category);
-        return {
-            _id: app._id,
-            name: app.name,
-            description: app.description,
-            category: app.category,
-            categoryName: category.name,
-            rating: Math.random() * 4 + 1,
-        };
+    function populateFull(app) {
+        return userService.find({ticalcId: {$in: app.authorIds}})
+            .then(function (authors) {
+                var category = categoryService.findByAbbrev(app.category);
+                return {
+                    _id: app._id,
+                    name: app.name,
+                    description: app.description,
+                    screenshots: app.screenshots,
+                    authors: authors,
+                    category: app.category,
+                    categoryName: category.name,
+                    artifact: app.artifact,
+                    datePublished: app.datePublished,
+                    rating: Math.random() * 4 + 1
+                };
+            });
     }
 };

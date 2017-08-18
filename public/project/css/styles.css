@@ -19,6 +19,10 @@
 
 /* body elements */
 
+.cl {
+    clear: both;
+}
+
 .zw-with-nav {
     margin-top: 50px;
     margin-bottom: 50px;
@@ -32,7 +36,6 @@
 }
 
 h1, h2, h3, h4, h5 {
-    margin-top: 20px;
     font-weight: bold;
 }
 
@@ -63,6 +66,48 @@ label {
 .alert {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.zw-right {
+    float: right;
+    clear: left;
+}
+
+.zw-app-rating {
+    margin-top: 5px;
+    text-align: center;
+}
+
+/* carousel */
+
+.center {
+    text-align: center;
+}
+
+.bgimage {
+    background: #222;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 100%;
+    background-position: center center;
+}
+
+.zw-aspect-16-9 {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+}
+
+ul[rn-carousel] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+div.rn-carousel-indicator span.active {
+    color: #ddd;
 }
 
 /* lists */

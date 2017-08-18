@@ -1,0 +1,42 @@
+<div ng-include="'views/templates/navbar.view.client.html'"></div>
+
+<div class="container zw-with-nav">
+    <h3>{{model.app.name}}</h3>
+    <div class="zw-right">
+        <a href="{{model.app.artifact}}"
+           rel="noreferrer"
+           class="btn btn-primary">
+            {{model.app.categoryName}} Download
+        </a>
+        <ng-rate-it ng-model="model.app.rating"
+                    read-only="true"
+                    class="zw-app-rating"></ng-rate-it>
+    </div>
+    <div ng-repeat="author in model.app.authors">
+        <b>{{author.displayName}}</b>
+    </div>
+    <i>{{model.app.datePublished | date}}</i>
+    <div class="cl"></div>
+    <div ng-if="model.app.description">
+        <hr>
+        {{model.app.description}}
+    </div>
+    <div ng-if="model.app.screenshots.length">
+        <hr>
+        <div class="zw-aspect-16-9">
+            <ul rn-carousel
+                rn-carousel-index="screenshotsIndex"
+                class="image">
+                <li ng-repeat="screenshot in model.app.screenshots">
+                    <div ng-style="{'background-image': 'url(' + screenshot + ')'}"
+                         class="bgimage"></div>
+                </li>
+            </ul>
+        </div>
+        <div rn-carousel-indicators
+             slides="model.app.screenshots"
+             rn-carousel-index="screenshotsIndex"
+             class="center">
+        </div>
+    </div>
+</div>

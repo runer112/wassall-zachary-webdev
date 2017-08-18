@@ -1,4 +1,4 @@
 (function () {
     angular
-        .module("ticalcAppStore", ["ngRoute", "ngRateIt"]);
+        .module("ticalcAppStore", ["ngRoute", "ngRateIt", "angular-carousel"]);
 })();

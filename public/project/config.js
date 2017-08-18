@@ -80,6 +80,12 @@
                 controller: "searchController",
                 controllerAs: "model"
             })
+            .when("/app/:appId", {
+                templateUrl: "views/app/templates/app.view.client.html",
+                controller: "appController",
+                controllerAs: "model",
+                resolve: {loggedin: getLoggedin}
+            })
         // .when("/user/:uid", {
         //     templateUrl: "views/user/templates/profile.view.client.html",
         //     controller: "profileController",
