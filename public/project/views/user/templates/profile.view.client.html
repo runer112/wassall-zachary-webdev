@@ -53,13 +53,14 @@
                        type="text"
                        ng-change="model.successMessage = null"
                        class="form-control"/>
-                <input id="isAdmin"
-                       ng-model="model.user.isAdmin"
-                       type="checkbox"
-                       ng-if="user.isAdmin"
-                       ng-disabled="user._id === model.user._id"
-                       ng-change="model.successMessage = null"/>
-                <label for="isAdmin">Admin</label>
+                <div ng-if="user.isAdmin">
+                    <input id="isAdmin"
+                           ng-model="model.user.isAdmin"
+                           type="checkbox"
+                           ng-disabled="user._id === model.user._id"
+                           ng-change="model.successMessage = null"/>
+                    <label for="isAdmin">Admin</label>
+                </div>
                 <div class="zw-group">
                     <button id="submitButton"
                             type="submit"
