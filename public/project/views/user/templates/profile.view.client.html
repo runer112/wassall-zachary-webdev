@@ -1,10 +1,21 @@
 <div ng-include="'views/templates/navbar.view.client.html'"></div>
 
 <div class="container zw-with-nav">
-    <ul class="nav nav-tabs">
+    <div ng-if="user && user._id !== model.user._id">
+        <button id="followButton"
+                ng-click="model.toggleFollowUser()"
+                class="btn btn-default zw-btn-follow">
+            {{model.followButtonText}}
+        </button>
+    </div>
+    <h3>{{model.user.displayName ? model.user.displayName : model.user.username}}</h3>
+    <div>
+        Joined {{model.user.dateCreated | date}}
+    </div>
+<!--    <ul class="nav nav-tabs">
         <li class="active"><a href="#!/profile/{{model.userId}}">Details</a></li>
-        <li><a href="#!/profile/{{model.userId}}/followed-reviewers">Followed Reviewers</a></li>
-    </ul>
+        <li><a href="#!/profile/{{model.userId}}/following">Following</a></li>
+    </ul>-->
     <div ng-if="user._id === model.user._id || user.isAdmin">
         <form ng-submit="model.updateUser()">
             <div ng-show="model.successMessage" class="alert alert-success">
@@ -38,6 +49,14 @@
         </form>
     </div>
     <div ng-if="!(user._id === model.user._id || user.isAdmin)">
-        hello
+
+    </div>
+    <hr>
+    <h4>Following</h4>
+    <div class="zw-list">
+        <div ng-repeat="following in model.user.following"
+             class="zw-list-item">
+            <a href="#!/profile/{{following._id}}">{{following.displayName}}</a>
+        </div>
     </div>
 </div>

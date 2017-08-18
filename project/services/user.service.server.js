@@ -7,7 +7,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 
 var bcrypt = require("bcrypt-nodejs");
 
-module.exports = function (app, deleteChildrenByFkSupplier) {
+module.exports = function (app, services, deleteChildrenByFkSupplier) {
     var userService = createGenericService(app, "/p/api/user", "/p/api/user/:userId", "userId", null, userModel, null, deleteChildrenByFkSupplier);
 
     // express API setup
@@ -34,6 +34,8 @@ module.exports = function (app, deleteChildrenByFkSupplier) {
     passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
 
     // internal API setup
+    var genericFindById = userService.findById;
+    userService.findById = findById;
     userService.findByUsername = userService.findOneBy("username");
     userService.findByFacebookId = userService.findOneBy("facebook.id");
     userService.findByTicalcId = userService.findOneBy("ticalcId");
@@ -84,8 +86,7 @@ module.exports = function (app, deleteChildrenByFkSupplier) {
     }
 
     function deserializeUser(user, done) {
-        userService
-            .findById(user._id)
+        genericFindById(user._id)
             .then(
                 function (user) {
                     done(null, user);
@@ -142,6 +143,26 @@ module.exports = function (app, deleteChildrenByFkSupplier) {
     }
 
     // internal API
+
+    function findById(userId) {
+        return genericFindById(userId)
+            .populate('following')
+            .then(function (user) {
+                user.following = user.following.map(services.userService.reduce);
+                user.following.sort(function (user1, user2) {
+                    var name1 = user1.displaynName.toLowerCase();
+                    var name2 = user2.displaynName.toLowerCase();
+                    if (name1 < name2) {
+                        return -1;
+                    }
+                    if (name1 > name2) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                return user;
+            });
+    }
 
     function reduce(user) {
         return {

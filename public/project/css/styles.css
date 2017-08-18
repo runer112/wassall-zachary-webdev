@@ -73,6 +73,12 @@ label {
     clear: left;
 }
 
+.zw-btn-follow {
+    margin-top: 20px;
+    float: right;
+    clear: left;
+}
+
 .zw-h-center {
     text-align: center;
     font-size: 120%;

@@ -1,6 +1,6 @@
 module.exports = function (app) {
     var services = {};
-    services.userService = require("./services/user.service.server.js")(app, function () {
+    services.userService = require("./services/user.service.server.js")(app, services, function () {
         return null;
     });
     services.categoryService = require("./services/category.service.server.js")();
