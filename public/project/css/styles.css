@@ -209,8 +209,7 @@ div.rn-carousel-indicator span.active {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding-bottom: 5px;
-    margin-bottom: 5px;
+    padding: 5px;
 }
 
 /* app reviews */
