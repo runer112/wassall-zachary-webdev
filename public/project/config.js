@@ -154,5 +154,11 @@
                 controllerAs: "model",
                 resolve: {loggedin: checkLoggedin}
             })
+            .when("/user/:userId/app-review", {
+                templateUrl: "views/review/templates/user-app-review-list.view.client.html",
+                controller: "userAppReviewListController",
+                controllerAs: "model",
+                resolve: {loggedin: checkDeveloper}
+            })
     }
 })();

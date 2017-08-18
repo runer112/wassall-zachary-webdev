@@ -8,7 +8,8 @@
 
         var api = {
             createReview: genericService.create,
-            findReviewsByFollowing: findReviewsByFollowing
+            findReviewsByFollowing: findReviewsByFollowing,
+            findAppReviewsForUser: findAppReviewsForUser
         };
 
         return api;
@@ -23,6 +24,10 @@
 
         function findReviewsByFollowing(userId) {
             return $http.get("/p/api/user/" + userId + "/following-reviews");
+        }
+
+        function findAppReviewsForUser(userId) {
+            return $http.get("/p/api/user/" + userId + "/app-reviews");
         }
     }
 })();

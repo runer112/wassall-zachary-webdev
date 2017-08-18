@@ -11,7 +11,7 @@
         function init() {
             $rootScope.title = "My Apps";
 
-            appService.findAppsByAuthor($rootScope.user.ticalcId)
+            appService.findAppsByAuthor($rootScope.user._id)
                 .then(function (response) {
                     model.apps = response.data;
                 });

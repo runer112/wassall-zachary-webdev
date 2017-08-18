@@ -187,11 +187,18 @@ module.exports = function (app, services) {
     }
 
     function findByAuthor(userId) {
-        return model.find({authorIds: userId})
-            .then(function (apps) {
-                apps = apps.map(reduce);
-                return apps;
-            })
+        return services.userService.findByIdNoPopulate(userId)
+            .then(function (user) {
+                if (user && user.ticalcId) {
+                    return model.find({authorIds: user.ticalcId})
+                        .then(function (apps) {
+                            apps = apps.map(reduce);
+                            return apps;
+                        })
+                } else {
+                    return []
+                }
+            });
     }
 
     function update(appId, app) {
