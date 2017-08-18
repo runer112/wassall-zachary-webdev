@@ -44,6 +44,13 @@
                        type="text"
                        ng-change="model.successMessage = null"
                        class="form-control"/>
+                <input id="isAdmin"
+                       ng-model="model.user.isAdmin"
+                       type="checkbox"
+                       ng-if="user.isAdmin"
+                       ng-disabled="user._id === model.user._id"
+                       ng-change="model.successMessage = null"/>
+                <label for="isAdmin">Admin</label>
                 <div class="zw-group">
                     <button id="submitButton"
                             type="submit"
@@ -51,7 +58,7 @@
                         Save
                     </button>
                     <button id="deleteButton"
-                            ng-if="user.isAdmin"
+                            ng-if="user.isAdmin && !(user._id === model.user._id)"
                             ng-click="model.deleteUser()"
                             class="btn btn-block btn-danger">
                         Delete
