@@ -2,9 +2,8 @@ var mongoose = require("mongoose");
 
 var reviewSchema = mongoose.Schema({
     author: {type: mongoose.Schema.Types.ObjectId, ref: "PUserModel"},
-    app: Number,
-    authorName: String,
-    rating: Number,
+    app: {type: mongoose.Schema.Types.ObjectId, ref: "PAppModel"},
+    stars: Number,
     title: String,
     text: String,
     dateCreated: {type: Date, default: Date.now},

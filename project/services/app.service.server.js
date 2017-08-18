@@ -3,7 +3,7 @@ var model = require("../model/app/app.model.server.js");
 var request = require('request');
 var $q = require('q');
 
-module.exports = function (app, userService, categoryService) {
+module.exports = function (app, services) {
     var baseUrl = "/p/api/app";
     var entityUrl = "/p/api/app/:appId";
     var idParam = "appId";
@@ -16,6 +16,7 @@ module.exports = function (app, userService, categoryService) {
         find: find,
         findById: findById,
         findByTicalcId: findByTicalcId,
+        findOneAndUpdate: findOneAndUpdate,
         reduce: reduce,
     };
 
@@ -155,15 +156,19 @@ module.exports = function (app, userService, categoryService) {
         return deferred.promise;
     }
 
+    function findOneAndUpdate(query, update) {
+        return model.findOneAndUpdate(query, update);
+    }
+
     function reduce(app) {
-        var category = categoryService.findByAbbrev(app.category);
+        var category = services.categoryService.findByAbbrev(app.category);
         return {
             _id: app._id,
             name: app.name,
             description: app.description,
             category: app.category,
             categoryName: category.name,
-            rating: Math.random() * 4 + 1
+            stars: calculateRating(app)
         };
     }
 
@@ -236,7 +241,7 @@ module.exports = function (app, userService, categoryService) {
                     authorIds.push(authorId);
 
                     (function (authorId, displayName, email) {
-                        userService.findByTicalcId(authorId)
+                        services.userService.findByTicalcId(authorId)
                             .then(function (author) {
                                 if (!author) {
                                     author = {
@@ -244,7 +249,7 @@ module.exports = function (app, userService, categoryService) {
                                         displayName: displayName,
                                         email: email
                                     };
-                                    userService.create(author);
+                                    services.userService.create(author);
                                 }
                             });
                     })(authorId, displayName, email);
@@ -288,9 +293,9 @@ module.exports = function (app, userService, categoryService) {
     }
 
     function populateFull(app) {
-        return userService.find({ticalcId: {$in: app.authorIds}})
+        return services.userService.find({ticalcId: {$in: app.authorIds}})
             .then(function (authors) {
-                var category = categoryService.findByAbbrev(app.category);
+                var category = services.categoryService.findByAbbrev(app.category);
                 return {
                     _id: app._id,
                     name: app.name,
@@ -300,9 +305,14 @@ module.exports = function (app, userService, categoryService) {
                     category: app.category,
                     categoryName: category.name,
                     artifact: app.artifact,
+                    stars: calculateRating(app),
+                    ratingTotal: app.ratingTotal,
                     datePublished: app.datePublished,
-                    rating: Math.random() * 4 + 1
                 };
             });
+    }
+
+    function calculateRating(app) {
+        return app.ratingTotal ? (app.starTotal - app.ratingTotal) / app.ratingTotal + 1 : null;
     }
 };
