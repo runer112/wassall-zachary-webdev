@@ -73,9 +73,36 @@ label {
     clear: left;
 }
 
+.zw-h-center {
+    text-align: center;
+    font-size: 120%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+/* star rating */
+
 .zw-app-rating {
     margin-top: 5px;
     text-align: center;
+}
+
+.zw-app-rating-count {
+    vertical-align: top;
+}
+
+.zw-review-rating {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.ngrateit {
+    display: inline;
+    line-height: 25px;
+}
+
+.ngrateit-star {
+    background-size: cover;
 }
 
 /* carousel */
@@ -124,25 +151,22 @@ div.rn-carousel-indicator span.active {
 
 /* search */
 
-.ellipsis {
-}
-
-.zw-search-main {
+.zw-app-short-main {
     position: relative;
     margin-top: 10px;
     height: 25px;
     font-size: 110%;
 }
 
-.zw-search-category {
+.zw-app-short-category {
     position: absolute;
     display: inline;
     left: 0;
     width: 85px;
-    border-right: solid lightgray 1px;
+    border-right: solid #ccc 1px;
 }
 
-.zw-search-name {
+.zw-app-short-name {
     position: absolute;
     display: inline;
     left: 90px;
@@ -152,14 +176,14 @@ div.rn-carousel-indicator span.active {
     text-overflow: ellipsis;
 }
 
-.zw-search-rating {
+.zw-app-short-rating {
     position: absolute;
     display: inline;
     right: 0;
     top: 1px;
 }
 
-.zw-search-description {
+.zw-app-short-description {
     display: block;
     display: -webkit-box;
     max-height: 124px;
@@ -167,7 +191,38 @@ div.rn-carousel-indicator span.active {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    border-bottom: solid lightgray 2px;
+    border-bottom: solid #ccc 1px;
     padding-bottom: 5px;
     margin-bottom: 5px;
+}
+
+/* app reviews */
+
+.zw-review-short-main {
+    border-top: solid #eee 1px;
+    padding-top: 5px;
+    margin-top: 5px;
+    margin-bottom: 2px;
+}
+
+.zw-review-short-title {
+    font-size: 110%;
+}
+
+.zw-review-short-date {
+    float: right;
+    font-size: 110%;
+}
+
+.zw-review-short-rating > .ngrateit {
+    display: inline;
+}
+
+.zw-review-short-author {
+    vertical-align: top;
+}
+
+.zw-review-short-text {
+    display: block;
+    margin-top: 5px;
 }

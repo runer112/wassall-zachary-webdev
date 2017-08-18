@@ -295,20 +295,32 @@ module.exports = function (app, services) {
     function populateFull(app) {
         return services.userService.find({ticalcId: {$in: app.authorIds}})
             .then(function (authors) {
-                var category = services.categoryService.findByAbbrev(app.category);
-                return {
-                    _id: app._id,
-                    name: app.name,
-                    description: app.description,
-                    screenshots: app.screenshots,
-                    authors: authors,
-                    category: app.category,
-                    categoryName: category.name,
-                    artifact: app.artifact,
-                    stars: calculateRating(app),
-                    ratingTotal: app.ratingTotal,
-                    datePublished: app.datePublished,
-                };
+                return services.reviewService.findByApp(app._id)
+                    .populate('author')
+                    .then(function (reviews) {
+                        var reviewsWithText = reviews.filter(function (review) {
+                            return review.text;
+                        });
+                        reviewsWithText.forEach(function (review) {
+                            var author = services.userService.reduce(review.author);
+                            review.author = author;
+                        });
+                        var category = services.categoryService.findByAbbrev(app.category);
+                        return {
+                            _id: app._id,
+                            name: app.name,
+                            description: app.description,
+                            screenshots: app.screenshots,
+                            authors: authors,
+                            category: app.category,
+                            categoryName: category.name,
+                            artifact: app.artifact,
+                            stars: calculateRating(app),
+                            ratingTotal: app.ratingTotal,
+                            reviews: reviewsWithText,
+                            datePublished: app.datePublished,
+                        };
+                    });
             });
     }
 

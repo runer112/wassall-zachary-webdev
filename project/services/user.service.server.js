@@ -37,6 +37,7 @@ module.exports = function (app, deleteChildrenByFkSupplier) {
     userService.findByUsername = userService.findOneBy("username");
     userService.findByFacebookId = userService.findOneBy("facebook.id");
     userService.findByTicalcId = userService.findOneBy("ticalcId");
+    userService.reduce = reduce;
 
     return userService;
 
@@ -141,4 +142,11 @@ module.exports = function (app, deleteChildrenByFkSupplier) {
     }
 
     // internal API
+
+    function reduce(user) {
+        return {
+            _id: user._id,
+            displayName: user.displayName ? user.displayName : user.username
+        };
+    }
 };

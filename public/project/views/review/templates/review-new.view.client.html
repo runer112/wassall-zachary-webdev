@@ -1,0 +1,38 @@
+<div ng-include="'views/templates/navbar.view.client.html'"></div>
+
+<div class="container zw-with-nav">
+    <div class="zw-review-rating">
+        <ng-rate-it ng-model="model.review.stars"
+                    step="1"
+                    star-width="32"
+                    star-height="32"
+                    resetable="false"></ng-rate-it>
+    </div>
+    <form ng-submit="model.createReview()">
+        <label for="title">Title</label>
+        <input id="title"
+               ng-model="model.review.title"
+               type="text"
+               placeholder="Title"
+               required
+               class="form-control"/>
+        <label for="text">Review</label>
+        <textarea id="text"
+                  ng-model="model.review.text"
+                  placeholder="Review (Optional)"
+                  rows="10"
+                  class="form-control"></textarea>
+        <div class="zw-group">
+            <button id="submitButton"
+                    ng-disabled="!model.review.stars"
+                    type="submit"
+                    class="btn btn-block btn-success">
+                Create
+            </button>
+            <a class="btn btn-block btn-default"
+               ng-href="#!/app/{{model.appId}}">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>

@@ -8,9 +8,11 @@
            class="btn btn-primary">
             {{model.app.categoryName}} Download
         </a>
-        <ng-rate-it ng-model="model.app.stars"
-                    read-only="true"
-                    class="zw-app-rating"></ng-rate-it>
+        <div class="zw-app-rating">
+            <ng-rate-it ng-model="model.app.stars"
+                        read-only="true"></ng-rate-it>
+            <span class="zw-app-rating-count">({{model.app.ratingTotal}})</span>
+        </div>
     </div>
     <div ng-repeat="author in model.app.authors">
         <b>{{author.displayName}}</b>
@@ -38,6 +40,35 @@
              slides="model.app.screenshots"
              rn-carousel-index="screenshotsIndex"
              class="center">
+        </div>
+    </div>
+    <div>
+        <hr>
+        <div ng-if="user"
+             class="zw-h-center">
+            <a href="#!/app/{{model.appId}}/review/new">Write a review</a>
+        </div>
+        <div ng-if="!user"
+             class="zw-h-center">
+            <i>Log in to write a review</i>
+        </div>
+        <div ng-if="model.app.reviews.length">
+            <div ng-repeat="review in model.app.reviews">
+                <div class="zw-review-short-main">
+                    <span class="zw-review-short-title">{{review.title}}</span>
+                    <span class="zw-review-short-date">{{review.dateUpdated | date}}</span>
+                </div>
+                <span class="zw-review-short-rating">
+                    <ng-rate-it ng-model="review.stars"
+                                read-only="true"></ng-rate-it>
+                </span>
+                <span class="zw-review-short-author">by {{review.author.displayName}}</span>
+                <span class="zw-review-short-text">{{review.text}}</span>
+            </div>
+        </div>
+        <div ng-if="!model.app.reviews.length"
+             class="zw-h-center">
+            No text reviews!
         </div>
     </div>
 </div>

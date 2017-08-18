@@ -86,6 +86,13 @@
                 controllerAs: "model",
                 resolve: {loggedin: getLoggedin}
             })
+            // review routes
+            .when("/app/:appId/review/new", {
+                templateUrl: "views/review/templates/review-new.view.client.html",
+                controller: "newReviewController",
+                controllerAs: "model",
+                resolve: {loggedin: checkLoggedin}
+            })
         // .when("/user/:uid", {
         //     templateUrl: "views/user/templates/profile.view.client.html",
         //     controller: "profileController",

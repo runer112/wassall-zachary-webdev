@@ -15,7 +15,7 @@ module.exports = function (app, services, deleteChildrenByFkSupplier) {
     function create(review) {
         return genericCreate(review)
             .then(function (review) {
-                services.appService.findOneAndUpdate({
+                return services.appService.findOneAndUpdate({
                     _id: review.app
                 }, {
                     $inc: {
