@@ -5,10 +5,10 @@ var userSchema = mongoose.Schema({
         id:    String,
         token: String
     },
-    ticalcId: Number,
+    ticalcId: {type: Number, unique: true, sparse: true},
     isAdmin: Boolean,
     isGenerated: {type: Boolean, default: false},
-    username: String,
+    username: {type: String, unique: true, sparse: true},
     password: String,
     displayName: String,
     email: String,
