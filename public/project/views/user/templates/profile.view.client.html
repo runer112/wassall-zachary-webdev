@@ -26,11 +26,20 @@
                 <div ng-show="model.successMessage" class="alert alert-success">
                     {{model.successMessage}}
                 </div>
+                <div ng-show="model.errorMessage" class="alert alert-danger">
+                    {{model.errorMessage}}
+                </div>
                 <label for="username">Username</label>
                 <input id="username"
                        ng-model="model.user.username"
                        type="text"
                        readonly
+                       class="form-control"/>
+                <label for="ticalcId">ticalc ID</label>
+                <input id="ticalcId"
+                       ng-model="model.user.ticalcId"
+                       type="number"
+                       ng-change="model.successMessage = null"
                        class="form-control"/>
                 <label for="email">Email</label>
                 <input id="email"

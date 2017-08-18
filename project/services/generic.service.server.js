@@ -38,14 +38,15 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
     // express API
 
     function esend(res, promise) {
-        promise
-            .then(function (data) {
-                if (data) {
-                    res.json(data);
-                } else {
-                    res.sendStatus(404);
-                }
-            });
+        promise.then(function (data) {
+            if (data && typeof data === 'string') {
+                res.status(412).send(data);
+            } else if (data) {
+                res.json(data);
+            } else {
+                res.sendStatus(404);
+            }
+        });
     }
 
     function ecreate(req, res) {

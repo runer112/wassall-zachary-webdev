@@ -41,6 +41,8 @@ module.exports = function (app, services, deleteChildrenByFkSupplier) {
     userService.findByUsername = userService.findOneBy("username");
     userService.findByFacebookId = userService.findOneBy("facebook.id");
     userService.findByTicalcId = userService.findOneBy("ticalcId");
+    var genericUpdate = userService.update;
+    userService.update = update;
     userService.reduce = reduce;
 
     return userService;
@@ -160,8 +162,8 @@ module.exports = function (app, services, deleteChildrenByFkSupplier) {
             .then(function (user) {
                 user.following = user.following.map(services.userService.reduce);
                 user.following.sort(function (user1, user2) {
-                    var name1 = user1.displaynName.toLowerCase();
-                    var name2 = user2.displaynName.toLowerCase();
+                    var name1 = user1.displayName.toLowerCase();
+                    var name2 = user2.displayName.toLowerCase();
                     if (name1 < name2) {
                         return -1;
                     }
@@ -172,6 +174,26 @@ module.exports = function (app, services, deleteChildrenByFkSupplier) {
                 });
                 return user;
             });
+    }
+
+    function update(userId, user) {
+        if (user.ticalcId) {
+            return userService.findByTicalcId(user.ticalcId)
+                .then(function (existingUser) {
+                    if (!existingUser || existingUser._id == userId) {
+                        return genericUpdate(userId, user);
+                    } else if (existingUser.isGenerated) {
+                        return existingUser.remove()
+                            .then(function () {
+                                return genericUpdate(userId, user);
+                            });
+                    } else {
+                        return "That ticalc ID has already been claimed";
+                    }
+                });
+        } else {
+            return genericUpdate(userId, user);
+        }
     }
 
     function reduce(user) {

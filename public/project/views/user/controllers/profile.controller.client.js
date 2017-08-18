@@ -32,9 +32,13 @@
         }
 
         function updateUser() {
+            model.successMessage = null;
+            model.errorMessage = null;
             userService.updateUser(model.userId, model.user)
                 .then(function (response) {
                     model.successMessage = "Changes saved successfully.";
+                }, function (response) {
+                    model.errorMessage = response.data;
                 });
         }
 
