@@ -91,6 +91,10 @@ label {
     margin-bottom: 10px;
 }
 
+.zw-remove {
+    color: red;
+}
+
 /* star rating */
 
 .zw-app-rating {

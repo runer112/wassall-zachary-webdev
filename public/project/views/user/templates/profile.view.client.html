@@ -57,6 +57,13 @@
         <div ng-repeat="following in model.user.following"
              class="zw-list-item">
             <a href="#!/profile/{{following._id}}">{{following.displayName}}</a>
+            <p ng-if="user._id === model.user._id"
+               class="pull-right">
+                <a ng-click="model.unfollowUser(following._id)">
+                    <span class="glyphicon glyphicon-remove zw-remove">
+                    </span>
+                </a>
+            </p>
         </div>
     </div>
 </div>

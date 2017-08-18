@@ -7,6 +7,7 @@
         var model = this;
 
         model.updateUser = updateUser;
+        model.unfollowUser = unfollowUser;
         model.toggleFollowUser = toggleFollowUser;
         model.userId = $routeParams.userId;
         userService.findUserById(model.userId)
@@ -27,6 +28,15 @@
             userService.updateUser(model.userId, model.user)
                 .then(function (response) {
                     model.successMessage = "Changes saved successfully.";
+                });
+        }
+
+        function unfollowUser(userId) {
+            var index = model.user.following.indexOf(userId);
+            model.user.following.splice(index, 1);
+            userService.updateUser(model.user._id, model.user)
+                .then(function (response) {
+                    // do nothing
                 });
         }
 
