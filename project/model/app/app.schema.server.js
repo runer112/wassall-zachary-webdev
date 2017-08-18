@@ -8,6 +8,7 @@ var appSchema = mongoose.Schema({
     authorIds: [Number],
     category: String,
     artifact: String,
+    stars: Number,
     starTotal: {type: Number, default: 0},
     ratingTotal: {type: Number, default: 0},
     datePublished: Date

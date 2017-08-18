@@ -167,7 +167,8 @@ module.exports = function (app, services, deleteChildrenByFkSupplier) {
     function reduce(user) {
         return {
             _id: user._id,
-            displayName: user.displayName ? user.displayName : user.username
+            displayName: user.displayName ? user.displayName : user.username,
+            isGenerated: user.isGenerated
         };
     }
 };

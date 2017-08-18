@@ -29,18 +29,18 @@ module.exports = function (app, services, deleteChildrenByFkSupplier) {
     function create(review) {
         return genericCreate(review)
             .then(function (review) {
-                return services.appService.findOneAndUpdate({
-                    _id: review.app
-                }, {
-                    $inc: {
-                        starTotal: review.stars,
-                        ratingTotal: 1
-                    }
-                }).then(function () {
-                    return review;
-                }, function (err) {
-                    console.log(err);
-                });
+                return services.appService.findById(review.app)
+                    .then(function (app) {
+                        app.starTotal += review.stars;
+                        app.ratingTotal++;
+                        app.stars = (app.starTotal - app.ratingTotal) / app.ratingTotal + 1;
+                        return services.appService.update(app._id, app)
+                            .then(function (app) {
+                                return review;
+                            }, function (err) {
+                                console.log(err);
+                            });
+                    });
             });
     }
 

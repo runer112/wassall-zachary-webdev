@@ -16,7 +16,7 @@ module.exports = function (app, services) {
         find: find,
         findById: findById,
         findByTicalcId: findByTicalcId,
-        findOneAndUpdate: findOneAndUpdate,
+        update: update,
         reduce: reduce,
     };
 
@@ -156,8 +156,8 @@ module.exports = function (app, services) {
         return deferred.promise;
     }
 
-    function findOneAndUpdate(query, update) {
-        return model.findOneAndUpdate(query, update);
+    function update(appId, app) {
+        return model.update({_id: appId}, {$set: app});
     }
 
     function reduce(app) {
@@ -168,7 +168,7 @@ module.exports = function (app, services) {
             description: app.description,
             category: app.category,
             categoryName: category.name,
-            stars: calculateRating(app)
+            stars: app.stars
         };
     }
 
@@ -246,6 +246,7 @@ module.exports = function (app, services) {
                                 if (!author) {
                                     author = {
                                         ticalcId: authorId,
+                                        isGenerated: true,
                                         displayName: displayName,
                                         email: email
                                     };
@@ -315,16 +316,13 @@ module.exports = function (app, services) {
                             category: app.category,
                             categoryName: category.name,
                             artifact: app.artifact,
-                            stars: calculateRating(app),
+                            stars: app.stars,
+                            starTotal: app.starTotal,
                             ratingTotal: app.ratingTotal,
                             reviews: reviewsWithText,
                             datePublished: app.datePublished,
                         };
                     });
             });
-    }
-
-    function calculateRating(app) {
-        return app.ratingTotal ? (app.starTotal - app.ratingTotal) / app.ratingTotal + 1 : null;
     }
 };

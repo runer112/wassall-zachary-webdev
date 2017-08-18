@@ -1,7 +1,7 @@
 <div ng-include="'views/templates/navbar.view.client.html'"></div>
 
 <div class="container zw-with-nav">
-    <div ng-if="user && user._id !== model.user._id">
+    <div ng-if="!model.user.isGenerated && user && user._id !== model.user._id">
         <button id="followButton"
                 ng-click="model.toggleFollowUser()"
                 class="btn btn-default zw-btn-follow">
@@ -9,61 +9,68 @@
         </button>
     </div>
     <h3>{{model.user.displayName ? model.user.displayName : model.user.username}}</h3>
-    <div>
-        Joined {{model.user.dateCreated | date}}
+    <div ng-if="model.user.isGenerated">
+        Auto-generated app author
     </div>
-<!--    <ul class="nav nav-tabs">
-        <li class="active"><a href="#!/profile/{{model.userId}}">Details</a></li>
-        <li><a href="#!/profile/{{model.userId}}/following">Following</a></li>
-    </ul>-->
-    <div ng-if="user._id === model.user._id || user.isAdmin">
-        <form ng-submit="model.updateUser()">
-            <div ng-show="model.successMessage" class="alert alert-success">
-                {{model.successMessage}}
-            </div>
-            <label for="username">Username</label>
-            <input id="username"
-                   ng-model="model.user.username"
-                   type="text"
-                   readonly
-                   class="form-control"/>
-            <label for="email">Email</label>
-            <input id="email"
-                   ng-model="model.user.email"
-                   type="email"
-                   ng-change="model.successMessage = null"
-                   class="form-control"/>
-            <label for="displayname">Display Name</label>
-            <input id="displayname"
-                   ng-model="model.user.displayName"
-                   type="text"
-                   ng-change="model.successMessage = null"
-                   class="form-control"/>
-            <div class="zw-group">
-                <button id="submitButton"
-                        type="submit"
-                        class="btn btn-block btn-success">
-                    Save
-                </button>
-            </div>
-        </form>
+    <div ng-if="!model.user.isGenerated">
+        Joined {{model.user.dateCreated | date}}
+        <!--    <ul class="nav nav-tabs">
+                <li class="active"><a href="#!/profile/{{model.userId}}">Details</a></li>
+                <li><a href="#!/profile/{{model.userId}}/following">Following</a></li>
+            </ul>-->
+        <div ng-if="user._id === model.user._id || user.isAdmin">
+            <form ng-submit="model.updateUser()">
+                <div ng-show="model.successMessage" class="alert alert-success">
+                    {{model.successMessage}}
+                </div>
+                <label for="username">Username</label>
+                <input id="username"
+                       ng-model="model.user.username"
+                       type="text"
+                       readonly
+                       class="form-control"/>
+                <label for="email">Email</label>
+                <input id="email"
+                       ng-model="model.user.email"
+                       type="email"
+                       ng-change="model.successMessage = null"
+                       class="form-control"/>
+                <label for="displayname">Display Name</label>
+                <input id="displayname"
+                       ng-model="model.user.displayName"
+                       type="text"
+                       ng-change="model.successMessage = null"
+                       class="form-control"/>
+                <div class="zw-group">
+                    <button id="submitButton"
+                            type="submit"
+                            class="btn btn-block btn-success">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
     <div ng-if="!(user._id === model.user._id || user.isAdmin)">
-
+        <div ng-if="model.user.email">
+            <a href="mailto:{{model.user.email}}">{{model.user.email}}</a>
+        </div>
     </div>
-    <hr>
-    <h4>Following</h4>
-    <div class="zw-list">
-        <div ng-repeat="following in model.user.following"
-             class="zw-list-item">
-            <a href="#!/profile/{{following._id}}">{{following.displayName}}</a>
-            <p ng-if="user._id === model.user._id"
-               class="pull-right">
-                <a ng-click="model.unfollowUser(following._id)">
-                    <span class="glyphicon glyphicon-remove zw-remove">
-                    </span>
-                </a>
-            </p>
+    <div ng-if="!model.user.isGenerated">
+        <hr>
+        <h4>Following</h4>
+        <div class="zw-list">
+            <div ng-repeat="following in model.user.following"
+                 class="zw-list-item">
+                <a href="#!/profile/{{following._id}}">{{following.displayName}}</a>
+                <p ng-if="user._id === model.user._id"
+                   class="pull-right">
+                    <a ng-click="model.unfollowUser(following._id)">
+                        <span class="glyphicon glyphicon-remove zw-remove">
+                        </span>
+                    </a>
+                </p>
+            </div>
         </div>
     </div>
 </div>
