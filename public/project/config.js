@@ -77,7 +77,7 @@
         $http.get('/p/api/loggedin')
             .then(function (response) {
                 var user = response.data;
-                if (user && user.ticalcId >= 0) {
+                if (user && user.ticalcId) {
                     $rootScope.user = user;
                     deferred.resolve(user);
                 } else {
