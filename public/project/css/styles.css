@@ -166,26 +166,29 @@ div.rn-carousel-indicator span.active {
 
 /* search */
 
+.zw-search {
+    margin-bottom: 20px;
+}
+
 .zw-app-short-main {
     position: relative;
-    margin-top: 10px;
-    height: 25px;
+    padding-top: 8px;
+    height: 35px;
     font-size: 110%;
 }
 
 .zw-app-short-category {
     position: absolute;
     display: inline;
-    left: 0;
-    width: 85px;
-    border-right: solid #ccc 1px;
+    left: 10px;
 }
 
 .zw-app-short-name {
     position: absolute;
     display: inline;
     left: 90px;
-    right: 85px;
+    right: 90px;
+    top: 6px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -194,19 +197,18 @@ div.rn-carousel-indicator span.active {
 .zw-app-short-rating {
     position: absolute;
     display: inline;
-    right: 0;
-    top: 1px;
+    right: 5px;
+    top: 7px;
 }
 
 .zw-app-short-description {
     display: block;
     display: -webkit-box;
-    max-height: 124px;
-    -webkit-line-clamp: 6;
+    max-height: 112px;
+    -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    border-bottom: solid #ccc 1px;
     padding-bottom: 5px;
     margin-bottom: 5px;
 }

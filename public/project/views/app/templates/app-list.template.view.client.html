@@ -1,8 +1,8 @@
 <div ng-show="model.apps">
-    <div ng-repeat="app in model.apps">
-        <div class="zw-app-short-main">
-            <div class="zw-app-short-category">{{app.categoryName}}</div>
-            <div class="zw-app-short-name"><a href="#!/app/{{app._id}}">{{app.name}}</a></div>
+    <div ng-repeat="app in model.apps" class="ng-scope panel panel-default">
+        <div class="zw-app-short-main panel-heading">
+            <span class="zw-app-short-category label label-primary">{{app.categoryName}}</span>
+            <span class="zw-app-short-name"><a href="#!/app/{{app._id}}">{{app.name}}</a></span>
             <div class="zw-app-short-rating">
                 <ng-rate-it ng-model="app.stars"
                             read-only="true"></ng-rate-it>
