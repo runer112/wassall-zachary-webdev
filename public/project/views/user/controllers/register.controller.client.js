@@ -4,12 +4,16 @@
         .controller("registerController", registerController);
 
     function registerController($rootScope, $scope, $location, userService) {
-        $rootScope.title = "Register";
-
         var model = this;
 
         model.register = register;
         model.validatePassword = validatePassword;
+
+        init();
+
+        function init() {
+            $rootScope.title = "Register";
+        }
 
         function register() {
             validateUsername(model.user.username, registerCallback);

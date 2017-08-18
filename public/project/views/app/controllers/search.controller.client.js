@@ -4,21 +4,26 @@
         .controller("searchController", searchController);
 
     function searchController($rootScope, $routeParams, $location, appService) {
-        $rootScope.title = "Search";
-
         var model = this;
 
         model.search = search;
-        model.q = $routeParams.q;
-        model.rating = 4;
 
-        // if the url includes a query string, fetch the search results
-        if (model.q) {
-            // if the query string is the same as the last search, return the last results
-            if ($rootScope.lastSearch && $rootScope.lastSearch.q === model.q && $rootScope.lastSearch.apps) {
-                model.apps = $rootScope.lastSearch.apps;
-            } else {
-                doSearch(model.q);
+        init();
+
+        function init() {
+            $rootScope.title = "Search";
+
+            model.q = $routeParams.q;
+            model.rating = 4;
+
+            // if the url includes a query string, fetch the search results
+            if (model.q) {
+                // if the query string is the same as the last search, return the last results
+                if ($rootScope.lastSearch && $rootScope.lastSearch.q === model.q && $rootScope.lastSearch.apps) {
+                    model.apps = $rootScope.lastSearch.apps;
+                } else {
+                    doSearch(model.q);
+                }
             }
         }
 

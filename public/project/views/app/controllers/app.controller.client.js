@@ -6,13 +6,17 @@
     function appController($rootScope, $routeParams, appService) {
         var model = this;
 
-        model.appId = $routeParams.appId;
+        init();
 
-        appService.findAppById(model.appId)
-            .then(function (response) {
-                var app = response.data;
-                model.app  = app;
-                $rootScope.title = app.name;
-            });
+        function init() {
+            model.appId = $routeParams.appId;
+
+            appService.findAppById(model.appId)
+                .then(function (response) {
+                    var app = response.data;
+                    model.app  = app;
+                    $rootScope.title = app.name;
+                });
+        }
     }
 })();

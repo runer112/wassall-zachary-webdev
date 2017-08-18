@@ -10,20 +10,26 @@
         model.deleteUser = deleteUser;
         model.unfollowUser = unfollowUser;
         model.toggleFollowUser = toggleFollowUser;
-        model.userId = $routeParams.userId;
-        userService.findUserById(model.userId)
-            .then(function (response) {
-                model.user = response.data;
 
-                if (model.user._id === $rootScope.user._id) {
-                    $rootScope.title = "Profile";
-                } else {
-                    $rootScope.title = (model.user.displayName ? model.user.displayName : model.user.username)
-                        + "'s Profile";
-                }
+        init();
 
-                updateFollowButton();
-            });
+        function init() {
+            model.userId = $routeParams.userId;
+
+            userService.findUserById(model.userId)
+                .then(function (response) {
+                    model.user = response.data;
+
+                    if (model.user._id === $rootScope.user._id) {
+                        $rootScope.title = "Profile";
+                    } else {
+                        $rootScope.title = (model.user.displayName ? model.user.displayName : model.user.username)
+                            + "'s Profile";
+                    }
+
+                    updateFollowButton();
+                });
+        }
 
         function updateUser() {
             userService.updateUser(model.userId, model.user)

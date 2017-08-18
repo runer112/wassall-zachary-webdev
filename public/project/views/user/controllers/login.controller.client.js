@@ -4,11 +4,15 @@
         .controller("loginController", loginController);
 
     function loginController($rootScope, $location, userService) {
-        $rootScope.title = "Login";
-
         var model = this;
 
         model.login = login;
+
+        init();
+
+        function init() {
+            $rootScope.title = "Login";
+        }
 
         function login(user) {
             userService.login(user)
