@@ -1,0 +1,9 @@
+<div ng-include="'views/templates/navbar.view.client.html'"></div>
+
+<div class="container zw-with-nav">
+    <h3>My Apps</h3>
+    <div ng-include="'views/app/templates/app-list.template.view.client.html'"></div>
+    <div ng-show="!model.apps">
+        You haven't authored any apps
+    </div>
+</div>

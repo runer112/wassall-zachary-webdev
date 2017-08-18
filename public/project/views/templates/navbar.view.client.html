@@ -7,31 +7,43 @@
                     </span>
                 </a>
             </p>
-            <button type="button" class="navbar-toggle navbar-right" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+            <button type="button" class="navbar-toggle navbar-right" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false"
                     aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <div class="navbar-brand">
-                ticalc App Store
-            </div>
+            <a href="#!/">
+                <div class="navbar-brand">ticalc App Store</div>
+            </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse" aria-expanded="false">
             <ul class="nav navbar-nav">
-                <li ng-class="title === 'Home' ? 'active' : ''"><a href="#!/">Home</a></li>
                 <li ng-class="title === 'Search' ? 'active' : ''"><a href="#!/app">Search</a></li>
                 <li ng-class="title === 'Login' ? 'active' : ''" ng-if="!user"><a href="#!/login">Login</a></li>
-                <li ng-class="title === 'Register' ? 'active' : ''" ng-if="!user"><a href="#!/register">Register</a></li>
-                <li ng-class="title === 'Review Feed' ? 'active' : ''" ng-if="user"><a href="#!/review-feed">Review Feed</a></li>
+                <li ng-class="title === 'Register' ? 'active' : ''" ng-if="!user"><a href="#!/register">Register</a>
+                </li>
+                <li ng-class="title === 'Review Feed' ? 'active' : ''" ng-if="user"><a href="#!/review-feed">Review
+                    Feed</a></li>
                 <li ng-if="user.isAdmin" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Admin <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#!/admin/users">Users</a></li>
                     </ul>
                 </li>
-                <li ng-class="title === 'Profile' ? 'active' : ''" ng-if="user"><a href="#!/profile/{{user._id}}">Profile</a></li>
+                <li ng-if="user.ticalcId" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Developer <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#!/user/{{user._id}}/app">My Apps</a></li>
+                        <li><a href="#!/user/{{user._id}}/app-review">Reviews</a></li>
+                    </ul>
+                </li>
+                <li ng-class="title === 'Profile' ? 'active' : ''" ng-if="user"><a href="#!/profile/{{user._id}}">Profile</a>
+                </li>
                 <li ng-if="user"><a ng-click="logout()">Logout</a></li>
             </ul>
         </div>

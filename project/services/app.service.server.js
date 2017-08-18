@@ -12,12 +12,14 @@ module.exports = function (app, services) {
     app.get(baseUrl, efind);
     app.get(entityUrl, efindById);
     app.get(baseUrl + "-top", efindTop);
+    app.get("/p/api/user/:userId/app", efindByAuthor);
 
     var api = {
         find: find,
         findById: findById,
         findByTicalcId: findByTicalcId,
         findTop: findTop,
+        findByAuthor: findByAuthor,
         update: update,
         reduce: reduce,
     };
@@ -51,6 +53,12 @@ module.exports = function (app, services) {
 
     function efindTop(req, res) {
         var promise = api.findTop();
+        esend(res, promise);
+    }
+
+    function efindByAuthor(req, res) {
+        var userId = req.params.userId;
+        var promise = api.findByAuthor(userId);
         esend(res, promise);
     }
 
@@ -176,6 +184,14 @@ module.exports = function (app, services) {
                 apps = apps.map(reduce);
                 return apps;
             });
+    }
+
+    function findByAuthor(userId) {
+        return model.find({authorIds: userId})
+            .then(function (apps) {
+                apps = apps.map(reduce);
+                return apps;
+            })
     }
 
     function update(appId, app) {

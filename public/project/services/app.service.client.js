@@ -10,6 +10,7 @@
             search: search,
             findTopApps: findTopApps,
             findAppById: genericService.findById,
+            findAppsByAuthor: findAppsByAuthor,
         };
 
         return api;
@@ -31,6 +32,10 @@
 
         function findTopApps() {
             return $http.get(getBaseUrl() + "-top");
+        }
+
+        function findAppsByAuthor(userId) {
+            return $http.get("/p/api/user/" + userId + "/app");
         }
     }
 })();

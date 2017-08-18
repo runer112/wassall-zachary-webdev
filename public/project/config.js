@@ -72,6 +72,22 @@
         return deferred.promise;
     };
 
+    var checkDeveloper = function ($q, $timeout, $http, $location, $rootScope) {
+        var deferred = $q.defer();
+        $http.get('/p/api/loggedin')
+            .then(function (response) {
+                var user = response.data;
+                if (user && user.ticalcId >= 0) {
+                    $rootScope.user = user;
+                    deferred.resolve(user);
+                } else {
+                    deferred.reject();
+                    $location.url('/');
+                }
+            });
+        return deferred.promise;
+    };
+
     function configuration($routeProvider) {
         $routeProvider
         // home route
@@ -118,6 +134,12 @@
                 controller: "appController",
                 controllerAs: "model",
                 resolve: {loggedin: getLoggedin}
+            })
+            .when("/user/:userId/app", {
+                templateUrl: "views/app/templates/user-app-list.view.client.html",
+                controller: "userAppListController",
+                controllerAs: "model",
+                resolve: {loggedin: checkDeveloper}
             })
             // review routes
             .when("/review-feed", {
