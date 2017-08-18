@@ -9,6 +9,9 @@
         </button>
     </div>
     <h3>{{model.user.displayName ? model.user.displayName : model.user.username}}</h3>
+    <div ng-if="model.user.isAdmin">
+        Admin
+    </div>
     <div ng-if="model.user.isGenerated">
         Auto-generated app author
     </div>
@@ -46,6 +49,12 @@
                             type="submit"
                             class="btn btn-block btn-success">
                         Save
+                    </button>
+                    <button id="deleteButton"
+                            ng-if="user.isAdmin"
+                            ng-click="model.deleteUser()"
+                            class="btn btn-block btn-danger">
+                        Delete
                     </button>
                 </div>
             </form>

@@ -25,6 +25,12 @@
                 <li ng-class="title === 'Login' ? 'active' : ''" ng-if="!user"><a href="#!/login">Login</a></li>
                 <li ng-class="title === 'Register' ? 'active' : ''" ng-if="!user"><a href="#!/register">Register</a></li>
                 <li ng-class="title === 'Review Feed' ? 'active' : ''" ng-if="user"><a href="#!/review-feed">Review Feed</a></li>
+                <li ng-if="user.isAdmin" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#!/admin/users">Users</a></li>
+                    </ul>
+                </li>
                 <li ng-class="title === 'Profile' ? 'active' : ''" ng-if="user"><a href="#!/profile/{{user._id}}">Profile</a></li>
                 <li ng-if="user"><a ng-click="logout()">Logout</a></li>
             </ul>

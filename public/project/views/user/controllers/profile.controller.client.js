@@ -7,6 +7,7 @@
         var model = this;
 
         model.updateUser = updateUser;
+        model.deleteUser = deleteUser;
         model.unfollowUser = unfollowUser;
         model.toggleFollowUser = toggleFollowUser;
         model.userId = $routeParams.userId;
@@ -28,6 +29,13 @@
             userService.updateUser(model.userId, model.user)
                 .then(function (response) {
                     model.successMessage = "Changes saved successfully.";
+                });
+        }
+
+        function deleteUser() {
+            userService.deleteUser(model.userId)
+                .then(function (response) {
+                    $location.url("/admin/users");
                 });
         }
 

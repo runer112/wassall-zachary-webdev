@@ -56,6 +56,22 @@
         return deferred.promise;
     };
 
+    var checkAdmin = function ($q, $timeout, $http, $location, $rootScope) {
+        var deferred = $q.defer();
+        $http.get('/p/api/loggedin')
+            .then(function (response) {
+                var user = response.data;
+                if (user && user.isAdmin) {
+                    $rootScope.user = user;
+                    deferred.resolve(user);
+                } else {
+                    deferred.reject();
+                    $location.url('/');
+                }
+            });
+        return deferred.promise;
+    };
+
     function configuration($routeProvider) {
         $routeProvider
         // home route
@@ -83,6 +99,12 @@
                 controller: "profileController",
                 controllerAs: "model",
                 resolve: {loggedin: getLoggedin}
+            })
+            .when("/admin/users", {
+                templateUrl: "views/user/templates/user-list.view.client.html",
+                controller: "userListController",
+                controllerAs: "model",
+                resolve: {loggedin: checkAdmin}
             })
             // app routes
             .when("/app", {

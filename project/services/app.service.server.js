@@ -297,6 +297,7 @@ module.exports = function (app, services) {
         return services.userService.find({ticalcId: {$in: app.authorIds}})
             .then(function (authors) {
                 return services.reviewService.findByApp(app._id)
+                    .sort({dateUpdated: -1})
                     .populate('author')
                     .then(function (reviews) {
                         var reviewsWithText = reviews.filter(function (review) {

@@ -34,6 +34,8 @@ module.exports = function (app, services, deleteChildrenByFkSupplier) {
     passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
 
     // internal API setup
+    var genericFind = userService.find;
+    userService.find = find;
     userService.findByIdNoPopulate = userService.findById;
     userService.findById = findById;
     userService.findByUsername = userService.findOneBy("username");
@@ -144,6 +146,14 @@ module.exports = function (app, services, deleteChildrenByFkSupplier) {
 
     // internal API
 
+    function find(query) {
+        return genericFind(query)
+            .then(function (users) {
+                users = users.map(reduce);
+                return users;
+            });
+    }
+
     function findById(userId) {
         return userService.findByIdNoPopulate(userId)
             .populate('following')
@@ -165,6 +175,9 @@ module.exports = function (app, services, deleteChildrenByFkSupplier) {
     }
 
     function reduce(user) {
+        if (!user) {
+            return null;
+        }
         return {
             _id: user._id,
             displayName: user.displayName ? user.displayName : user.username,

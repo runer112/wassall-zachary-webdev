@@ -8,6 +8,7 @@
 
         var api = {
             createUser: genericService.create,
+            findUsers: genericService.query,
             findUserById: genericService.findById,
             findUserByUsername: genericService.queryBy("username"),
             updateUser: genericService.update,

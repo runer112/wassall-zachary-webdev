@@ -7,7 +7,7 @@ var userSchema = mongoose.Schema({
     },
     ticalcId: Number,
     isAdmin: Boolean,
-    isGenerated: Boolean,
+    isGenerated: {type: Boolean, default: false},
     username: String,
     password: String,
     displayName: String,
