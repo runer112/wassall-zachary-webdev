@@ -1,0 +1,24 @@
+<div ng-include="'views/templates/navbar.view.client.html'"></div>
+
+<div class="container zw-with-nav">
+    <h3>Recent reviews from followed users</h3>
+    <div ng-if="model.reviews.length">
+        <div ng-repeat="review in model.reviews">
+            <div class="zw-review-short-main">
+                <div class="zw-review-short-app-name"><a href="#!/app/{{review.app._id}}">{{review.app.name}}</a></div>
+                <span class="zw-review-short-title">{{review.title}}</span>
+                <span class="zw-review-short-date">{{review.dateUpdated | date}}</span>
+            </div>
+            <span class="zw-review-short-rating">
+                <ng-rate-it ng-model="review.stars"
+                            read-only="true"></ng-rate-it>
+            </span>
+            <span class="zw-review-short-author">by {{review.author.displayName}}</span>
+            <span class="zw-review-short-text">{{review.text}}</span>
+        </div>
+    </div>
+    <div ng-if="!model.reviews.length"
+         class="zw-h-center">
+        No reviews! Try following some users who have written reviews.
+    </div>
+</div>

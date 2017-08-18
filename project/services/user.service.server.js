@@ -34,7 +34,7 @@ module.exports = function (app, services, deleteChildrenByFkSupplier) {
     passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
 
     // internal API setup
-    var genericFindById = userService.findById;
+    userService.findByIdNoPopulate = userService.findById;
     userService.findById = findById;
     userService.findByUsername = userService.findOneBy("username");
     userService.findByFacebookId = userService.findOneBy("facebook.id");
@@ -86,7 +86,7 @@ module.exports = function (app, services, deleteChildrenByFkSupplier) {
     }
 
     function deserializeUser(user, done) {
-        genericFindById(user._id)
+        userService.findByIdNoPopulate(user._id)
             .then(
                 function (user) {
                     done(null, user);
@@ -145,7 +145,7 @@ module.exports = function (app, services, deleteChildrenByFkSupplier) {
     // internal API
 
     function findById(userId) {
-        return genericFindById(userId)
+        return userService.findByIdNoPopulate(userId)
             .populate('following')
             .then(function (user) {
                 user.following = user.following.map(services.userService.reduce);

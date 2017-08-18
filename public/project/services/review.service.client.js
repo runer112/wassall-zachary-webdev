@@ -7,7 +7,8 @@
         var genericService = createGenericService($http, getBaseUrl, getEntityUrl);
 
         var api = {
-            createReview: genericService.create
+            createReview: genericService.create,
+            findReviewsByFollowing: findReviewsByFollowing
         };
 
         return api;
@@ -18,6 +19,10 @@
 
         function getEntityUrl(entityId) {
             return "/p/api/review/" + entityId;
+        }
+
+        function findReviewsByFollowing(userId) {
+            return $http.get("/p/api/user/" + userId + "/following-reviews");
         }
     }
 })();

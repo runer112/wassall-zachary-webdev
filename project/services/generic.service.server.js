@@ -20,6 +20,7 @@ module.exports = function (app, baseUrl_, entityUrl_, idParam_, fkParam_, model_
     app.delete(entityUrl, edelete);
 
     var api = {
+        esend: esend,
         create: create,
         find: find,
         findBy: findBy,
