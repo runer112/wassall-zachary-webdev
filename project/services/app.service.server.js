@@ -346,7 +346,7 @@ module.exports = function (app, services) {
                     .populate('author')
                     .then(function (reviews) {
                         var reviewsWithText = reviews.filter(function (review) {
-                            return review.text;
+                            return review.title || review.text;
                         });
                         reviewsWithText.forEach(function (review) {
                             var author = services.userService.reduce(review.author);
