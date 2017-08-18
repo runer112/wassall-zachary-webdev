@@ -52,6 +52,7 @@ module.exports = function (app, services, deleteChildrenByFkSupplier) {
                     .populate('app')
                     .populate('author')
                     .sort({dateUpdated: -1})
+                    .limit(10)
                     .then(function (reviews) {
                         reviews.forEach(function (review) {
                             var author = services.userService.reduce(review.author);
