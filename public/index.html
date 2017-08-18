@@ -2,36 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Web Dev Course Home Page</title>
+    <title>Zachary Wassall - Web Development @ Northeastern University</title>
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Custom styles -->
+    <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Web Dev Course Home Page</h1>
-
-    <p>
-        This is your website's home page. Your home page should have a picture of yourself, link to your assignments,
-        link to your final project implementation on Heroku, link to your GitHub,
-        link to a 5 minute video demoing your project. Your home page should look
-        spectacular. You should feel proud to share your homepage with your potential employer.
-        I should feel proud to share your homepage with my colleagues.
-    </p>
-
-    <h2>Required links</h2>
-    <ul>
-        <li>
-            <a href="project/index.html">Project</a>
-        </li>
-        <li>
-            <a href="assignment/">Assignment</a>
-        </li>
-        <li>
-            <a href="test/index.html">Test MongoDB</a>
-        </li>
-        <li>
-            <a href="https://github.com/runer112/wassall-zachary-webdev">Private repository at GitHub.com</a>
-        </li>
-        <li>
-            <a href="/lectures">Lectures</a>
-        </li>
-    </ul>
+    <div class="container">
+        <h2>Hello!</h2>
+        <p>
+            I, Zachary Wassall, am a graduate student at Northeasten University. This site is a product of the Web Development class I am taking concurrently with working at Black Duck Software in Burlington, Massachusetts, where I'm a backend (Java) software developer. My hope is to become more familiar with the frontend side of software development.
+        </p>
+        <p>
+            My work for the class can be found below. For reference the project sources data from <a href="http://www.ticalc.org/">ticalc.org</a>&mdash;specifically, the <a href="http://www.ticalc.org/search/">search</a> and file detail pages. No special API is used; the server makes normal HTTP requests and parses the HTTP responses to form its own "API."
+        </p>
+        <hr>
+        <a href="/project/">
+            <div class="jumbotron zw-jumbolink">
+                <h3 class="zw-no-margin">Final Project: ticalc App Store</h3>
+            </div>
+        </a>
+        <a href="/assignment/#!/login">
+            <div class="jumbotron zw-jumbolink">
+                <h3 class="zw-no-margin">Ongoing Assignment: Web App Maker</h3>
+            </div>
+        </a>
+        <a href="https://github.com/runer112/wassall-zachary-webdev/">
+            <div class="jumbotron zw-jumbolink">
+                <h3 class="zw-no-margin">GitHub Repository</h3>
+            </div>
+        </a>
+    </div>
 </body>
 </html>
