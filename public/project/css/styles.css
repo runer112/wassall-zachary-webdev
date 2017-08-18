@@ -183,6 +183,10 @@ div.rn-carousel-indicator span.active {
     left: 10px;
 }
 
+span.zw-app-short-category {
+    padding: 3px 6px;
+}
+
 .zw-app-short-name {
     position: absolute;
     display: inline;
