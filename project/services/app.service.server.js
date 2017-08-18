@@ -11,11 +11,13 @@ module.exports = function (app, services) {
     // http handlers
     app.get(baseUrl, efind);
     app.get(entityUrl, efindById);
+    app.get(baseUrl + "-top", efindTop);
 
     var api = {
         find: find,
         findById: findById,
         findByTicalcId: findByTicalcId,
+        findTop: findTop,
         update: update,
         reduce: reduce,
     };
@@ -44,6 +46,11 @@ module.exports = function (app, services) {
     function efindById(req, res) {
         var entityId = req.params[idParam];
         var promise = api.findById(entityId);
+        esend(res, promise);
+    }
+
+    function efindTop(req, res) {
+        var promise = api.findTop();
         esend(res, promise);
     }
 
@@ -154,6 +161,17 @@ module.exports = function (app, services) {
             });
 
         return deferred.promise;
+    }
+
+    function findTop() {
+        return model
+            .find({stars: {$ne: null}})
+            .sort({stars: -1})
+            .limit(10)
+            .then(function (apps) {
+                apps = apps.map(reduce);
+                return apps;
+            });
     }
 
     function update(appId, app) {

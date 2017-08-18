@@ -8,6 +8,7 @@
 
         var api = {
             search: search,
+            findTopApps: findTopApps,
             findAppById: genericService.findById,
         };
 
@@ -26,6 +27,10 @@
                 q: searchString
             };
             return genericService.query(null, query);
+        }
+
+        function findTopApps() {
+            return $http.get(getBaseUrl() + "-top");
         }
     }
 })();

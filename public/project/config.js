@@ -76,8 +76,8 @@
         $routeProvider
         // home route
             .when("/", {
-                templateUrl: "views/home/templates/home.view.client.html",
-                controller: "homeController",
+                templateUrl: "views/app/templates/top-app-list.view.client.html",
+                controller: "topAppListController",
                 controllerAs: "model",
                 resolve: {loggedin: getLoggedin}
             })
