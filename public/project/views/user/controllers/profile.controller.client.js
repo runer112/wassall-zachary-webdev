@@ -4,26 +4,23 @@
         .controller("profileController", profileController);
 
     function profileController($rootScope, $location, $routeParams, userService) {
-        $rootScope.title = "Profile";
-
         var model = this;
 
-        model.logout = logout;
         model.updateUser = updateUser;
-        model.uid = $rootScope.user._id;
-        model.user = $rootScope.user;
-
-        function logout() {
-            userService.logout()
-                .then(
-                    function (response) {
-                        $rootScope.user = null;
-                        $location.url("/");
-                    });
-        }
+        model.userId = $routeParams.userId;
+        userService.findUserById(model.userId)
+            .then(function (response) {
+                model.user = response.data;
+                if (model.user._id === $rootScope.user._id) {
+                    $rootScope.title = "Profile";
+                } else {
+                    $rootScope.title = (model.user.displayName ? model.user.displayName : model.user.username)
+                        + "'s Profile";
+                }
+            });
 
         function updateUser() {
-            userService.updateUser(model.uid, model.user)
+            userService.updateUser(model.userId, model.user)
                 .then(function (response) {
                     model.successMessage = "Changes saved successfully.";
                     $rootScope.user = response.data;

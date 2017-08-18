@@ -80,6 +80,11 @@ label {
     margin-bottom: 20px;
 }
 
+.nav-tabs {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 /* star rating */
 
 .zw-app-rating {

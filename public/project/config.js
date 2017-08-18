@@ -1,7 +1,17 @@
 (function () {
     angular
         .module("ticalcAppStore")
-        .config(configuration);
+        .config(configuration)
+        .run(function ($rootScope, $route, userService) {
+            $rootScope.logout = function () {
+                userService.logout()
+                    .then(
+                        function (response) {
+                            $rootScope.user = null;
+                            $route.reload();
+                        });
+            }
+        });
 
     var getLoggedin = function ($q, $timeout, $http, $location, $rootScope) {
         var deferred = $q.defer();
@@ -48,7 +58,7 @@
 
     function configuration($routeProvider) {
         $routeProvider
-            // home route
+        // home route
             .when("/", {
                 templateUrl: "views/home/templates/home.view.client.html",
                 controller: "homeController",
@@ -68,17 +78,18 @@
                 controllerAs: "model",
                 resolve: {loggedin: checkNotLoggedin}
             })
-            .when("/profile", {
+            .when("/profile/:userId", {
                 templateUrl: "views/user/templates/profile.view.client.html",
                 controller: "profileController",
                 controllerAs: "model",
-                resolve: {loggedin: checkLoggedin}
+                resolve: {loggedin: getLoggedin}
             })
             // app routes
             .when("/app", {
                 templateUrl: "views/app/templates/search.view.client.html",
                 controller: "searchController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {loggedin: getLoggedin}
             })
             .when("/app/:appId", {
                 templateUrl: "views/app/templates/app.view.client.html",

@@ -1,38 +1,43 @@
 <div ng-include="'views/templates/navbar.view.client.html'"></div>
 
 <div class="container zw-with-nav">
-    <form ng-submit="model.updateUser()">
-        <div ng-show="model.successMessage" class="alert alert-success">
-            {{model.successMessage}}
-        </div>
-        <label for="username">Username</label>
-        <input id="username"
-               ng-model="model.user.username"
-               type="text"
-               readonly
-               class="form-control"/>
-        <label for="email">Email</label>
-        <input id="email"
-               ng-model="model.user.email"
-               type="email"
-               ng-change="model.successMessage = null"
-               class="form-control"/>
-        <label for="displayname">Display Name</label>
-        <input id="displayname"
-               ng-model="model.user.displayName"
-               type="text"
-               ng-change="model.successMessage = null"
-               class="form-control"/>
-        <div class="zw-group">
-            <button id="submitButton"
-                    type="submit"
-                    class="btn btn-block btn-success">
-                Save
-            </button>
-            <a ng-click="model.logout()"
-               class="btn btn-block btn-danger">
-                Logout
-            </a>
-        </div>
-    </form>
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#!/profile/{{model.userId}}">Details</a></li>
+        <li><a href="#!/profile/{{model.userId}}/followed-reviewers">Followed Reviewers</a></li>
+    </ul>
+    <div ng-if="user._id === model.user._id || user.isAdmin">
+        <form ng-submit="model.updateUser()">
+            <div ng-show="model.successMessage" class="alert alert-success">
+                {{model.successMessage}}
+            </div>
+            <label for="username">Username</label>
+            <input id="username"
+                   ng-model="model.user.username"
+                   type="text"
+                   readonly
+                   class="form-control"/>
+            <label for="email">Email</label>
+            <input id="email"
+                   ng-model="model.user.email"
+                   type="email"
+                   ng-change="model.successMessage = null"
+                   class="form-control"/>
+            <label for="displayname">Display Name</label>
+            <input id="displayname"
+                   ng-model="model.user.displayName"
+                   type="text"
+                   ng-change="model.successMessage = null"
+                   class="form-control"/>
+            <div class="zw-group">
+                <button id="submitButton"
+                        type="submit"
+                        class="btn btn-block btn-success">
+                    Save
+                </button>
+            </div>
+        </form>
+    </div>
+    <div ng-if="!(user._id === model.user._id || user.isAdmin)">
+        hello
+    </div>
 </div>

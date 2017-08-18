@@ -24,8 +24,8 @@
                 <li ng-class="title === 'Search' ? 'active' : ''"><a href="#!/app">Search</a></li>
                 <li ng-class="title === 'Login' ? 'active' : ''" ng-if="!user"><a href="#!/login">Login</a></li>
                 <li ng-class="title === 'Register' ? 'active' : ''" ng-if="!user"><a href="#!/register">Register</a></li>
-                <li ng-class="title === 'Profile' ? 'active' : ''" ng-if="user"><a href="#!/profile">Profile</a></li>
-                <li ng-if="user"><a ng-click="model.logout()">Logout</a></li>
+                <li ng-class="title === 'Profile' ? 'active' : ''" ng-if="user"><a href="#!/profile/{{user._id}}">Profile</a></li>
+                <li ng-if="user"><a ng-click="logout()">Logout</a></li>
             </ul>
         </div>
     </div>
