@@ -18,17 +18,5 @@
     <div ng-show="model.errorMessage" class="alert alert-danger">
         {{model.errorMessage}}
     </div>
-    <div ng-show="model.apps">
-        <div ng-repeat="app in model.apps">
-            <div class="zw-app-short-main">
-                <div class="zw-app-short-category">{{app.categoryName}}</div>
-                <div class="zw-app-short-name"><a href="#!/app/{{app._id}}">{{app.name}}</a></div>
-                <div class="zw-app-short-rating">
-                    <ng-rate-it ng-model="app.stars"
-                                read-only="true"></ng-rate-it>
-                </div>
-            </div>
-            <div class="zw-app-short-description">{{app.description}}</div>
-        </div>
-    </div>
+    <div ng-include="'views/app/templates/app-list.template.view.client.html'"></div>
 </div>

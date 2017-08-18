@@ -91,6 +91,10 @@ module.exports = function (app, services) {
                         ticalcIds.push(ticalcId);
                     }
 
+                    if (!ticalcIds.length) {
+                        deferred.resolve([]);
+                    }
+
                     var appsMap = {};
                     var checkDone = function () {
                         if (Object.keys(appsMap).length === ticalcIds.length) {
