@@ -85,7 +85,7 @@
     <div ng-if="!model.user.isGenerated">
         <hr>
         <h4>Following</h4>
-        <div class="zw-list">
+        <div ng-if="model.user.following.length" class="zw-list">
             <div ng-repeat="following in model.user.following"
                  class="zw-list-item">
                 <a href="#!/profile/{{following._id}}">{{following.displayName}}</a>
@@ -97,6 +97,9 @@
                     </a>
                 </p>
             </div>
+        </div>
+        <div ng-if="!model.user.following.length" class="zw-h-center">
+            Nobody
         </div>
     </div>
 </div>
