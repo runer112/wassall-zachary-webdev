@@ -18,12 +18,7 @@
 
             // if the url includes a query string, fetch the search results
             if (model.q) {
-                // if the query string is the same as the last search, return the last results
-                if ($rootScope.lastSearch && $rootScope.lastSearch.q === model.q && $rootScope.lastSearch.apps) {
-                    model.apps = $rootScope.lastSearch.apps;
-                } else {
-                    doSearch(model.q);
-                }
+                doSearch(model.q);
             }
         }
 
@@ -32,16 +27,11 @@
         }
 
         function doSearch(q) {
-            $rootScope.lastSearch = {
-                q: q
-            };
-
             appService.search(q)
                 .then(
                     function (response) {
                         var apps = response.data;
                         model.apps = apps;
-                        $rootScope.lastSearch.apps = apps;
 
                         if (!apps.length) {
                             model.errorMessage = "No results found.";
