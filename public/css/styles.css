@@ -1,7 +1,45 @@
 .zw-jumbolink {
-    text-align: center;
+    margin-top: 20px;
+    min-height: 150px;
+    background: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.zw-no-margin {
-    margin: 0;
+.zw-jumbolink-text {
+    margin: auto;
+    text-align: center;
+    text-shadow: 0 0 10px #FFFFFF, 0 0 20px #FFFFFF, 0 0 30px #000000;
+}
+
+.zw-jumbolink-img-bg {
+    background-size: cover;
+    background-position: center;
+    -webkit-filter: blur(3px);
+    -moz-filter: blur(3px);
+    -o-filter: blur(3px);
+    -ms-filter: blur(3px);
+    filter: blur(3px);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    border-radius: 20px;
+    border: solid 1px lightsteelblue;
+}
+
+.zw-jumbolink-project-bg {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("../assets/images/project.png");
+}
+
+.zw-jumbolink-assignment-bg {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url("../assets/images/assignment.png");
+}
+
+.zw-jumbolink-github-bg {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("../assets/images/github.png");
 }
